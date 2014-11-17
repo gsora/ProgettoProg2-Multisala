@@ -62,11 +62,11 @@ public class Spettacolo {
 			orarioOreInteger = Integer.parseInt(orarioSplittato[0]);
 			orarioMinutiInteger = Integer.parseInt(orarioSplittato[1]);
 		} catch (NumberFormatException nfe) {
-			throw new OrarioNonValidoException("l'orario in input non contiene numeri.");
+			throw new OrarioNonValidoException("l'orario in input non contiene solo numeri.");
 		}
 		
-		if((orarioOreInteger < 0 || orarioOreInteger > 24) || (orarioMinutiInteger < 0 || orarioMinutiInteger > 60)) {
-			throw new OrarioNonValidoException("l'orario non ha senso.r");
+		if((orarioOreInteger < 0 || orarioOreInteger > 24) || (orarioMinutiInteger < 0 || orarioMinutiInteger > 59)) {
+			throw new OrarioNonValidoException("l'orario non ha senso.");
 		}
 	}
 }
