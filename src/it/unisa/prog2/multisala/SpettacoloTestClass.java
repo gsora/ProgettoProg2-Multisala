@@ -1,7 +1,9 @@
 package it.unisa.prog2.multisala;
 
 public class SpettacoloTestClass {
-
+	
+	// classe di test, soppressione approvata 
+	@SuppressWarnings("unused")
 	public static void main(String[] args) throws OrarioNonValidoException {
 		// Nuovo oggetto Spettacolo
 		System.out.println("*** TESTER PER CLASSE SPETTACOLO ***");
