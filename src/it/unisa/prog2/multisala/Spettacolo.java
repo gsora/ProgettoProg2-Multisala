@@ -46,6 +46,80 @@ public class Spettacolo {
 		orarioMinutiInteger = 0;
 	}
 	
+	/*
+	 * Metodi pubblici
+	 */
+	
+	/**
+	 * Restituisce il titolo dello spettacolo
+	 * @return titolo dello spettacolo
+	 */
+	
+	public String getTitoloSpettacolo() {
+		return titoloSpettacolo;
+	}
+	
+	/**
+	 * Restituisce il numero della sala dove viene proiettato il film in questione
+	 * @return numero della sala
+	 */
+	
+	public int getNumeroSala() {
+		return numeroSala;
+	}
+	
+	/**
+	 * Restituisce una stringa contenente l'orario di inizio formattato nella sintassi HH:MM
+	 * @return orario di inizio dello spettacolo
+	 */
+	
+	public String getOrarioDiInizio() {
+		return orarioDiInizio;
+	}
+	
+	/**
+	 * Restituisce la durata dello spettacolo
+	 * @return durata dello spettacolo
+	 */
+	
+	public double getDurata() {
+		return durata;
+	}
+	
+	/**
+	 * Setta il titolo dello spettacolo all'argomento passato
+	 * @param s nome dello spettacolo
+	 */
+	
+	public void setTitoloSpettacolo(String s) {
+		titoloSpettacolo = s;
+	}
+	
+	/**
+	 * Setta il numero della sala dello spettacolo
+	 * @param n numero della sala
+	 */
+	
+	public void setNumeroSala(int n) {
+		numeroSala = n;
+	}
+	
+	/**
+	 * Setta l'orario di inizio controllando prima la sua validità
+	 * @param s orario dello spettacolo
+	 * @throws OrarioNonValidoException
+	 */
+	
+	public void setOrarioDiInizio(String s) throws OrarioNonValidoException {
+		// controllare sempre prima che il nuovo orario sia corretto
+		CheckValOrario(s);
+		orarioDiInizio = s;
+	}
+	
+	/*
+	 * Metodi privati
+	 */
+	
 	// Controlla che l'orario di inizio dato sia valido secondo le indicazioni date e sensato
 	private void CheckValOrario(String s) throws OrarioNonValidoException {
 		if(s.contains(":")) {
