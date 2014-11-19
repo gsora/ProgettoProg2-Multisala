@@ -1,13 +1,22 @@
 package it.unisa.prog2.multisala;
 
+import java.util.Calendar;
+
 
 public class Spettacolo {
 	
 	private String titoloSpettacolo;
 	private int numeroSala;
-	private String orarioDiInizio;
+	
+	private String orarioDiInizio;	
 	private int orarioOreInteger;
 	private int orarioMinutiInteger;
+	
+	private String dataSpettacolo;
+	private int dataGiornoInteger;
+	private int dataMeseInteger;
+	private int dataAnnoInteger;
+	
 	private double durata;
 	
 	/**
@@ -18,11 +27,16 @@ public class Spettacolo {
 		titoloSpettacolo = null;
 		numeroSala = 0;
 		
-		// TODO: metodo per splittare orario di inizio da stringa verso due int ora e minuti?
 		orarioDiInizio = null;
-		durata = 0;
 		orarioOreInteger = 0;
 		orarioMinutiInteger = 0;
+		
+		dataSpettacolo = null;
+		dataGiornoInteger = 0;
+		dataMeseInteger = 0;
+		dataAnnoInteger = 0;
+		
+		durata = 0;
 	}
 	
 	/**
@@ -31,19 +45,23 @@ public class Spettacolo {
 	 * @param titolo titolo dello spettacolo
 	 * @param numSala numero della sala assegnato
 	 * @param orarioDI orario di inizio passato in formato HH:MM
+	 * @param data data dello spettacolo passata in format GG/MM/AA
 	 * @param dur durata dello spettacolo
 	 * @throws OrarioNonValidoException 
+	 * @throws DataNonValidaException 
 	 */
 	
-	public Spettacolo(String titolo, int numSala, String orarioDI, Double dur) throws OrarioNonValidoException {
+	public Spettacolo(String titolo, int numSala, String orarioDI, String data, Double dur) throws OrarioNonValidoException, DataNonValidaException {
 		titoloSpettacolo = titolo;
 		numeroSala = numSala;
-		// TODO: metodo per splittare orario di inizio da stringa verso due int ora e minuti?
+		
 		orarioDiInizio = orarioDI;
 		CheckValOrario(orarioDiInizio);
+		
+		dataSpettacolo = data;
+		CheckData(dataSpettacolo);
+		
 		durata = dur;
-		orarioOreInteger = 0;
-		orarioMinutiInteger = 0;
 	}
 	
 	/*
@@ -75,6 +93,15 @@ public class Spettacolo {
 	
 	public String getOrarioDiInizio() {
 		return orarioDiInizio;
+	}
+	
+	/**
+	 * Restituisce una stringa contenente la data dello spettacolo nella sintassi GG/MM/AA
+	 * @return data dello spettacolo
+	 */
+	
+	public String getData() {
+		return dataSpettacolo;
 	}
 	
 	/**
@@ -116,9 +143,56 @@ public class Spettacolo {
 		orarioDiInizio = s;
 	}
 	
+	/**
+	 * Setta la data dello spettacolo controllando prima la sua validità
+	 * @param s data dello spettacolo
+	 * @throws DataNonValidaException
+	 */
+	
+	public void setData(String s) throws DataNonValidaException {
+		CheckData(s);
+		dataSpettacolo = s;
+	}
+	
 	/*
 	 * Metodi privati
 	 */
+	
+	private void CheckData(String s) throws DataNonValidaException {
+		if(s.contains("/")) {
+			SplitData(s);
+		} else {
+			throw new DataNonValidaException("la data in input non soddisfa le condizioni: il formato deve essere GG/MM/AA.");
+		}
+	}
+	
+	private void SplitData(String s) throws DataNonValidaException {
+		String[] dataSplittata = s.split("/");
+		try {
+			dataGiornoInteger = Integer.parseInt(dataSplittata[0]);
+			dataMeseInteger = Integer.parseInt(dataSplittata[1]);
+			dataAnnoInteger = Integer.parseInt(dataSplittata[2]);
+		} catch (NumberFormatException nfe) {
+			throw new DataNonValidaException("la data in input non contiene solo numeri.");
+		}
+		
+		// giorno nonsense
+		if(dataGiornoInteger > 31 || dataGiornoInteger < 1) {
+			throw new DataNonValidaException("il giorno non ha senso.");
+		}
+		
+		// mese nonsense
+		if(dataMeseInteger > 12 || dataMeseInteger < 1) {
+			throw new DataNonValidaException("il mese non ha senso.");
+		}
+		
+		// anno nonsense, confronto con anno attuale
+		Calendar cal = Calendar.getInstance();
+		int annoCorrente = cal.get(Calendar.YEAR);
+		if(dataAnnoInteger < annoCorrente) {
+			throw new DataNonValidaException("l'anno non ha senso.");
+		}
+	}
 	
 	// Controlla che l'orario di inizio dato sia valido secondo le indicazioni date e sensato
 	private void CheckValOrario(String s) throws OrarioNonValidoException {
