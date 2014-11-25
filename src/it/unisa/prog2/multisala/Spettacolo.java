@@ -3,7 +3,7 @@ package it.unisa.prog2.multisala;
 import java.util.Calendar;
 
 
-public class Spettacolo {
+public class Spettacolo implements Cloneable {
 	
 	private String titoloSpettacolo;
 	private int numeroSala;
@@ -67,6 +67,18 @@ public class Spettacolo {
 	/*
 	 * Metodi pubblici
 	 */
+	
+	/**
+	 * Implementazione dell'interfaccia Cloneable
+	 */
+	@Override
+	public Spettacolo clone() {
+		try {
+			return (Spettacolo) super.clone();
+		} catch (CloneNotSupportedException e) {
+			throw new RuntimeException(e);
+		}
+	}
 	
 	/**
 	 * Restituisce il titolo dello spettacolo
