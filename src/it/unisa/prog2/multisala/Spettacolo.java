@@ -2,6 +2,9 @@ package it.unisa.prog2.multisala;
 
 import java.util.Calendar;
 
+// TODO: ordinare i getter e i setter 
+
+
 
 public class Spettacolo implements Cloneable {
 	
