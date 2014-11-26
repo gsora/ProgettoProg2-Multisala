@@ -8,7 +8,7 @@ public class Sala {
 	// numero massimo di posti in una sala
 	private static int MAX_POSTI = 50;
 	
-	private Posto[] listaPosti;
+	private Posto[] listaPosti = new Posto[MAX_POSTI];
 	
 	private int numeroSala;
 	private int postiLiberi;
@@ -26,6 +26,7 @@ public class Sala {
 		numeroSala = ns;
 		spettacoloAssegnato = new Spettacolo();	
 		inizializzaListaPosti(listaPosti);
+		ricaricaStatusPosti(listaPosti);
 	}
 	
 	/**
@@ -38,6 +39,7 @@ public class Sala {
 		numeroSala = ns;
 		spettacoloAssegnato = s.clone();
 		inizializzaListaPosti(listaPosti);
+		ricaricaStatusPosti(listaPosti);
 	}
 	
 	/**
@@ -55,6 +57,7 @@ public class Sala {
 	 */
 	
 	public int getNumeroPostiLiberi() {
+		ricaricaStatusPosti(listaPosti);
 		return postiLiberi;
 	}
 	
@@ -63,6 +66,7 @@ public class Sala {
 	 * @return numero di posti assegnati
 	 */
 	public int getNumeroPostiAssegnati() {
+		ricaricaStatusPosti(listaPosti);
 		return postiAssegnati;
 	}
 	
@@ -72,6 +76,7 @@ public class Sala {
 	 */
 	
 	public int getNumeroPostiPrenotati() {
+		ricaricaStatusPosti(listaPosti);
 		return postiPrenotati;
 	}
 	
@@ -93,12 +98,60 @@ public class Sala {
 		return numeroSala;
 	}
 	
+	
+	// TODO: scrivere javadoc 
+	// TODO: controllare le funzioni di prenotazione, incremento e acquisto biglietto perché non scrivono nell'oggetto Posto
+	public void prenotaPosto() {
+		postiLiberi--;
+		postiPrenotati++;
+	}
+	
+	public void incrementaPostiLiberi() {
+		postiLiberi++;
+		postiAssegnati--;
+	}
+	
+	public void compraBiglietto() {
+		postiLiberi--;
+		postiAssegnati++;
+	}
+	
+	public String statoPostiSala() {
+		return "Posti liberi: " + getNumeroPostiLiberi() + "|" + "Posti assegnati: " + getNumeroPostiAssegnati() + "|" + "Posti prenotati: " + getNumeroPostiPrenotati();
+	}
+	
 	// METODI PRIVATI //
 	
 	private void inizializzaListaPosti(Posto[] p) {
-		p = new Posto[MAX_POSTI];
-		for(int i = 0; i  < MAX_POSTI-1; i++) {
+		for(int i = 0; i  < MAX_POSTI; i++) {
 			p[i] = new Posto(i+1, 0);
 		}
+	}
+	
+	private void ricaricaStatusPosti(Posto[] p) {
+		for(Posto ps : p) {
+			int valore = ps.getStatus();
+			if(valore == 0) {
+				if(postiLiberi >= 50) {
+					;
+				} else {
+					postiLiberi++;
+				}
+			} else if(valore == 1) {
+				if(postiAssegnati >= 50) {
+					;
+				} else {
+					postiAssegnati++;
+				}
+			} else if(valore == 2) {
+				if(postiPrenotati >= 50) {
+					;
+				} else {
+					postiPrenotati++;
+				}
+			}
+		}
+		
+		postiLiberi = postiLiberi - postiAssegnati;
 	}
 }
