@@ -1,7 +1,5 @@
 package it.unisa.prog2.multisala;
 
-import java.util.ArrayList;
-
 public class Sala {
 	
 	// spettacolo assegnato alla sala corrente
