@@ -5,6 +5,11 @@ public class Sala {
 	// spettacolo assegnato alla sala corrente
 	private Spettacolo spettacoloAssegnato;
 	
+	// numero massimo di posti in una sala
+	private static int MAX_POSTI = 50;
+	
+	private Posto[] listaPosti;
+	
 	private int numeroSala;
 	private int postiLiberi;
 	private int postiAssegnati;
@@ -17,9 +22,10 @@ public class Sala {
 	 * @param ns numero della sala
 	 */
 	public Sala(int ns) {
-		postiTotali = 50;
+		postiTotali = MAX_POSTI;
 		numeroSala = ns;
-		spettacoloAssegnato = new Spettacolo();
+		spettacoloAssegnato = new Spettacolo();	
+		inizializzaListaPosti(listaPosti);
 	}
 	
 	/**
@@ -28,9 +34,10 @@ public class Sala {
 	 */
 	
 	public Sala(int ns, Spettacolo s) {
-		postiTotali = 50;
+		postiTotali = MAX_POSTI;
 		numeroSala = ns;
 		spettacoloAssegnato = s.clone();
+		inizializzaListaPosti(listaPosti);
 	}
 	
 	/**
@@ -84,5 +91,14 @@ public class Sala {
 	
 	public int getNumeroSala() {
 		return numeroSala;
+	}
+	
+	// METODI PRIVATI //
+	
+	private void inizializzaListaPosti(Posto[] p) {
+		p = new Posto[MAX_POSTI];
+		for(int i = 0; i  < MAX_POSTI-1; i++) {
+			p[i] = new Posto(i+1, 0);
+		}
 	}
 }
