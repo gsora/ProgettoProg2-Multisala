@@ -101,7 +101,10 @@ public class Sala {
 	
 	// TODO: scrivere javadoc 
 	// TODO: controllare le funzioni di prenotazione, incremento e acquisto biglietto perché non scrivono nell'oggetto Posto
-	public void prenotaPosto() {
+	public void prenotaPosto() throws PostiPrenotabiliEsauritiException {
+		if(postiLiberi <= 0) {
+			throw new PostiPrenotabiliEsauritiException("posti prenotabili nella sala esauriti.");
+		}
 		postiLiberi--;
 		postiPrenotati++;
 	}
@@ -111,7 +114,10 @@ public class Sala {
 		postiAssegnati--;
 	}
 	
-	public void compraBiglietto() {
+	public void compraBiglietto() throws PostiLiberiEsauritiException {
+		if(postiLiberi <= 0) {
+			throw new PostiLiberiEsauritiException("posti liberi nella sala esauriti.");
+		}
 		postiLiberi--;
 		postiAssegnati++;
 	}
