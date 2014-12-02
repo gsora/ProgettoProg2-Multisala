@@ -105,8 +105,6 @@ public class Sala {
 		if(postiLiberi <= 0) {
 			throw new PostiPrenotabiliEsauritiException("posti prenotabili nella sala esauriti.");
 		}
-		postiLiberi--;
-		postiPrenotati++;
 	}
 	
 	public void incrementaPostiLiberi() {
@@ -118,12 +116,18 @@ public class Sala {
 		if(postiLiberi <= 0) {
 			throw new PostiLiberiEsauritiException("posti liberi nella sala esauriti.");
 		}
-		postiLiberi--;
-		postiAssegnati++;
+		listaPosti[postiAssegnati].setStatus(1);
+		ricaricaStatusPosti(listaPosti);
 	}
 	
 	public String statoPostiSala() {
 		return "Posti liberi: " + getNumeroPostiLiberi() + "|" + "Posti assegnati: " + getNumeroPostiAssegnati() + "|" + "Posti prenotati: " + getNumeroPostiPrenotati();
+	}
+	
+	
+	// TODO: aggiugnere controllo overflow posti
+	public int getStatoPostoSingolo(int a) {
+		return listaPosti[a].getStatus();
 	}
 	
 	// METODI PRIVATI //
@@ -135,29 +139,26 @@ public class Sala {
 	}
 	
 	private void ricaricaStatusPosti(Posto[] p) {
+		
+		postiLiberi = 0;
+		postiAssegnati = 0;
+		postiPrenotati = 0;
+		
 		for(Posto ps : p) {
 			int valore = ps.getStatus();
+			/*if(!(postiLiberi >= MAX_POSTI))
+				postiLiberi++;*/
 			if(valore == 0) {
-				if(postiLiberi >= 50) {
-					;
-				} else {
-					postiLiberi++;
-				}
-			} else if(valore == 1) {
-				if(postiAssegnati >= 50) {
-					;
-				} else {
-					postiAssegnati++;
-				}
-			} else if(valore == 2) {
-				if(postiPrenotati >= 50) {
-					;
-				} else {
-					postiPrenotati++;
-				}
+				postiLiberi++;
+			}
+			
+			if(valore == 1) {
+				postiAssegnati++;
+			}
+			
+			if(valore == 2) {
+				postiPrenotati++;
 			}
 		}
-		
-		postiLiberi = postiLiberi - postiAssegnati;
 	}
 }
