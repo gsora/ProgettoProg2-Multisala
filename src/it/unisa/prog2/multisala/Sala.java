@@ -120,6 +120,14 @@ public class Sala {
 		ricaricaStatusPosti(listaPosti);
 	}
 	
+	public void compraBiglietto(int postoNumero) throws PostiLiberiEsauritiException {
+		if(postiLiberi <= 0) {
+			throw new PostiLiberiEsauritiException("posti liberi nella sala esauriti.");
+		}
+		listaPosti[postoNumero-1].setStatus(1);
+		ricaricaStatusPosti(listaPosti);
+	}
+	
 	public String statoPostiSala() {
 		return "Posti liberi: " + getNumeroPostiLiberi() + "|" + "Posti assegnati: " + getNumeroPostiAssegnati() + "|" + "Posti prenotati: " + getNumeroPostiPrenotati();
 	}
