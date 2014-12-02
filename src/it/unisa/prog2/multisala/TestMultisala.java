@@ -1,5 +1,10 @@
 package it.unisa.prog2.multisala;
 
+import javax.swing.*;
+
+import java.awt.*;
+
+
 public class TestMultisala {
 
 	public static void main(String[] args) throws OrarioNonValidoException, DataNonValidaException, PostiLiberiEsauritiException {
@@ -10,54 +15,6 @@ public class TestMultisala {
 		System.out.println(s.statoPostiSala());
 		
 		s.compraBiglietto();
-		
-		System.out.println(s.statoPostiSala());
-		
-		s.compraBiglietto();
-		s.compraBiglietto();
-		s.compraBiglietto();
-		s.compraBiglietto();
-		s.compraBiglietto();
-		s.compraBiglietto();
-		s.compraBiglietto();
-		
-		s.compraBiglietto();
-		s.compraBiglietto();
-		s.compraBiglietto();
-		s.compraBiglietto();
-		s.compraBiglietto();
-		s.compraBiglietto();
-		s.compraBiglietto();
-		
-		s.compraBiglietto();
-		s.compraBiglietto();
-		s.compraBiglietto();
-		s.compraBiglietto();
-		s.compraBiglietto();
-		s.compraBiglietto();
-		s.compraBiglietto();
-		
-		s.compraBiglietto();
-		s.compraBiglietto();
-		s.compraBiglietto();
-		s.compraBiglietto();
-		s.compraBiglietto();
-		s.compraBiglietto();
-		s.compraBiglietto();
-		
-		s.compraBiglietto();
-		s.compraBiglietto();
-		s.compraBiglietto();
-		s.compraBiglietto();
-		s.compraBiglietto();
-		s.compraBiglietto();
-		s.compraBiglietto();
-		s.compraBiglietto();
-		s.compraBiglietto();
-		s.compraBiglietto();
-		s.compraBiglietto();
-		s.compraBiglietto();
-		s.compraBiglietto();
 		s.compraBiglietto();
 		s.compraBiglietto();
 		s.compraBiglietto();
@@ -68,6 +25,25 @@ public class TestMultisala {
 		s.compraBiglietto();
 		
 		System.out.println(s.statoPostiSala());
+		
+		
+		JFrame frame = new JFrame();
+		
+		frame.setSize(1150, 720);
+		frame.setResizable(false);
+		frame.setTitle("Test");
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setLayout(new GridLayout(5, 10));
+		
+		DrawPosto[] a = new DrawPosto[50];
+		
+		
+		for(int i = 0; i < s.getNumeroPostiTotali(); i++) {
+			a[i] = new DrawPosto(s.getStatoPostoSingolo(i));
+			frame.repaint();
+			frame.add(a[i]);
+		}
+		frame.setVisible(true);
 		
 	}
 
