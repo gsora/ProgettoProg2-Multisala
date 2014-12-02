@@ -3,25 +3,27 @@ package it.unisa.prog2.multisala;
 import javax.swing.JComponent;
 
 import java.awt.Color;	
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.geom.GeneralPath;
 
 @SuppressWarnings("serial")
-public class DrawPosto extends JComponent {
+public class DrawPosto extends JComponent implements MouseListener {
 	
 	private Graphics2D g2;
 	private GeneralPath path;
 	private Color c;
-	
-	
+	private int numeroPosto;
 	
 	public DrawPosto() {
 		
 	}
 	
-	public DrawPosto(int status) {
+	public DrawPosto(int status, int ns) {
 		switch (status) {
 		case 0:
 			c = new Color(0, 177, 106);
@@ -36,6 +38,9 @@ public class DrawPosto extends JComponent {
 			c = new Color(0, 177, 106);
 			break;
 		}
+		
+		numeroPosto = ns;
+		this.addMouseListener(this);
 	}
 	
 	private void disegnaPath() {
@@ -53,8 +58,15 @@ public class DrawPosto extends JComponent {
         path.lineTo(10, 50);
         path.closePath();
         g2.fill(path);
+        Font textFont = new Font("Arial", Font.BOLD, 16);  
+        g2.setFont(textFont); 
+        g2.drawString(Integer.toString(numeroPosto), this.getWidth()/2, this.getHeight()/5);
         g2.draw(path);
 		
+	}
+	
+	public int getNumeroPostoDraw() {
+		return numeroPosto;
 	}
 	
 	public void paintComponent(Graphics g) {
@@ -64,6 +76,37 @@ public class DrawPosto extends JComponent {
 
 		disegnaPath();
 
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		System.out.println("Click posto numero: " + numeroPosto);
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
