@@ -1,24 +1,21 @@
 package it.unisa.prog2.multisala;
 
 import javax.swing.JComponent;
-
 import java.awt.Color;	
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.geom.GeneralPath;
 
 @SuppressWarnings("serial")
-public class DrawPosto extends JComponent implements MouseListener {
+public class DrawPosto extends JComponent {
 	
 	private Graphics2D g2;
 	private GeneralPath path;
 	private Color c;
 	private int numeroPosto;
-	
+
 	public DrawPosto() {
 		
 	}
@@ -40,7 +37,6 @@ public class DrawPosto extends JComponent implements MouseListener {
 		}
 		
 		numeroPosto = ns;
-		this.addMouseListener(this);
 	}
 	
 	private void disegnaPath() {
@@ -78,35 +74,5 @@ public class DrawPosto extends JComponent implements MouseListener {
 
 	}
 
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-		System.out.println("Click posto numero: " + numeroPosto);
-		
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
 
 }
