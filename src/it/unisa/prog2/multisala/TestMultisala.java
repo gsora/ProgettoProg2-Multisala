@@ -24,7 +24,7 @@ public class TestMultisala implements MouseListener {
 		frame.setSize(1150, 720);
 		frame.setVisible(true);
 		frame.setResizable(false);
-		frame.setTitle("Sala n°");
+		frame.setTitle("Sala nï¿½");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLayout(new GridLayout(5, 10, 50, 50));
 		frame.setLocationRelativeTo(null);
@@ -65,7 +65,8 @@ public class TestMultisala implements MouseListener {
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		try {
-			s.compraBiglietto(((DrawPosto) e.getSource()).getNumeroPostoDraw());
+			int numeroPosto = ((DrawPosto) e.getSource()).getNumeroPostoDraw();
+			s.compraBiglietto(numeroPosto);
 			ricaricaUI(frame, s, a);
 		} catch (PostiLiberiEsauritiException e1) {
 			// TODO Auto-generated catch block
@@ -78,15 +79,15 @@ public class TestMultisala implements MouseListener {
 		frame.setResizable(false);
 		frame.setTitle("Compra o Prenota Biglietto");
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-			frame.setLayout(new BorderLayout());
-			JPanel subpanel = new JPanel();
-			JButton Compra = new JButton("Compra");
-			JButton Prenota = new JButton("Prenota");
-			subpanel.add(Prenota);
-			subpanel.add(Compra);
-			frame.add(subpanel, BorderLayout.SOUTH);
-			JLabel lab1 = new JLabel("");
-			frame.add(lab1, BorderLayout.NORTH);
+		frame.setLayout(new BorderLayout());
+		JPanel subpanel = new JPanel();
+		JButton Compra = new JButton("Compra");
+		JButton Prenota = new JButton("Prenota");
+		subpanel.add(Prenota);
+		subpanel.add(Compra);
+		frame.add(subpanel, BorderLayout.SOUTH);
+		JLabel lab1 = new JLabel("");
+		frame.add(lab1, BorderLayout.NORTH);
 		}
 
 	@Override
