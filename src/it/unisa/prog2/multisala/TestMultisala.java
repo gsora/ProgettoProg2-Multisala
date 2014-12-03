@@ -24,7 +24,7 @@ public class TestMultisala implements MouseListener {
 		frame.setSize(1150, 720);
 		frame.setVisible(true);
 		frame.setResizable(false);
-		frame.setTitle("Sala n�");
+		frame.setTitle("Sala " + s.getNumeroSala() );
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLayout(new GridLayout(5, 10, 50, 50));
 		frame.setLocationRelativeTo(null);
@@ -83,7 +83,7 @@ public class TestMultisala implements MouseListener {
 		frame.setLayout(new BorderLayout());
 		JPanel subpanel = new JPanel();
 		JButton Compra = new JButton("Compra");
-		JButton Prenota = new JButton("Prenota");
+		JButton Prenota = new JButton("Prenota");	
 		subpanel.add(Prenota);
 		subpanel.add(Compra);
 		frame.add(subpanel, BorderLayout.SOUTH);
