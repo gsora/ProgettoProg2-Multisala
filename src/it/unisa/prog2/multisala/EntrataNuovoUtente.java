@@ -1,13 +1,11 @@
 package it.unisa.prog2.multisala;
 
 import javax.swing.JButton;
-import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
@@ -78,6 +76,7 @@ public class EntrataNuovoUtente {
 				frameChiamante.setVisible(false);
 				nuovoUtente.setVisible(false);
 				ListaSale ls = new ListaSale(nuovoUtente);
+				ls.costruisciUI(nuovoUtente);
 			}
 		});
 		
