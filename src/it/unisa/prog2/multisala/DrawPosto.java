@@ -1,8 +1,8 @@
 package it.unisa.prog2.multisala;
 
 import javax.swing.JComponent;
-
 import java.awt.Color;	
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -14,14 +14,13 @@ public class DrawPosto extends JComponent {
 	private Graphics2D g2;
 	private GeneralPath path;
 	private Color c;
-	
-	
-	
+	private int numeroPosto;
+
 	public DrawPosto() {
 		
 	}
 	
-	public DrawPosto(int status) {
+	public DrawPosto(int status, int ns) {
 		switch (status) {
 		case 0:
 			c = new Color(0, 177, 106);
@@ -36,6 +35,8 @@ public class DrawPosto extends JComponent {
 			c = new Color(0, 177, 106);
 			break;
 		}
+		
+		numeroPosto = ns;
 	}
 	
 	private void disegnaPath() {
@@ -53,8 +54,15 @@ public class DrawPosto extends JComponent {
         path.lineTo(10, 50);
         path.closePath();
         g2.fill(path);
+        Font textFont = new Font("Arial", Font.BOLD, 16);  
+        g2.setFont(textFont); 
+        g2.drawString(Integer.toString(numeroPosto), this.getWidth()/2, this.getHeight()/5);
         g2.draw(path);
 		
+	}
+	
+	public int getNumeroPostoDraw() {
+		return numeroPosto;
 	}
 	
 	public void paintComponent(Graphics g) {
@@ -65,5 +73,6 @@ public class DrawPosto extends JComponent {
 		disegnaPath();
 
 	}
+
 
 }
