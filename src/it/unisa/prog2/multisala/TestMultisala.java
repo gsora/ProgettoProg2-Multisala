@@ -64,8 +64,9 @@ public class TestMultisala implements MouseListener {
 	
 	@Override
 	public void mouseClicked(MouseEvent e) {
+		int numeroPosto = ((DrawPosto) e.getSource()).getNumeroPostoDraw();
 		try {
-			int numeroPosto = ((DrawPosto) e.getSource()).getNumeroPostoDraw();
+			
 			s.compraBiglietto(numeroPosto);
 			ricaricaUI(frame, s, a);
 		} catch (PostiLiberiEsauritiException e1) {
@@ -86,7 +87,7 @@ public class TestMultisala implements MouseListener {
 		subpanel.add(Prenota);
 		subpanel.add(Compra);
 		frame.add(subpanel, BorderLayout.SOUTH);
-		JLabel lab1 = new JLabel("");
+		JLabel lab1 = new JLabel("Scegliere l'opzione da eseguire con il posto numero " + numeroPosto);
 		frame.add(lab1, BorderLayout.NORTH);
 		}
 
