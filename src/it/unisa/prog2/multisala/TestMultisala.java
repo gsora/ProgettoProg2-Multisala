@@ -2,6 +2,8 @@ package it.unisa.prog2.multisala;
 
 import javax.swing.*;
 
+import com.sun.glass.events.WindowEvent;
+
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -75,7 +77,7 @@ public class TestMultisala implements MouseListener {
 		frame.setVisible(true);
 		frame.setResizable(false);
 		frame.setTitle("Compra o Prenota Biglietto");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 			frame.setLayout(new BorderLayout());
 			JPanel subpanel = new JPanel();
 			JButton Compra = new JButton("Compra");
@@ -83,7 +85,7 @@ public class TestMultisala implements MouseListener {
 			subpanel.add(Prenota);
 			subpanel.add(Compra);
 			frame.add(subpanel, BorderLayout.SOUTH);
-			JLabel lab1 = new JLabel("Scegliere cosa fare:");
+			JLabel lab1 = new JLabel("");
 			frame.add(lab1, BorderLayout.NORTH);
 		}
 
