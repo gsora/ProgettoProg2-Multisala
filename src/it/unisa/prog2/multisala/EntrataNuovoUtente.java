@@ -1,15 +1,19 @@
 package it.unisa.prog2.multisala;
 
 import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -50,6 +54,7 @@ public class EntrataNuovoUtente {
 		messaggio2 = new JLabel("Conserva questo codice per poter gestire le tue prenotazioni!", SwingConstants.CENTER);
 		
 		bottoneOK = new JButton("OK");
+		
 		JPanel flowPanel = new JPanel(new FlowLayout());
 		flowPanel.add(bottoneOK);
 		pan = new JPanel();
@@ -63,8 +68,20 @@ public class EntrataNuovoUtente {
 		
 		nuovoUtente.add(pan, BorderLayout.CENTER);
 		
-		nuovoUtente.setVisible(true);
+	}
+	
+	public void costruisciUI(JFrame frameChiamante) {
+		bottoneOK.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				frameChiamante.setVisible(false);
+				nuovoUtente.setVisible(false);
+				ListaSale ls = new ListaSale(nuovoUtente);
+			}
+		});
 		
+		nuovoUtente.setVisible(true);
 	}
 	
 	private String generaID(){
