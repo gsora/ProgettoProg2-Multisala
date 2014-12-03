@@ -22,7 +22,7 @@ public class TestMultisala implements MouseListener {
 		frame.setSize(1150, 720);
 		frame.setVisible(true);
 		frame.setResizable(false);
-		frame.setTitle("Test");
+		frame.setTitle("Sala n°");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLayout(new GridLayout(5, 10, 50, 50));
 		frame.setLocationRelativeTo(null);
@@ -68,8 +68,24 @@ public class TestMultisala implements MouseListener {
 		} catch (PostiLiberiEsauritiException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
+		} 
+		
+		frame = new JFrame();
+		frame.setSize(600, 350);
+		frame.setVisible(true);
+		frame.setResizable(false);
+		frame.setTitle("Compra o Prenota Biglietto");
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			frame.setLayout(new BorderLayout());
+			JPanel subpanel = new JPanel();
+			JButton Compra = new JButton("Compra");
+			JButton Prenota = new JButton("Prenota");
+			subpanel.add(Prenota);
+			subpanel.add(Compra);
+			frame.add(subpanel, BorderLayout.SOUTH);
+			JLabel lab1 = new JLabel("Scegliere cosa fare:");
+			frame.add(lab1, BorderLayout.NORTH);
 		}
-	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
