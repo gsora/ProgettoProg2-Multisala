@@ -45,12 +45,12 @@ public class DrawPosto extends JComponent {
         path.moveTo(15, 50);
         path.curveTo(20, 10, 50, 10, 55, 50);
         path.lineTo(60, 50);
-        path.lineTo(60, 90);
-        path.lineTo(50, 90);
-        path.lineTo(50, 70);
-        path.lineTo(20, 70);
-        path.lineTo(20, 90);
-        path.lineTo(10, 90);
+        path.lineTo(60, 85);
+        path.lineTo(50, 85);
+        path.lineTo(50, 80);
+        path.lineTo(20, 80);
+        path.lineTo(20, 85);
+        path.lineTo(10, 85);
         path.lineTo(10, 50);
         path.closePath();
         g2.fill(path);
