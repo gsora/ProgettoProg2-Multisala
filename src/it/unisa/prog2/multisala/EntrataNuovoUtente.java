@@ -29,14 +29,13 @@ public class EntrataNuovoUtente {
 	public EntrataNuovoUtente(){
 		nuovoUtente = new JFrame();
 		nuovoUtente.setSize(400, 200);
-		nuovoUtente.setVisible(true);
 		nuovoUtente.setTitle("Benvenuto");
 		nuovoUtente.setResizable(false);
 		nuovoUtente.setLocationRelativeTo(null);
 		nuovoUtente.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		nuovoUtente.setLayout(new BorderLayout());
 		
-		messaggio1 = new JLabel("Il tuo codice ID è:", SwingConstants.CENTER);
+		messaggio1 = new JLabel("Il tuo codice ID Ã¨:", SwingConstants.CENTER);
 		
 		codiceID = new JTextPane();
 		codiceID.setText(generaID());
@@ -64,6 +63,8 @@ public class EntrataNuovoUtente {
 		pan.add(flowPanel);
 		
 		nuovoUtente.add(pan, BorderLayout.CENTER);
+		
+		nuovoUtente.setVisible(true);
 		
 	}
 	
