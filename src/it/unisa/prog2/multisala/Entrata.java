@@ -23,7 +23,6 @@ public class Entrata {
 		entrata.setSize(300, 150);
 		entrata.setResizable(false);
 		entrata.setLocationRelativeTo(null);
-		entrata.setVisible(true);
 		entrata.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		entrata.setTitle(nomeCinema);
 		entrata.setLayout(new BorderLayout());
@@ -39,6 +38,7 @@ public class Entrata {
 		
 		messaggioEntrata = new JLabel("Benvenuto al Multisala Pancakes", SwingConstants.CENTER);
 		entrata.add(messaggioEntrata, BorderLayout.NORTH);
+		entrata.setVisible(true);
 		
 		nuovoUtente.addActionListener(new ActionListener() {
 			
