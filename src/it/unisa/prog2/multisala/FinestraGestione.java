@@ -9,8 +9,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import com.apple.eawt.AppEventListener;
-
 public class FinestraGestione implements GestioneGrafica{
 	
 	private JFrame gestione;
