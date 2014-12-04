@@ -14,7 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 
-public class EntrataUtenteEsistente {
+public class EntrataUtenteEsistente implements GestioneGrafica {
 
 	private JFrame utenteEsistente;
 	private JLabel messaggio1;
@@ -57,6 +57,7 @@ public class EntrataUtenteEsistente {
 		utenteEsistente.add(pan);
 	}
 	
+	@Override
 	public void costruisciUI(JFrame frameChiamante) {
 		utenteEsistente.setVisible(true);
 		
@@ -71,4 +72,7 @@ public class EntrataUtenteEsistente {
 		});
 		
 	}
+
+	@Override
+	public void costruisciUI() { }
 }
