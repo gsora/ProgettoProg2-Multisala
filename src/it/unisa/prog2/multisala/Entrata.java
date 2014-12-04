@@ -38,13 +38,13 @@ public class Entrata {
 		
 		messaggioEntrata = new JLabel("Benvenuto al Multisala Pancakes", SwingConstants.CENTER);
 		entrata.add(messaggioEntrata, BorderLayout.NORTH);
-		entrata.setVisible(true);
 		
 		nuovoUtente.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				EntrataNuovoUtente enu = new EntrataNuovoUtente();
+				enu.costruisciUI(entrata);
 			}
 		});
 		
@@ -56,5 +56,9 @@ public class Entrata {
 				
 			}
 		});
+	}
+	
+	public void costruisciUI() {
+		entrata.setVisible(true);
 	}
 }
