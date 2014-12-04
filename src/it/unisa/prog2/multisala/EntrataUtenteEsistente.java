@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -30,7 +32,7 @@ public class EntrataUtenteEsistente {
 		utenteEsistente.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		utenteEsistente.setLayout(new BorderLayout());
 		
-		messaggio1 = new JLabel("Bentornato al Multisale Pancakes", SwingConstants.CENTER);
+		messaggio1 = new JLabel("Bentornato al Multisala Pancakes", SwingConstants.CENTER);
 		messaggio2 = new JLabel("Inserisci il tuo codice utente per continuare:", SwingConstants.CENTER);
 		
 		
@@ -53,9 +55,20 @@ public class EntrataUtenteEsistente {
 		pan.add(flowPanel2);
 	
 		utenteEsistente.add(pan);
-		//utenteEsistente.add(codiceID);
-		//utenteEsistente.add(bottoneEntra);
-		
+	}
+	
+	public void costruisciUI(JFrame frameChiamante) {
 		utenteEsistente.setVisible(true);
+		
+		bottoneEntra.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO: inserire controllo ID valido
+				// se controllo ok:
+				// frameChiamante.setVisible(false);
+			}
+		});
+		
 	}
 }
