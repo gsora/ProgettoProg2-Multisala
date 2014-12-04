@@ -25,6 +25,7 @@ public class ListaSale {
 		listaSale.setSize(500,800);
 		listaSale.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		listaSale.setVisible(true);
+		listaSale.setLocationRelativeTo(null);
 	}
 	
 	public void costruisciUI(JFrame frameChiamante) {
