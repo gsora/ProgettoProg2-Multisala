@@ -65,6 +65,12 @@ public class EntrataUtenteEsistente implements GestioneGrafica {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				if(codiceID.getText().contentEquals("MLGPR0")) {
+					// TODO: apri finestra gestione
+					FinestraGestione fg = new FinestraGestione();
+					fg.costruisciUI(utenteEsistente);
+					frameChiamante.setVisible(false);
+				}
 				// TODO: inserire controllo ID valido
 				// se controllo ok:
 				// frameChiamante.setVisible(false);
