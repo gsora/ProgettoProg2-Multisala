@@ -18,7 +18,7 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.util.UUID;
 
-public class EntrataNuovoUtente {
+public class EntrataNuovoUtente implements GestioneGrafica {
 
 	private JFrame nuovoUtente;
 	private JLabel messaggio1;
@@ -69,6 +69,7 @@ public class EntrataNuovoUtente {
 		
 	}
 	
+	@Override
 	public void costruisciUI(JFrame frameChiamante) {
 		bottoneOK.addActionListener(new ActionListener() {
 			
@@ -82,6 +83,9 @@ public class EntrataNuovoUtente {
 		});
 		
 	}
+	
+	@Override
+	public void costruisciUI() { }
 	
 	private String generaID(){
 		UUID codice = UUID.randomUUID();
