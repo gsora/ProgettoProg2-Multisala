@@ -6,7 +6,7 @@ public class Multisala {
 	
 		String nomeCinema = "Multisala Pancakes";
 		Entrata pancakes = new Entrata(nomeCinema);
-		pancakes.costruisciUI();
+		//pancakes.costruisciUI();
 		
 	}
 

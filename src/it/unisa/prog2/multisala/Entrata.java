@@ -47,5 +47,14 @@ public class Entrata {
 				EntrataNuovoUtente enu = new EntrataNuovoUtente();
 			}
 		});
+		
+		utenteEsistente.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				EntrataUtenteEsistente ue = new EntrataUtenteEsistente();
+				
+			}
+		});
 	}
 }
