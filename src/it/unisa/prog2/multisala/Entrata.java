@@ -10,7 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-public class Entrata {
+public class Entrata implements GestioneGrafica {
 
 	private JFrame entrata;
 	private JButton nuovoUtente;
@@ -58,7 +58,11 @@ public class Entrata {
 		});
 	}
 	
+	@Override
 	public void costruisciUI() {
 		entrata.setVisible(true);
 	}
+
+	@Override
+	public void costruisciUI(JFrame frameChiamante) { }
 }
