@@ -53,7 +53,7 @@ public class Entrata {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				EntrataUtenteEsistente ue = new EntrataUtenteEsistente();
-				
+				ue.costruisciUI(entrata);
 			}
 		});
 	}
