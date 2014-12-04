@@ -65,6 +65,7 @@ public class EntrataNuovoUtente {
 		pan.add(flowPanel);
 		
 		nuovoUtente.add(pan, BorderLayout.CENTER);
+		nuovoUtente.setVisible(true);
 		
 	}
 	
@@ -80,7 +81,6 @@ public class EntrataNuovoUtente {
 			}
 		});
 		
-		nuovoUtente.setVisible(true);
 	}
 	
 	private String generaID(){
