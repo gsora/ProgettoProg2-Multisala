@@ -5,5 +5,6 @@ import javax.swing.JFrame;
 public interface GestioneGrafica {
 	
 	public void costruisciUI(JFrame frameChiamante);
+	public void costruisciUI();
 
 }
