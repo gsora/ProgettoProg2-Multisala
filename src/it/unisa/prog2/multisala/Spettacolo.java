@@ -1,12 +1,12 @@
 package it.unisa.prog2.multisala;
 
+import java.io.Serializable;
 import java.util.Calendar;
 
 // TODO: ordinare i getter e i setter 
 
-
-
-public class Spettacolo implements Cloneable {
+@SuppressWarnings("serial")
+public class Spettacolo implements Cloneable, Serializable {
 	
 	private String titoloSpettacolo;
 	private int numeroSala;
