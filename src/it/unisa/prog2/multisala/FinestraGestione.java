@@ -1,13 +1,19 @@
 package it.unisa.prog2.multisala;
 
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.Border;
+import javax.swing.border.EtchedBorder;
 
 public class FinestraGestione implements GestioneGrafica{
 	
@@ -21,6 +27,7 @@ public class FinestraGestione implements GestioneGrafica{
 	private JButton applicaSconti;
 	private JButton modificaStatusPosto;
 	private JButton visualizzaBilancioSettimanale;
+	Border loweredetched;
 	
 	public FinestraGestione() {
 		gestione = new JFrame();
@@ -32,48 +39,79 @@ public class FinestraGestione implements GestioneGrafica{
 		gestione.setLayout(gbl);
 		
 		// pannelloSinistra
+		pannelloSinistra = new JPanel();
+		pannelloSinistra.setLayout(new GridLayout(6,1));
+		Dimension dim = new Dimension(150 ,105);
 		bottoneInserisciProgramma = new JButton("Inserisci programma settimanale");
-		GridBagConstraints bip = new GridBagConstraints();
+		bottoneInserisciProgramma.setPreferredSize(dim);
+	 /*	GridBagConstraints bip = new GridBagConstraints();
 		bip.gridx = 0;
 		bip.gridy = 0;
 		gbl.setConstraints(bottoneInserisciProgramma, bip);
-		gestione.add(bottoneInserisciProgramma);
+		gestione.add(bottoneInserisciProgramma); */
 		
 		bottoneCambiaPrezzi = new JButton("Setta prezzi spettacoli");
-		GridBagConstraints bcp = new GridBagConstraints();
+		bottoneCambiaPrezzi.setPreferredSize(dim);
+		/*GridBagConstraints bcp = new GridBagConstraints();
 		bcp.gridx = 0;
 		bcp.gridy = 1;
 		gbl.setConstraints(bottoneCambiaPrezzi, bcp);
-		gestione.add(bottoneCambiaPrezzi);
+		gestione.add(bottoneCambiaPrezzi);*/
 		
 		visualizzaListaSpettacoli = new JButton("Visualizza lista spettacoli");
-		GridBagConstraints vls = new GridBagConstraints();
+		visualizzaListaSpettacoli.setPreferredSize(dim);
+		/*GridBagConstraints vls = new GridBagConstraints();
 		vls.gridx = 0;
 		vls.gridy = 2;
 		gbl.setConstraints(visualizzaListaSpettacoli, vls);
-		gestione.add(visualizzaListaSpettacoli);
+		gestione.add(visualizzaListaSpettacoli);*/
 		
 		applicaSconti = new JButton("Applica sconti");
-		GridBagConstraints as = new GridBagConstraints();
+		applicaSconti.setPreferredSize(dim);
+		/*GridBagConstraints as = new GridBagConstraints();
 		as.gridx = 0;
 		as.gridy = 3;
 		gbl.setConstraints(applicaSconti, as);
-		gestione.add(applicaSconti);
+		gestione.add(applicaSconti);*/
 		
 		modificaStatusPosto = new JButton("Modifica status posti");
-		GridBagConstraints msp = new GridBagConstraints();
+		modificaStatusPosto.setPreferredSize(dim);
+		/*GridBagConstraints msp = new GridBagConstraints();
 		msp.gridx = 0;
 		msp.gridy = 4;
 		gbl.setConstraints(modificaStatusPosto, msp);
-		gestione.add(modificaStatusPosto);
+		gestione.add(modificaStatusPosto);*/
 		
 		visualizzaBilancioSettimanale = new JButton("Visualizza bilancio settimanale");
-		GridBagConstraints vbs = new GridBagConstraints();
+		visualizzaBilancioSettimanale.setPreferredSize(dim);
+ /*		GridBagConstraints vbs = new GridBagConstraints();
 		vbs.gridx = 0;
 		vbs.gridy = 5;
-		gbl.setConstraints(visualizzaBilancioSettimanale, vbs);
-		gestione.add(visualizzaBilancioSettimanale);
+		gbl.setConstraints(visualizzaBilancioSettimanale, vbs); 
+		gestione.add(visualizzaBilancioSettimanale); */
+		pannelloSinistra.add(bottoneInserisciProgramma);
+		pannelloSinistra.add(bottoneCambiaPrezzi);
+		pannelloSinistra.add(visualizzaListaSpettacoli);
+		pannelloSinistra.add(applicaSconti);
+		pannelloSinistra.add(modificaStatusPosto);
+		pannelloSinistra.add(visualizzaBilancioSettimanale);
+		gestione.add(pannelloSinistra);
 		
+		//pannelloDestra
+		pannelloDestra = new JPanel();
+		/*GridBagConstraints pd = new GridBagConstraints();
+		pd.gridx = 1;
+		pd.gridy = 0;
+		pd.gridheight = 6;
+		pd.gridwidth = 4; */
+		loweredetched = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
+		JLabel prova = new JLabel("PROVA");
+		prova.setBorder(loweredetched);
+		prova.setPreferredSize(new Dimension(700, 650));
+		pannelloDestra.add(prova);
+		
+		//gbl.setConstraints(pannelloDestra, pd);
+		gestione.add(pannelloDestra);
 	}
 
 	@Override
