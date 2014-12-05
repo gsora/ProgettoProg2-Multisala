@@ -41,54 +41,25 @@ public class FinestraGestione implements GestioneGrafica{
 		// pannelloSinistra
 		pannelloSinistra = new JPanel();
 		pannelloSinistra.setLayout(new GridLayout(6,1));
-		Dimension dim = new Dimension(150 ,105);
-		bottoneInserisciProgramma = new JButton("Inserisci programma settimanale");
+		Dimension dim = new Dimension(150 ,108);
+		bottoneInserisciProgramma = new JButton("<html>Inserisci<br />Programma<br />Settimanale<html>");
 		bottoneInserisciProgramma.setPreferredSize(dim);
-	 /*	GridBagConstraints bip = new GridBagConstraints();
-		bip.gridx = 0;
-		bip.gridy = 0;
-		gbl.setConstraints(bottoneInserisciProgramma, bip);
-		gestione.add(bottoneInserisciProgramma); */
 		
-		bottoneCambiaPrezzi = new JButton("Setta prezzi spettacoli");
+		bottoneCambiaPrezzi = new JButton("<html>Combia<br />Prezzi<html>");
 		bottoneCambiaPrezzi.setPreferredSize(dim);
-		/*GridBagConstraints bcp = new GridBagConstraints();
-		bcp.gridx = 0;
-		bcp.gridy = 1;
-		gbl.setConstraints(bottoneCambiaPrezzi, bcp);
-		gestione.add(bottoneCambiaPrezzi);*/
 		
-		visualizzaListaSpettacoli = new JButton("Visualizza lista spettacoli");
+		visualizzaListaSpettacoli = new JButton("<html>Visualizza Lista<br />Spettacoli<html>");
 		visualizzaListaSpettacoli.setPreferredSize(dim);
-		/*GridBagConstraints vls = new GridBagConstraints();
-		vls.gridx = 0;
-		vls.gridy = 2;
-		gbl.setConstraints(visualizzaListaSpettacoli, vls);
-		gestione.add(visualizzaListaSpettacoli);*/
 		
-		applicaSconti = new JButton("Applica sconti");
+		applicaSconti = new JButton("<html>Applica<br />Sconti<html>");
 		applicaSconti.setPreferredSize(dim);
-		/*GridBagConstraints as = new GridBagConstraints();
-		as.gridx = 0;
-		as.gridy = 3;
-		gbl.setConstraints(applicaSconti, as);
-		gestione.add(applicaSconti);*/
 		
-		modificaStatusPosto = new JButton("Modifica status posti");
+		modificaStatusPosto = new JButton("<html>Modifica<br />Status posto</html>");
 		modificaStatusPosto.setPreferredSize(dim);
-		/*GridBagConstraints msp = new GridBagConstraints();
-		msp.gridx = 0;
-		msp.gridy = 4;
-		gbl.setConstraints(modificaStatusPosto, msp);
-		gestione.add(modificaStatusPosto);*/
 		
-		visualizzaBilancioSettimanale = new JButton("Visualizza bilancio settimanale");
+		visualizzaBilancioSettimanale = new JButton("<html>Visualizza<br />Bilancio <br /> Settimanale</html>");
 		visualizzaBilancioSettimanale.setPreferredSize(dim);
- /*		GridBagConstraints vbs = new GridBagConstraints();
-		vbs.gridx = 0;
-		vbs.gridy = 5;
-		gbl.setConstraints(visualizzaBilancioSettimanale, vbs); 
-		gestione.add(visualizzaBilancioSettimanale); */
+		
 		pannelloSinistra.add(bottoneInserisciProgramma);
 		pannelloSinistra.add(bottoneCambiaPrezzi);
 		pannelloSinistra.add(visualizzaListaSpettacoli);
@@ -99,18 +70,10 @@ public class FinestraGestione implements GestioneGrafica{
 		
 		//pannelloDestra
 		pannelloDestra = new JPanel();
-		/*GridBagConstraints pd = new GridBagConstraints();
-		pd.gridx = 1;
-		pd.gridy = 0;
-		pd.gridheight = 6;
-		pd.gridwidth = 4; */
 		loweredetched = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
-		JLabel prova = new JLabel("PROVA");
-		prova.setBorder(loweredetched);
-		prova.setPreferredSize(new Dimension(700, 650));
-		pannelloDestra.add(prova);
+		pannelloDestra.setBorder(loweredetched);
+		pannelloDestra.setPreferredSize(new Dimension(700, 650));
 		
-		//gbl.setConstraints(pannelloDestra, pd);
 		gestione.add(pannelloDestra);
 	}
 
