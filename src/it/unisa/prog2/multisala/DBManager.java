@@ -2,17 +2,19 @@ package it.unisa.prog2.multisala;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.util.UUID;
 
 public class DBManager {
 	
-	private String cartellaDati;
+	private static String cartellaDati;
 	private String pathFileDatabase;
-	private String[] nomiCartelleSale;
+	private static String[] nomiCartelleSale;
 
 	public DBManager() {
 		cartellaDati = new String();
@@ -32,9 +34,6 @@ public class DBManager {
 		if(controllaEsistenzaPath()) {
 			System.out.println("La path esiste");
 			caricaNomiCartelle();
-			for(String i : nomiCartelleSale) {
-				System.out.println(i);
-			}
 		} else {
 			System.out.println("La path non esiste");
 			creaStrutturaDirectory();
@@ -83,6 +82,10 @@ public class DBManager {
 		}
 	}
 	
+	private static String pathSalaNumero(int numeroSala) {
+		return cartellaDati + "/" + nomiCartelleSale[numeroSala - 1];
+	}
+	
 	public void salvaSpettacolo(Spettacolo s) {
 		String pathSpettacolo = cartellaDati + "/" + nomiCartelleSale[s.getNumeroSala() - 1] + "/" + UUID.randomUUID().toString() + ".pks";
 		
@@ -97,6 +100,27 @@ public class DBManager {
 		}
 	}
 	
+	public static Spettacolo[] caricaSpettacoliInSala(int numeroSala) {
+		ArrayList<Spettacolo> notReturnThis = new ArrayList<Spettacolo>();
+		File a = new File(pathSalaNumero(numeroSala));
+		for(File i : a.listFiles()) {
+			try {
+				FileInputStream fis = new FileInputStream(i);
+				ObjectInputStream oos = new ObjectInputStream(fis);
+				notReturnThis.add((Spettacolo) oos.readObject());
+				oos.close();
+				fis.close();
+			} catch (IOException | ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		Spettacolo[] returnThis = notReturnThis.toArray(new Spettacolo[notReturnThis.size()]);
+		return  returnThis;
+	}
+	
+	
 	// TODO: ELIMINAMI
 	public static void main(String[] args) {
 		DBManager asd = new DBManager();
@@ -104,6 +128,9 @@ public class DBManager {
 		try {
 			ggpas = new Spettacolo("Guida Galattica Per Autostoppisti", 1, "18:43", "1/2/2014", 2.6);
 			asd.salvaSpettacolo(ggpas);
+			for(Spettacolo i : caricaSpettacoliInSala(1)) {
+				System.out.println(i.getTitoloSpettacolo());
+			}
 		} catch (OrarioNonValidoException | DataNonValidaException e) {
 			e.printStackTrace();
 		}
