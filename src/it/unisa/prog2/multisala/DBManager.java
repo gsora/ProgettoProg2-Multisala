@@ -1,8 +1,8 @@
 package it.unisa.prog2.multisala;
 
+import java.awt.event.FocusAdapter;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -14,11 +14,13 @@ public class DBManager {
 	
 	private static String cartellaDati;
 	private String pathFileDatabase;
-	private static String[] nomiCartelleSale;
-
+	private static String[] nomiFileSale;
+	private ArrayList<ArrayList<Spettacolo>> arrayListeSpettPerSala;
+	
 	public DBManager() {
 		cartellaDati = new String();
-		nomiCartelleSale = new String[4];
+		nomiFileSale = new String[4];
+		arrayListeSpettPerSala = new ArrayList<ArrayList<Spettacolo>>();
 		
 		String OS = System.getProperty("os.name").toUpperCase();
 		if(OS.contains("WIN")) {
@@ -46,24 +48,39 @@ public class DBManager {
 	}
 	
 	private void creaStrutturaDirectory() {
+		// riempi l'arraylist
+		for(int i = 0; i < 4; i++) {
+			ArrayList<Spettacolo> a = new ArrayList<Spettacolo>();
+			arrayListeSpettPerSala.add(a);
+		}
+		
+		
 		File d = new File(cartellaDati);
 		d.mkdir();
 		
 		UUID [] sale = new UUID[4];
 		
 		for (int j = 0; j < sale.length; j++) {
-			sale[j] = UUID.randomUUID();
-			File a = new File(cartellaDati + "/" + sale[j].toString());
-			a.mkdir();
-			nomiCartelleSale[j] = sale[j].toString();
+			try {
+				sale[j] = UUID.randomUUID();
+				FileOutputStream salaX = new FileOutputStream(cartellaDati + "/" + sale[j].toString() + ".pks");
+				ObjectOutputStream salaOut = new ObjectOutputStream(salaX);
+				salaOut.writeObject(arrayListeSpettPerSala.get(j));
+				salaOut.close();
+				salaX.close();
+				nomiFileSale[j] = sale[j].toString() + ".pks";
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
 		try {
-			FileOutputStream nomiCartelleSaleSerializzato = new FileOutputStream(pathFileDatabase);
-			ObjectOutputStream outStream = new ObjectOutputStream(nomiCartelleSaleSerializzato);
-			outStream.writeObject(nomiCartelleSale);
+			FileOutputStream nomiFileSaleSerializzato = new FileOutputStream(pathFileDatabase);
+			ObjectOutputStream outStream = new ObjectOutputStream(nomiFileSaleSerializzato);
+			outStream.writeObject(nomiFileSale);
 			outStream.close();
-			nomiCartelleSaleSerializzato.close();
+			nomiFileSaleSerializzato.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -74,7 +91,7 @@ public class DBManager {
 		try {
 			FileInputStream nomiCartelleSaleSerializzato = new FileInputStream(pathFileDatabase);
 			ObjectInputStream inStream = new ObjectInputStream(nomiCartelleSaleSerializzato);
-			nomiCartelleSale = (String []) inStream.readObject();
+			nomiFileSale = (String []) inStream.readObject();
 			inStream.close();
 			nomiCartelleSaleSerializzato.close();
 		} catch (IOException | ClassNotFoundException e) {
@@ -83,40 +100,48 @@ public class DBManager {
 	}
 	
 	private static String pathSalaNumero(int numeroSala) {
-		return cartellaDati + "/" + nomiCartelleSale[numeroSala - 1];
+		return cartellaDati + "/" + nomiFileSale[numeroSala - 1];
 	}
 	
 	public void salvaSpettacolo(Spettacolo s) {
-		String pathSpettacolo = cartellaDati + "/" + nomiCartelleSale[s.getNumeroSala() - 1] + "/" + UUID.randomUUID().toString() + ".pks";
+		String pathSpettacolo = cartellaDati + "/" + nomiFileSale[s.getNumeroSala() - 1];
+		File fA = new File(pathSpettacolo);
 		
 		try {
-			FileOutputStream fileSpettacolo = new FileOutputStream(pathSpettacolo);
-			ObjectOutputStream outStream = new ObjectOutputStream(fileSpettacolo);
-			outStream.writeObject(s);
-			outStream.close();
-			fileSpettacolo.close();
-		} catch (IOException e) {
+			FileInputStream fis = new FileInputStream(fA);
+			ObjectInputStream ois = new ObjectInputStream(fis);
+			ArrayList<Spettacolo> als = (ArrayList<Spettacolo>) ois.readObject();
+			als.add(s);
+			ois.close();
+			fis.close();
+			
+			fA.delete();
+			
+			FileOutputStream fos = new FileOutputStream(fA);
+			ObjectOutputStream oos = new ObjectOutputStream(fos);
+			oos.writeObject(als);
+			oos.close();
+			fos.close();
+		} catch (IOException | ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 	}
 	
 	public static Spettacolo[] caricaSpettacoliInSala(int numeroSala) {
-		ArrayList<Spettacolo> notReturnThis = new ArrayList<Spettacolo>();
 		File a = new File(pathSalaNumero(numeroSala));
-		for(File i : a.listFiles()) {
-			try {
-				FileInputStream fis = new FileInputStream(i);
-				ObjectInputStream oos = new ObjectInputStream(fis);
-				notReturnThis.add((Spettacolo) oos.readObject());
-				oos.close();
-				fis.close();
-			} catch (IOException | ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		ArrayList<Spettacolo> als = new ArrayList<Spettacolo>();
+		try {
+			FileInputStream fis = new FileInputStream(a);
+			ObjectInputStream oos = new ObjectInputStream(fis);
+			als = (ArrayList<Spettacolo>) oos.readObject();
+			oos.close();
+			fis.close();
+		} catch (IOException | ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
-		Spettacolo[] returnThis = notReturnThis.toArray(new Spettacolo[notReturnThis.size()]);
+		Spettacolo[] returnThis = als.toArray(new Spettacolo[als.size()]);
 		return  returnThis;
 	}
 	
