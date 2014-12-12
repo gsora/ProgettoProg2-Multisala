@@ -1,9 +1,9 @@
 package it.unisa.prog2.multisala;
 
-import java.awt.event.FocusAdapter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOError;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -16,6 +16,7 @@ public class DBManager {
 	private String pathFileDatabase;
 	private static String[] nomiFileSale;
 	private ArrayList<ArrayList<Spettacolo>> arrayListeSpettPerSala;
+	private ArrayList<Prenotazione> listaPostiPrenotati;
 	
 	public DBManager() {
 		cartellaDati = new String();
@@ -57,6 +58,9 @@ public class DBManager {
 		
 		File d = new File(cartellaDati);
 		d.mkdir();
+		
+		File du = new File(cartellaDati + "/Utenti");
+		du.mkdir();
 		
 		UUID [] sale = new UUID[4];
 		
@@ -127,6 +131,30 @@ public class DBManager {
 		}
 	}
 	
+	public void rimuoviSpettacolo(Spettacolo s) {
+		String pathSpettacolo = cartellaDati + "/" + nomiFileSale[s.getNumeroSala() - 1];
+		File fA = new File(pathSpettacolo);
+		
+		try {
+			FileInputStream fis = new FileInputStream(fA);
+			ObjectInputStream ois = new ObjectInputStream(fis);
+			ArrayList<Spettacolo> als = (ArrayList<Spettacolo>) ois.readObject();
+			als.remove(s);
+			ois.close();
+			fis.close();
+			
+			fA.delete();
+			
+			FileOutputStream fos = new FileOutputStream(fA);
+			ObjectOutputStream oos = new ObjectOutputStream(fos);
+			oos.writeObject(als);
+			oos.close();
+			fos.close();
+		} catch (IOException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public static Spettacolo[] caricaSpettacoliInSala(int numeroSala) {
 		File a = new File(pathSalaNumero(numeroSala));
 		ArrayList<Spettacolo> als = new ArrayList<Spettacolo>();
@@ -145,6 +173,10 @@ public class DBManager {
 		return  returnThis;
 	}
 	
+	public void aggiungiUtente(String userID) {
+		File user = new File(cartellaDati + "/Utenti/" + userID);
+		user.mkdir();
+	}
 	
 	// TODO: ELIMINAMI
 	public static void main(String[] args) {
@@ -153,6 +185,7 @@ public class DBManager {
 		try {
 			ggpas = new Spettacolo("Guida Galattica Per Autostoppisti", 1, "18:43", "1/2/2014", 2.6);
 			asd.salvaSpettacolo(ggpas);
+			asd.rimuoviSpettacolo(ggpas);
 			for(Spettacolo i : caricaSpettacoliInSala(1)) {
 				System.out.println(i.getTitoloSpettacolo());
 			}
