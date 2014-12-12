@@ -26,8 +26,10 @@ public class EntrataNuovoUtente implements GestioneGrafica {
 	private JTextPane codiceID;
 	private JButton bottoneOK;
 	private JPanel pan;
+	private String IDUtente;
 	
 	public EntrataNuovoUtente(){
+		IDUtente = generaID();
 		nuovoUtente = new JFrame();
 		nuovoUtente.setSize(400, 200);
 		nuovoUtente.setTitle("Benvenuto");
@@ -36,10 +38,10 @@ public class EntrataNuovoUtente implements GestioneGrafica {
 		nuovoUtente.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		nuovoUtente.setLayout(new BorderLayout());
 		
-		messaggio1 = new JLabel("Il tuo codice ID Ã¨:", SwingConstants.CENTER);
+		messaggio1 = new JLabel("Il tuo codice ID è:", SwingConstants.CENTER);
 		
 		codiceID = new JTextPane();
-		codiceID.setText(generaID());
+		codiceID.setText(IDUtente);
 		codiceID.setEditable(false);
 		codiceID.setBackground(null);
 		codiceID.setBorder(null);
