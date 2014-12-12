@@ -36,7 +36,7 @@ public class EntrataNuovoUtente implements GestioneGrafica {
 		nuovoUtente.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		nuovoUtente.setLayout(new BorderLayout());
 		
-		messaggio1 = new JLabel("Il tuo codice ID Ã¨:", SwingConstants.CENTER);
+		messaggio1 = new JLabel("Il tuo codice ID è:", SwingConstants.CENTER);
 		
 		codiceID = new JTextPane();
 		codiceID.setText(generaID());
