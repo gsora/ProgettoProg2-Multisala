@@ -12,6 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 
@@ -21,12 +22,12 @@ public class FinestraGestione implements GestioneGrafica{
 	private JPanel pannelloDestra;
 	private JPanel pannelloSinistra;
 	
-	private JButton bottoneInserisciProgramma;
-	private JButton bottoneCambiaPrezzi;
-	private JButton visualizzaListaSpettacoli;
-	private JButton applicaSconti;
-	private JButton modificaStatusPosto;
-	private JButton visualizzaBilancioSettimanale;
+	private JPanel inserisciProgramma;
+	private JPanel cambiaPrezzi;
+	private JPanel visualizzaListaSpettacoli;
+	private JPanel applicaSconti;
+	private JPanel modificaStatusPosto;
+	private JPanel visualizzaBilancioSettimanale;
 	Border loweredetched;
 	
 	public FinestraGestione() {
@@ -35,7 +36,31 @@ public class FinestraGestione implements GestioneGrafica{
 		gestione.setTitle("Gestione Multisala Pancakes");
 		gestione.setResizable(false);
 		gestione.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		GridBagLayout gbl = new GridBagLayout();
+		JTabbedPane tabbedPane = new JTabbedPane();
+		
+		//inserisciProgramma = new JPanel(new InserisciProgramma());
+		tabbedPane.addTab("Inserisci Programma", inserisciProgramma);
+		
+		cambiaPrezzi = new JPanel();
+		tabbedPane.addTab("Cambia Prezzi", cambiaPrezzi);
+		
+		visualizzaListaSpettacoli = new JPanel();
+		tabbedPane.addTab("Lista Spettacoli", visualizzaListaSpettacoli);
+		
+		applicaSconti = new JPanel();
+		tabbedPane.addTab("Applica Sconti", applicaSconti);
+		
+		modificaStatusPosto = new JPanel();
+		tabbedPane.addTab("Modifica Status Posti", modificaStatusPosto);
+		
+		visualizzaBilancioSettimanale = new JPanel();
+		tabbedPane.addTab("Bilancio Settimanale", visualizzaBilancioSettimanale);
+		
+		
+		gestione.add(tabbedPane);
+		
+		
+		/*GridBagLayout gbl = new GridBagLayout();
 		gestione.setLayout(gbl);
 		
 		// pannelloSinistra
@@ -75,6 +100,7 @@ public class FinestraGestione implements GestioneGrafica{
 		pannelloDestra.setPreferredSize(new Dimension(700, 650));
 		
 		gestione.add(pannelloDestra);
+	*/
 	}
 
 	@Override
