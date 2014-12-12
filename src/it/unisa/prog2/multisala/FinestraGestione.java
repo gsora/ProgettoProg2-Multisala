@@ -9,11 +9,6 @@ public class FinestraGestione implements GestioneGrafica{
 	
 	private JFrame gestione;
 	
-	private JPanel cambiaPrezzi;
-	private JPanel visualizzaListaSpettacoli;
-	private JPanel applicaSconti;
-	private JPanel modificaStatusPosto;
-	private JPanel visualizzaBilancioSettimanale; 
 	
 	public FinestraGestione() {
 		gestione = new JFrame();
@@ -25,20 +20,15 @@ public class FinestraGestione implements GestioneGrafica{
 		
 		tabbedPane.addTab("Inserisci Programma", new InserisciProgramma());
 		
-		cambiaPrezzi = new JPanel();
-		tabbedPane.addTab("Cambia Prezzi", cambiaPrezzi);
+		tabbedPane.addTab("Cambia Prezzi", new CambiaPrezzi());
 		
-		visualizzaListaSpettacoli = new JPanel();
-		tabbedPane.addTab("Lista Spettacoli", visualizzaListaSpettacoli);
+		tabbedPane.addTab("Lista Spettacoli", new ListaSpettacoli());
 		
-		applicaSconti = new JPanel();
-		tabbedPane.addTab("Applica Sconti", applicaSconti);
+		tabbedPane.addTab("Applica Sconti", new ApplicaSconti());
 		
-		modificaStatusPosto = new JPanel();
-		tabbedPane.addTab("Modifica Status Posti", modificaStatusPosto);
+		tabbedPane.addTab("Modifica Status Posti", new ModificaStatusPosto());
 		
-		visualizzaBilancioSettimanale = new JPanel();
-		tabbedPane.addTab("Bilancio Settimanale", visualizzaBilancioSettimanale);
+		tabbedPane.addTab("Bilancio Settimanale", new BilancioSettimanale());
 		
 		
 		gestione.add(tabbedPane);

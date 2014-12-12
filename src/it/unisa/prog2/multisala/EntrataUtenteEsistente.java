@@ -39,6 +39,7 @@ public class EntrataUtenteEsistente implements GestioneGrafica {
 		codiceID = new JTextField();
 		codiceID.setEditable(true);
 		codiceID.setColumns(12);
+		codiceID.setHorizontalAlignment(JTextField.CENTER);
 		codiceID.setFont(new Font("Lucida Sans Typewriter", Font.BOLD, 28));
 		JPanel flowPanel1 = new JPanel(new FlowLayout());
 		flowPanel1.add(codiceID);
