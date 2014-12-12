@@ -179,6 +179,22 @@ public class DBManager {
 		user.mkdir();
 	}
 	
+	public void aggiungiPrenotazione(String userID, int numeroPosto, int numeroSala) {
+		File user = new File(cartellaDati + "/Utenti/" + userID);
+		
+		Prenotazione p = new Prenotazione(numeroSala, numeroPosto);
+		
+		try {
+			FileOutputStream f = new FileOutputStream(user);
+			ObjectOutputStream o = new ObjectOutputStream(f);
+			o.writeObject(p);
+			o.close();
+			f.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	// TODO: ELIMINAMI
 	public static void main(String[] args) {
 		DBManager asd = new DBManager();
