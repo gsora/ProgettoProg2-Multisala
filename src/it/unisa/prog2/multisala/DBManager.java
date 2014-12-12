@@ -190,6 +190,7 @@ public class DBManager {
 			o.writeObject(p);
 			o.close();
 			f.close();
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
