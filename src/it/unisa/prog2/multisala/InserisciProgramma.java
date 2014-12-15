@@ -201,10 +201,20 @@ public class InserisciProgramma extends JPanel {
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
+					String t1 = titolo.getText().toString(); 
+					int n1 = Integer.parseInt(numSala.getText().toString());
+					String o1 = orarioDiInizio.getText().toString();
+					String d1 = dataSpettacolo.getText().toString();
+					int p1 = Integer.parseInt(durata.getText().toString());
 					DBManager dbm = new DBManager();
-					//Spettacolo s = new Spettacolo()
-					dbm.salvaSpettacolo(null);
 					
+					try {
+						Spettacolo s = new Spettacolo(t1, n1, o1, d1, p1);
+						dbm.salvaSpettacolo(s);
+					} catch (OrarioNonValidoException | DataNonValidaException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 				}
 			});
 		}
