@@ -87,6 +87,7 @@ public class InserisciProgramma extends JPanel {
 			numSala = new JTextField();
 			numSala.setFont(font);
 			numSala.setColumns(12);
+			numSala.setEditable(true);
 			numSala.setHorizontalAlignment(JTextField.CENTER);
 			GridBagConstraints numSalac = new GridBagConstraints();
 			numSalac.gridx = 3;
@@ -113,6 +114,7 @@ public class InserisciProgramma extends JPanel {
 			
 			orarioDiInizio = new JTextField();
 			orarioDiInizio.setFont(font);
+			orarioDiInizio.setEditable(true);
 			orarioDiInizio.setColumns(12);
 			orarioDiInizio.setHorizontalAlignment(JTextField.CENTER);
 			GridBagConstraints orarioDiInizioc = new GridBagConstraints();
@@ -140,6 +142,7 @@ public class InserisciProgramma extends JPanel {
 			
 			dataSpettacolo = new JTextField();
 			dataSpettacolo.setFont(font);
+			dataSpettacolo.setEditable(true);
 			dataSpettacolo.setColumns(12);
 			dataSpettacolo.setHorizontalAlignment(JTextField.CENTER);
 			
@@ -167,6 +170,7 @@ public class InserisciProgramma extends JPanel {
 			
 			durata = new JTextField();
 			durata.setFont(font);
+			durata.setEditable(true);
 			durata.setColumns(12);
 			durata.setHorizontalAlignment(JTextField.CENTER);
 			
