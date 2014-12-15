@@ -7,5 +7,9 @@ public class ListaSpettacoli extends JPanel {
 	public ListaSpettacoli() {
 		
 	}
+	
+	public ListaSpettacoli(String utente) {
+		
+	}
 
 }

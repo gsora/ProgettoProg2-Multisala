@@ -71,12 +71,18 @@ public class EntrataNuovoUtente implements GestioneGrafica {
 		
 	}
 	
+	public String getIDUtente(){
+		return IDUtente;
+	}
+	
 	@Override
 	public void costruisciUI(JFrame frameChiamante) {
 		bottoneOK.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				DBManager dmb = new DBManager();
+				dmb.aggiungiUtente(IDUtente);
 				frameChiamante.setVisible(false);
 				nuovoUtente.setVisible(false);
 				ListaSale ls = new ListaSale(nuovoUtente);
