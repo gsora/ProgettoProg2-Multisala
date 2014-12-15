@@ -54,7 +54,7 @@ public class Spettacolo implements Cloneable, Serializable {
 	 * @throws DataNonValidaException 
 	 */
 	
-	public Spettacolo(String titolo, int numSala, String orarioDI, String data, Double dur) throws OrarioNonValidoException, DataNonValidaException {
+	public Spettacolo(String titolo, int numSala, String orarioDI, String data, int dur) throws OrarioNonValidoException, DataNonValidaException {
 		titoloSpettacolo = titolo;
 		numeroSala = numSala;
 		

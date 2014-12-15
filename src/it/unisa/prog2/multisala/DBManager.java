@@ -199,16 +199,8 @@ public class DBManager {
 	// TODO: ELIMINAMI
 	public static void main(String[] args) {
 		DBManager asd = new DBManager();
-		Spettacolo ggpas;
-		try {
-			ggpas = new Spettacolo("Guida Galattica Per Autostoppisti", 1, "18:43", "1/2/2014", 2.6);
-			asd.salvaSpettacolo(ggpas);
-			asd.rimuoviSpettacolo(ggpas);
-			for(Spettacolo i : caricaSpettacoliInSala(1)) {
-				System.out.println(i.getTitoloSpettacolo());
-			}
-		} catch (OrarioNonValidoException | DataNonValidaException e) {
-			e.printStackTrace();
+		for(Spettacolo i : caricaSpettacoliInSala(1)) {
+			System.out.println(i.getTitoloSpettacolo());
 		}
 	}
 	
