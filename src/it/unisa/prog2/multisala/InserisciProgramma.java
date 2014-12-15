@@ -24,10 +24,12 @@ public class InserisciProgramma extends JPanel {
 	private JTextField numSala;
 	private JTextField orarioDiInizio;
 	private JTextField dataSpettacolo;
+	private JTextField durata;
 	private JLabel ttl;
 	private JLabel nmsl;
 	private JLabel odi;
 	private JLabel dsp;
+	private JLabel drt;
 	private JButton okbutton;
 	
 		public InserisciProgramma() {
@@ -41,6 +43,8 @@ public class InserisciProgramma extends JPanel {
 			
 			pnl.setLayout(gbl);
 			Font font = new Font("Lucida Sans Typewriter", Font.BOLD, 20);
+			
+			
 			// titolo
 			ttl = new JLabel("Titolo del Film:");
 			ttl.setHorizontalAlignment(JLabel.LEFT);
@@ -144,9 +148,35 @@ public class InserisciProgramma extends JPanel {
 			dataSpettacoloc.weighty = 1;
 			dataSpettacoloc.fill = GridBagConstraints.HORIZONTAL;
 			gbl.setConstraints(dataSpettacolo, dataSpettacoloc);
-			
 			pnl.add(dsp);
 			pnl.add(dataSpettacolo);
+			
+			//Durata
+			drt = new JLabel("Durata dello spettacolo:");
+			drt.setHorizontalAlignment(JLabel.LEFT);
+
+			GridBagConstraints drtc = new GridBagConstraints();
+			drtc.gridx = 2;
+			drtc.gridy = 5;
+			drtc.weightx = 1;
+			drtc.weighty = 1;
+			drtc.fill = GridBagConstraints.HORIZONTAL;
+			gbl.setConstraints(drt, drtc);
+			
+			durata = new JTextField();
+			durata.setFont(font);
+			durata.setColumns(12);
+			durata.setHorizontalAlignment(JTextField.CENTER);
+			
+			GridBagConstraints duratac = new GridBagConstraints();
+			duratac.gridx = 3;
+			duratac.gridy = 5;
+			duratac.weightx = 1; 
+			duratac.weighty = 1;
+			duratac.fill = GridBagConstraints.HORIZONTAL;
+			gbl.setConstraints(durata, duratac);
+			pnl.add(drt);
+			pnl.add(durata);
 			
 			
 			okbutton = new JButton("OK");
