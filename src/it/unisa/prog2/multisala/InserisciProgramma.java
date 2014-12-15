@@ -7,6 +7,8 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -190,6 +192,17 @@ public class InserisciProgramma extends JPanel {
 			
 			msg = new JLabel("Inserire i dati richiesti per aggiungere un nuovo spettacolo al Database.");
 			add(msg, BorderLayout.NORTH);
+			
+			okbutton.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					DBManager dbm = new DBManager();
+					//Spettacolo s = new Spettacolo()
+					dbm.salvaSpettacolo(null);
+					
+				}
+			});
 		}
 
 }
