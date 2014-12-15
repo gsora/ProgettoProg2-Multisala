@@ -12,6 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 
 import com.sun.org.apache.xml.internal.utils.NSInfo;
 
@@ -31,8 +32,9 @@ public class InserisciProgramma extends JPanel {
 	
 		public InserisciProgramma() {
 			
-			setPreferredSize(new Dimension(850, 650));
+			//setPreferredSize(new Dimension(850, 650));
 			setLayout(new BorderLayout());
+			setBorder(new EmptyBorder(20, 20, 20, 20));
 			pnl = new JPanel();
 			
 			GridBagLayout gbl = new GridBagLayout();
@@ -148,9 +150,13 @@ public class InserisciProgramma extends JPanel {
 			
 			
 			okbutton = new JButton("OK");
-			add(okbutton, BorderLayout.SOUTH);
+			JPanel pnl1 = new JPanel(new FlowLayout());
+			okbutton.setPreferredSize(new Dimension(60, 20));
+			pnl1.add(okbutton);
+			add(pnl1, BorderLayout.SOUTH);
 			
 			add(pnl, BorderLayout.CENTER);
+						
 			
 			msg = new JLabel("Inserire i dati richiesti per aggiungere un nuovo spettacolo al Database.");
 			add(msg, BorderLayout.NORTH);

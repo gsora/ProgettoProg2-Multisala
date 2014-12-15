@@ -3,6 +3,7 @@ package it.unisa.prog2.multisala;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.border.EmptyBorder;
 
 
 public class FinestraGestione implements GestioneGrafica{
@@ -12,7 +13,7 @@ public class FinestraGestione implements GestioneGrafica{
 	
 	public FinestraGestione() {
 		gestione = new JFrame();
-		gestione.setSize(900, 700);
+		gestione.setSize(900, 500);
 		gestione.setTitle("Gestione Multisala Pancakes");
 		gestione.setResizable(false);
 		gestione.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
