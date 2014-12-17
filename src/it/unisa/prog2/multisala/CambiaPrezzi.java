@@ -1,6 +1,7 @@
 package it.unisa.prog2.multisala;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -21,6 +22,7 @@ public class CambiaPrezzi extends JPanel {
 	private JLabel nuoPrezzo;
 	private JTextField nuovoPrezzo;
 	private JButton aggiorna;
+	private JLabel errore;
 	private float prezzo;
 	
 	public CambiaPrezzi() {
@@ -30,7 +32,7 @@ public class CambiaPrezzi extends JPanel {
 		//setLayout(new BorderLayout());
 		setBorder(new EmptyBorder(40, 20, 20, 20));
 		pnl = new JPanel();
-		pnl.setLayout(new GridLayout(5, 1, 0, 45));
+		pnl.setLayout(new GridLayout(6, 1, 0, 28));
 		
 		//messaggio principale
 		msg = new JLabel("Inserire il prezzo desiderato per sostituirlo a quello attuale.");
@@ -55,6 +57,11 @@ public class CambiaPrezzi extends JPanel {
 		app0.add(nuovoPrezzo);
 		pnl.add(app0);
 		
+		errore = new JLabel("");
+		errore.setFont(font);
+		errore.setForeground(Color.RED);
+		pnl.add(errore);
+		
 		aggiorna = new JButton("Aggiorna");
 		JPanel app1 = new JPanel(new FlowLayout());
 		app1.add(aggiorna);
@@ -62,17 +69,22 @@ public class CambiaPrezzi extends JPanel {
 		add(pnl);
 		
 		
+		
 		aggiorna.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String prv = nuovoPrezzo.getText().toString();
-				if(prv.contains(",")) 
+				try {
+					String prv = nuovoPrezzo.getText().toString();
+					if(prv.contains(",")) 
 					prv = prv.replace(",", ".");
-				float p = Float.parseFloat(prv);
-				prezzo = p;
-				prezzoAttuale.setText("Il prezzo attuale del biglietto è: " + prezzo + "€" );
-				
+					float p = Float.parseFloat(prv);
+					prezzo = p;
+					prezzoAttuale.setText("Il prezzo attuale del biglietto è: " + prezzo + "€" );
+				}
+				catch (Exception ee) {
+					errore.setText("Hai inserito caratteri non validi, puoi utilizzare unicamente i numeri e il carattere \".\"");
+				}
 			}
 		});
 		
