@@ -72,6 +72,22 @@ public class DBManager {
 	// crea la struttura delle directory che serviranno a memorizzare prenotazioni, utenti e film nelle sale
 	private void creaStrutturaDirectory() {
 		
+		/*
+		 * STRUTTURA DIRECTORY
+		 * 
+		 * 	DataDir->
+		 * 		MultisalaPancakes->
+		 * 			sala1.pks
+		 * 			sala2.pks
+		 * 			sala3.pks
+		 * 			sala4.pks
+		 * 			Database.pks
+		 * 			StatisticheVendita.pks
+		 * 			Utenti->
+		 * 				utenteX.pks
+		 */
+		
+		
 		// crea un arraylist di arraylist che contengono solo spettacoli, d'appoggio
 		ArrayList<ArrayList<Spettacolo>> arrayListeSpettPerSala = new ArrayList<ArrayList<Spettacolo>>();
 		
@@ -250,31 +266,56 @@ public class DBManager {
 	 */
 	public void aggiungiPrenotazione(String userID, int numeroPosto, int numeroSala) {
 		
-		// localizza la cartella dell'utente
-		File user = new File(cartellaDati + "/Utenti/" + userID);
+		ArrayList<Prenotazione> prenotazioniUtente;
 		
-		// crea una prenotazione p
-		Prenotazione p = new Prenotazione(numeroSala, numeroPosto);
+		// controlla che non esista un database per le prenotazioni di quell'utente
+		// se non esiste, crealo
+		File user = new File(cartellaDati + "/Utenti/" + userID + ".pks");
 		
-		// serializzazione della prenotazione
-		try {
+		if(!user.exists()) {
+			try {
+			prenotazioniUtente = new ArrayList<Prenotazione>();
 			FileOutputStream f = new FileOutputStream(user);
 			ObjectOutputStream o = new ObjectOutputStream(f);
-			o.writeObject(p);
+			o.writeObject(prenotazioniUtente);
 			o.close();
 			f.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} else {
+			// crea una prenotazione p
+			Prenotazione p = new Prenotazione(numeroSala, numeroPosto);
 			
-		} catch (IOException e) {
-			e.printStackTrace();
+			try {
+				FileInputStream f = new FileInputStream(user);
+				ObjectInputStream o = new ObjectInputStream(f);
+				prenotazioniUtente = (ArrayList<Prenotazione>) o.readObject();
+				prenotazioniUtente.add(p);
+				o.close();
+				f.close();
+				
+				user.delete();
+				FileOutputStream f2 = new FileOutputStream(user);
+				ObjectOutputStream o2 = new ObjectOutputStream(f2);
+				o2.writeObject(prenotazioniUtente);
+				o2.close();
+				f2.close();
+				
+			} catch (ClassNotFoundException | IOException e) {
+				
+			}
+			
 		}
+		
+		// serializzazione della prenotazione
+
 	}
 	
 	// TODO: ELIMINAMI
 	public static void main(String[] args) {
 		DBManager asd = new DBManager();
-		for(Spettacolo i : caricaSpettacoliInSala(1)) {
-			System.out.println(i.getTitoloSpettacolo());
-		}
+		asd.aggiungiPrenotazione("okfunge", 22, 34);
 	}
 	
 }
