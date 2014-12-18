@@ -269,7 +269,7 @@ public class DBManager {
 		
 		// controlla che non esista un database per le prenotazioni di quell'utente
 		// se non esiste, crealo
-		File user = new File(cartellaDati + "/Utenti/" + userID + ".pks");
+		File user = new File(cartellaDati + "/Utenti/" + userID + "Prenotazioni" + ".pks");
 		
 		if(!user.exists()) {
 			try {
@@ -318,7 +318,7 @@ public class DBManager {
 		
 		// arraylist d'appoggio su cui deserializzare le prenotazioni dell'utente in argomento
 		ArrayList<Prenotazione> prenotazioniUtente = new ArrayList<Prenotazione>();
-		File user = new File(cartellaDati + "/Utenti/" + userID + ".pks");
+		File user = new File(cartellaDati + "/Utenti/" + userID + "Prenotazioni" + ".pks");
 		
 		try {
 			FileInputStream f = new FileInputStream(user);
