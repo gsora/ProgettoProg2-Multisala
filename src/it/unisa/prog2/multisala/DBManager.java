@@ -243,9 +243,8 @@ public class DBManager {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		Spettacolo[] returnThis = als.toArray(new Spettacolo[als.size()]);
-		return  returnThis;
+
+		return als.toArray(new Spettacolo[als.size()]);
 	}
 	
 	/**
@@ -307,15 +306,42 @@ public class DBManager {
 			}
 			
 		}
+	}
+	
+	/**
+	 * Restituisce la lista delle prenotazioni di un utente
+	 * @param userID ID dell'utente in questione
+	 * @return array di Prenotazione contenente tutte le prenotazioni che l'utente ha effettuato
+	 */
+	
+	public Prenotazione[] prenotazioniUtente(String userID) {
 		
-		// serializzazione della prenotazione
-
+		// arraylist d'appoggio su cui deserializzare le prenotazioni dell'utente in argomento
+		ArrayList<Prenotazione> prenotazioniUtente = new ArrayList<Prenotazione>();
+		File user = new File(cartellaDati + "/Utenti/" + userID + ".pks");
+		
+		try {
+			FileInputStream f = new FileInputStream(user);
+			ObjectInputStream o = new ObjectInputStream(f);
+			prenotazioniUtente = (ArrayList<Prenotazione>) o.readObject();
+			o.close();
+			f.close();
+		} catch (ClassNotFoundException | IOException e) {
+			e.printStackTrace();
+		}
+		
+		// ritorna direttamente l'array derivato dall'arraylist d'appoggio
+		return prenotazioniUtente.toArray(new Prenotazione[prenotazioniUtente.size()]);
 	}
 	
 	// TODO: ELIMINAMI
 	public static void main(String[] args) {
 		DBManager asd = new DBManager();
-		asd.aggiungiPrenotazione("okfunge", 22, 34);
+		asd.aggiungiPrenotazione("okfunge", 25, 66);
+		Prenotazione[] a = asd.prenotazioniUtente("okfunge");
+		for(Prenotazione x : a) {
+			System.out.println(x.getNumeroPostoPrenotazione());
+		}
 	}
 	
 }
