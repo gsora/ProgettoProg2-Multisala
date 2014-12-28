@@ -2,6 +2,7 @@ package it.unisa.prog2.multisala;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 public class Prenotazione implements Serializable{
 
@@ -9,10 +10,12 @@ public class Prenotazione implements Serializable{
 	private int numeroSalaPrenotazione;
 	private int numeroPostoPrenotazione;
 	private LocalDateTime dataCreazione;
+	private LocalTime oraCreazione;
 	private Boolean prenotazioneValida;
 	
 	public Prenotazione() {
 		dataCreazione = LocalDateTime.now();
+		oraCreazione = LocalTime.now();
 		prenotazioneValida = true;
 	}
 	
@@ -20,6 +23,7 @@ public class Prenotazione implements Serializable{
 		numeroSalaPrenotazione = nsp;
 		numeroPostoPrenotazione = npp;
 		dataCreazione = LocalDateTime.now();
+		oraCreazione = LocalTime.now();
 		prenotazioneValida = true;
 	}
 	
@@ -39,12 +43,16 @@ public class Prenotazione implements Serializable{
 		return numeroSalaPrenotazione;
 	}
 	
-	public String getDataCreazione() {
-		return dataCreazione.getDayOfMonth() + "/" + dataCreazione.getMonthValue() + "/" + dataCreazione.getYear();
-	}
-	
 	public Boolean statusValPrenotazione() {
 		return prenotazioneValida;
+	}
+	
+	public LocalTime getOraCreazione() {
+		return oraCreazione;
+	}
+	
+	public LocalDateTime getDataCreazione() {
+		return dataCreazione;
 	}
 	
 	public void settaStatusValPrenotazione(Boolean b) {
@@ -53,14 +61,16 @@ public class Prenotazione implements Serializable{
 	
 	public static Boolean prenotazioneScadua(Prenotazione p) {
 		LocalDateTime dataAttuale = LocalDateTime.now();
-		String[] dataSplittata = p.getDataCreazione().split("/");
-		if((Integer.parseInt(dataSplittata[1]) == dataAttuale.getMonthValue()) &&
-			(Integer.parseInt(dataSplittata[2]) == dataAttuale.getYear()) &&
-			(Integer.parseInt(dataSplittata[0]) >= dataAttuale.getDayOfMonth())) {
-			return false;
-		} else {
-			p.settaStatusValPrenotazione(false);
-			return true;
-		}
+		LocalTime oraAttuale = LocalTime.now();
+		
+		int oreAttuali = (dataAttuale.getDayOfYear() * 24) - (24 - oraAttuale.getHour());
+		int oreCreazione = (p.getDataCreazione().getDayOfYear() * 24) - (24 - p.getOraCreazione().getHour());
+		
+		return true;
+	}
+	
+	public static void main(String[] args) {
+		Prenotazione a = new Prenotazione();
+		Prenotazione.prenotazioneScadua(a);
 	}
 }
