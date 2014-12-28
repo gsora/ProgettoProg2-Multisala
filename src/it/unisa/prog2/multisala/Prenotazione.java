@@ -64,9 +64,4 @@ public class Prenotazione implements Serializable{
 			return true;
 		}
 	}
-	
-	public static void main(String[] args) {
-		Prenotazione a = new Prenotazione();
-		System.out.println(Prenotazione.prenotazioneScadua(a));
-	}
 }
