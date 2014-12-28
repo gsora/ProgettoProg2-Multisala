@@ -53,7 +53,6 @@ public class Prenotazione implements Serializable{
 	
 	public static Boolean prenotazioneScadua(Prenotazione p) {
 		LocalDateTime dataAttuale = LocalDateTime.now();
-		System.out.println(dataAttuale.toString());
 		String[] dataSplittata = p.getDataCreazione().split("/");
 		if((Integer.parseInt(dataSplittata[1]) == dataAttuale.getMonthValue()) &&
 			(Integer.parseInt(dataSplittata[2]) == dataAttuale.getYear()) &&
