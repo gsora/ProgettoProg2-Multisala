@@ -1,10 +1,6 @@
 package it.unisa.prog2.multisala;
 
 public class Sala {
-	
-	// spettacolo assegnato alla sala corrente
-	private Spettacolo spettacoloAssegnato;
-	
 	// numero massimo di posti in una sala
 	private static int MAX_POSTI = 50;
 	
@@ -15,8 +11,7 @@ public class Sala {
 	private int postiAssegnati;
 	private int postiPrenotati;
 	private int postiTotali;
-	
-	
+		
 	/**
 	 * Costruttore della classe sala che non accetta Spettacolo come argomento
 	 * @param ns numero della sala
@@ -24,33 +19,10 @@ public class Sala {
 	public Sala(int ns) {
 		postiTotali = MAX_POSTI;
 		numeroSala = ns;
-		spettacoloAssegnato = new Spettacolo();	
 		inizializzaListaPosti(listaPosti);
 		ricaricaStatusPosti(listaPosti);
-	}
-	
-	/**
-	 * Costruttore della classe Sala che accetta un oggetto Spettacolo come argomento
-	 * @param s oggetto Spettacolo 
-	 */
-	
-	public Sala(int ns, Spettacolo s) {
-		postiTotali = MAX_POSTI;
-		numeroSala = ns;
-		spettacoloAssegnato = s.clone();
-		inizializzaListaPosti(listaPosti);
-		ricaricaStatusPosti(listaPosti);
-	}
-	
-	/**
-	 * Getter per lo Spettacolo della Sala
-	 * @return oggetto Spettacolo
-	 */
-	
-	public Spettacolo spettacolo() {
-		return spettacoloAssegnato;
-	}
-	
+	}	
+		
 	/**
 	 * Numero di posti liberi nella sala
 	 * @return numero di posti liberi

@@ -20,28 +20,10 @@ public class Spettacolo implements Cloneable, Serializable {
 	private int dataMeseInteger;
 	private int dataAnnoInteger;
 	
-	private double durata;
+	private int durata;
 	
-	/**
-	 * Costruttore senza parametri
-	 */
-	
-	public Spettacolo() {
-		titoloSpettacolo = null;
-		numeroSala = 0;
-		
-		orarioDiInizio = null;
-		orarioOreInteger = 0;
-		orarioMinutiInteger = 0;
-		
-		dataSpettacolo = null;
-		dataGiornoInteger = 0;
-		dataMeseInteger = 0;
-		dataAnnoInteger = 0;
-		
-		durata = 0;
-	}
-	
+	private Sala salaAssegnata;
+
 	/**
 	 * Costruttore con parametri preimpostati
 	 * 
@@ -65,6 +47,7 @@ public class Spettacolo implements Cloneable, Serializable {
 		CheckData(dataSpettacolo);
 		
 		durata = dur;
+		salaAssegnata = new Sala(numSala);
 	}
 	
 	/*
@@ -124,7 +107,7 @@ public class Spettacolo implements Cloneable, Serializable {
 	 * @return durata dello spettacolo
 	 */
 	
-	public double getDurata() {
+	public int getDurata() {
 		return durata;
 	}
 	
@@ -167,6 +150,14 @@ public class Spettacolo implements Cloneable, Serializable {
 	public void setData(String s) throws DataNonValidaException {
 		CheckData(s);
 		dataSpettacolo = s;
+	}
+	
+	/**
+	 * Restituisce la sala assegnata allo spettacolo corrente
+	 * @return restituisce la sala
+	 */
+	public Sala sala() {
+		return salaAssegnata;
 	}
 	
 	/*
