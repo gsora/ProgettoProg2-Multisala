@@ -23,6 +23,9 @@ public class DBManager {
 	// array popolato con i nomi dei file .pks di ogni singola sala
 	private static String[] nomiFileSale;
 	
+	// prezzo dei film
+	private float prezzoFilm;
+	
 	// arraylist con la lista dei posti prenotati
 	// TODO: controllare il funzionamento del meccanismo, probabilmente è più comodo crearne uno al volo all'interno del metodo
 	private ArrayList<Prenotazione> listaPostiPrenotati;
@@ -37,6 +40,12 @@ public class DBManager {
 	public DBManager() {
 		cartellaDati = new String();
 		nomiFileSale = new String[4];
+		
+		// il prezzo e` definito?
+		// se si carica altrimenti inizializzalo a zero
+		if(!prezzoDefinito()) {
+			prezzoFilm = 0f;
+		}
 		
 		// questa stringa contiene il nome del sistema operativo in utilizzo sulla macchina attuale
 		String OS = System.getProperty("os.name").toUpperCase();
@@ -82,6 +91,7 @@ public class DBManager {
 		 * 			sala3.pks
 		 * 			sala4.pks
 		 * 			Database.pks
+		 * 			Prezzo.pks
 		 * 			StatisticheVendita.pks
 		 * 			Utenti->
 		 * 				utenteX.pks
@@ -142,9 +152,21 @@ public class DBManager {
 			e.printStackTrace();
 		}
 		
+		// serializza il prezzo
+		try {
+			FileOutputStream prezzoFile = new FileOutputStream(new File(cartellaDati + "/Prezzo.pks"));
+			ObjectOutputStream outFile = new ObjectOutputStream(prezzoFile);
+			outFile.writeObject(prezzoFilm);
+			outFile.close();
+			prezzoFile.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		
 	}
 	
-	// carica la struttura delle directory del database in memoria e rendila utilizzabile 
+	// carica la struttura delle directory del database in memoria e rendila utilizzabile, e il prezzo degli spettacoli
 	private void caricaNomiCartelle() {
 		try {
 			
@@ -154,16 +176,54 @@ public class DBManager {
 			nomiFileSale = (String []) inStream.readObject();
 			inStream.close();
 			nomiCartelleSaleSerializzato.close();
+			
+			// deserializza Prezzo.pks
+			FileInputStream prezzoFile = new FileInputStream(new File(cartellaDati + "/Prezzo.pks"));
+			ObjectInputStream is = new ObjectInputStream(prezzoFile);
+			prezzoFilm = (float) is.readObject();
+			is.close();
+			prezzoFile.close();
 		} catch (IOException | ClassNotFoundException e) {
 			// TODO: magari c'è da controllare l'eccezione?
 			e.printStackTrace();
 		}
 	}
 	
+	// il prezzo e` mai stato definito?
+	private Boolean prezzoDefinito() {
+		File prezzo = new File(cartellaDati + "/Prezzo.pks");
+		return prezzo.exists();
+	}
+	
 	// ritorna la path della sala data in argomento
 	private static String pathSalaNumero(int numeroSala) {
 		// TODO: lanciare un'eccezione se la sala non esiste?
 		return cartellaDati + "/" + nomiFileSale[numeroSala - 1];
+	}
+	
+	/**
+	 * Prendi prezzo dei film
+	 * @return prezzo dei film
+	 */
+	
+	public float getPrezzoFilm() {
+		return prezzoFilm;
+	}
+	
+	public void settaPrezzoFilm(float f) {
+		prezzoFilm = f;
+		// serializza il prezzo
+		try {
+			File pf = new File(cartellaDati + "/Prezzo.pks");
+			pf.delete();
+			FileOutputStream prezzoFile = new FileOutputStream(pf);
+			ObjectOutputStream outFile = new ObjectOutputStream(prezzoFile);
+			outFile.writeObject(prezzoFilm);
+			outFile.close();
+			prezzoFile.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**
