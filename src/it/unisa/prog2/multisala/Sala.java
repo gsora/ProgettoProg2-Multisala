@@ -1,6 +1,8 @@
 package it.unisa.prog2.multisala;
 
-public class Sala {
+import java.io.Serializable;
+
+public class Sala implements Serializable {
 	// numero massimo di posti in una sala
 	private static int MAX_POSTI = 50;
 	

@@ -1,6 +1,8 @@
 package it.unisa.prog2.multisala;
 
-public class Posto {
+import java.io.Serializable;
+
+public class Posto implements Serializable{
 
 	// numero identificativo del posto
 	private int numeroPosto;
