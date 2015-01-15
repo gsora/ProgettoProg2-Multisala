@@ -43,21 +43,6 @@ public class ListaSpettacoli extends JPanel {
 			System.out.println(s.getTitoloSpettacolo());
 		}
 		
-		/*for(Spettacolo s: appoggioSpettacoli) {
-			pnl = new JPanel(new FlowLayout());
-			JLabel l1 = new JLabel("Titolo: " +s.getTitoloSpettacolo());
-			JLabel l2 = new JLabel("Sala: " + s.getNumeroSala());
-			JLabel l3 = new JLabel("Data: "+ s.getData());
-			JLabel l4 = new JLabel("Durata: " + s.getDurata());
-			JLabel l5 = new JLabel("Orario di inizio: " + s.getOrarioDiInizio());
-			pnl.add(l1);
-			pnl.add(l2);
-			pnl.add(l3);
-			pnl.add(l4);
-			pnl.add(l5);
-			add(pnl);
-		}*/
-		
 		String[] nomiColonne ={"Titolo", "Numero Sala", "Data", "Orario di inizio", "Durata", "Posti liberi"};
 		
 		JTable informazioni = new JTable();
