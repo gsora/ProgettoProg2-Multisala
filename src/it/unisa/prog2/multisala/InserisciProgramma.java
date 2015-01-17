@@ -9,9 +9,12 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
@@ -211,9 +214,16 @@ public class InserisciProgramma extends JPanel {
 					try {
 						Spettacolo s = new Spettacolo(t1, n1, o1, d1, p1);
 						dbm.salvaSpettacolo(s);
+						JOptionPane.showMessageDialog(null, "Spettacolo salvato correttamente nel database", "Spettacolo salvato", JOptionPane.INFORMATION_MESSAGE);
+						titolo.setText("");
+						numSala.setText("");
+						orarioDiInizio.setText("");
+						dataSpettacolo.setText("");
+						durata.setText("");
 					} catch (OrarioNonValidoException | DataNonValidaException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
+						StringWriter sw = new StringWriter();
+						e1.printStackTrace(new PrintWriter(sw));
+						JOptionPane.showMessageDialog(null, sw.toString(), "Utente non trovato", JOptionPane.ERROR_MESSAGE);
 					}
 				}
 			});
