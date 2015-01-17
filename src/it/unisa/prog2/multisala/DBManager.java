@@ -225,6 +225,11 @@ public class DBManager {
 		user.mkdir();
 	}
 	
+	public static Boolean controllaEsistenzaUtente(String userID) {
+		File user = new File(cartellaDati + "/Utenti/" + userID);
+		return user.exists();
+	}
+	
 	/**
 	 * Aggiungi una prenotazione per un utente
 	 * @param userID identificativo dell'utente
@@ -300,48 +305,5 @@ public class DBManager {
 		
 		// ritorna direttamente l'array derivato dall'arraylist d'appoggio
 		return prenotazioniUtente.toArray(new Prenotazione[prenotazioniUtente.size()]);
-	}
-	 
-	public static void main(String[] args) {
-		try {
-			Spettacolo a = new Spettacolo("a", 1, "12:12", "12/12/2015", 140);
-			a.sala().compraBiglietto(1);
-			a.sala().compraBiglietto(2);
-			a.sala().compraBiglietto(3);
-			a.sala().compraBiglietto(4);
-			a.sala().compraBiglietto(5);
-			a.sala().compraBiglietto(6);
-			a.sala().compraBiglietto(7);
-			a.sala().compraBiglietto(8);
-			a.sala().compraBiglietto(9);
-			a.sala().compraBiglietto(10);
-			a.sala().compraBiglietto(11);
-			a.sala().compraBiglietto(12);
-			a.sala().compraBiglietto(13);
-			Spettacolo b = new Spettacolo("b", 3, "12:12", "12/12/2015", 140);
-			b.sala().compraBiglietto(1);
-			b.sala().compraBiglietto(2);
-			b.sala().compraBiglietto(3);
-			Spettacolo c = new Spettacolo("c", 2, "12:12", "12/12/2015", 140);
-			c.sala().compraBiglietto(1);
-			Spettacolo d = new Spettacolo("d", 2, "12:12", "12/12/2015", 140);
-
-			
-			Spettacolo[] arr = {d, a, b, c};
-			
-			Map<Integer, Spettacolo> map = new TreeMap<Integer, Spettacolo>();
-			for(Spettacolo s : arr) {
-				map.put(s.sala().getNumeroPostiLiberi(), s);
-			}
-			
-			for(Map.Entry<Integer, Spettacolo> asd : map.entrySet()) {
-				System.out.println("POSTI LIBERI: " + asd.getKey());
-				System.out.println("SPETTACOLO: " + asd.getValue().getTitoloSpettacolo());
-			}
-			
-		} catch (OrarioNonValidoException | DataNonValidaException | PostiLiberiEsauritiException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 }
