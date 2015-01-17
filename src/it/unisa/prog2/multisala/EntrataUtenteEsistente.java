@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
@@ -71,6 +72,8 @@ public class EntrataUtenteEsistente implements GestioneGrafica {
 					FinestraGestione fg = new FinestraGestione();
 					fg.costruisciUI(utenteEsistente);
 					frameChiamante.setVisible(false);
+				} else if(DBManager.controllaEsistenzaUtente(codiceID.getText()) == false) {
+					JOptionPane.showMessageDialog(null, "Impossibile trovare l'utente inserito", "Utente non trovato", JOptionPane.ERROR_MESSAGE);
 				}
 				// TODO: inserire controllo ID valido
 				// se controllo ok:
@@ -87,6 +90,8 @@ public class EntrataUtenteEsistente implements GestioneGrafica {
 					FinestraGestione fg = new FinestraGestione();
 					fg.costruisciUI(utenteEsistente);
 					frameChiamante.setVisible(false);
+				} else if(DBManager.controllaEsistenzaUtente(codiceID.getText()) == false) {
+					JOptionPane.showMessageDialog(null, "Impossibile trovare l'utente inserito", "Utente non trovato", JOptionPane.ERROR_MESSAGE);
 				}
 				// TODO: inserire controllo ID valido
 				// se controllo ok:
