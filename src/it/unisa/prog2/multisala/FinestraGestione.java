@@ -4,6 +4,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 
 public class FinestraGestione implements GestioneGrafica{
@@ -23,14 +25,13 @@ public class FinestraGestione implements GestioneGrafica{
 		
 		tabbedPane.addTab("Cambia Prezzi", new CambiaPrezzi());
 		
-		tabbedPane.addTab("Lista Spettacoli", new ListaSpettacoli());
+		tabbedPane.addTab("Lista Spettacoli", new ListaSpettacoli(tabbedPane));
 		
 		tabbedPane.addTab("Applica Sconti", new ApplicaSconti());
 		
 		tabbedPane.addTab("Modifica Status Posti", new ModificaStatusPosto());
 		
 		tabbedPane.addTab("Bilancio Settimanale", new BilancioSettimanale());
-		
 		
 		gestione.add(tabbedPane);
 		
