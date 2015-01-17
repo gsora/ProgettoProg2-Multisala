@@ -7,6 +7,11 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.UUID;
 
 public class DBManager {
@@ -185,8 +190,29 @@ public class DBManager {
 				e.printStackTrace();
 			}
 		}
-		
 		return returnthis.toArray(new Spettacolo[returnthis.size()]);
+	}
+	
+	public Spettacolo[] caricaSpettacoliOrdinati() {
+		ArrayList<Spettacolo> spettDis = new ArrayList<Spettacolo>(Arrays.asList(caricaSpettacoli()));
+		ArrayList<Spettacolo> spettOrd = new ArrayList<Spettacolo>();
+		
+		while(spettDis.size() > 0) {
+			Spettacolo minimo = null;
+			Spettacolo[] iterThis = spettDis.toArray(new Spettacolo[spettDis.size()]);
+			for(int i = 0; i < iterThis.length; i++) {
+				if(i == 0) {
+					minimo = iterThis[i];
+				} else if(i > 0) {
+					if(iterThis[i].sala().getNumeroPostiLiberi() < minimo.sala().getNumeroPostiLiberi()) {
+						minimo = iterThis[i];
+					}
+				}
+			}
+			spettOrd.add(minimo);
+			spettDis.remove(minimo);
+		}
+		 return spettOrd.toArray(new Spettacolo[spettOrd.size()]);
 	}
 	
 	/**
@@ -275,5 +301,47 @@ public class DBManager {
 		// ritorna direttamente l'array derivato dall'arraylist d'appoggio
 		return prenotazioniUtente.toArray(new Prenotazione[prenotazioniUtente.size()]);
 	}
-	
+	 
+	public static void main(String[] args) {
+		try {
+			Spettacolo a = new Spettacolo("a", 1, "12:12", "12/12/2015", 140);
+			a.sala().compraBiglietto(1);
+			a.sala().compraBiglietto(2);
+			a.sala().compraBiglietto(3);
+			a.sala().compraBiglietto(4);
+			a.sala().compraBiglietto(5);
+			a.sala().compraBiglietto(6);
+			a.sala().compraBiglietto(7);
+			a.sala().compraBiglietto(8);
+			a.sala().compraBiglietto(9);
+			a.sala().compraBiglietto(10);
+			a.sala().compraBiglietto(11);
+			a.sala().compraBiglietto(12);
+			a.sala().compraBiglietto(13);
+			Spettacolo b = new Spettacolo("b", 3, "12:12", "12/12/2015", 140);
+			b.sala().compraBiglietto(1);
+			b.sala().compraBiglietto(2);
+			b.sala().compraBiglietto(3);
+			Spettacolo c = new Spettacolo("c", 2, "12:12", "12/12/2015", 140);
+			c.sala().compraBiglietto(1);
+			Spettacolo d = new Spettacolo("d", 2, "12:12", "12/12/2015", 140);
+
+			
+			Spettacolo[] arr = {d, a, b, c};
+			
+			Map<Integer, Spettacolo> map = new TreeMap<Integer, Spettacolo>();
+			for(Spettacolo s : arr) {
+				map.put(s.sala().getNumeroPostiLiberi(), s);
+			}
+			
+			for(Map.Entry<Integer, Spettacolo> asd : map.entrySet()) {
+				System.out.println("POSTI LIBERI: " + asd.getKey());
+				System.out.println("SPETTACOLO: " + asd.getValue().getTitoloSpettacolo());
+			}
+			
+		} catch (OrarioNonValidoException | DataNonValidaException | PostiLiberiEsauritiException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }
