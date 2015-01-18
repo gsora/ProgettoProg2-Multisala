@@ -2,6 +2,7 @@ package it.unisa.prog2.multisala;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -39,12 +40,6 @@ public class DBManager {
 	public DBManager() {
 		cartellaDati = new String();
 		
-		// il prezzo e` definito?
-		// se si carica altrimenti inizializzalo a zero
-		if(!prezzoDefinito()) {
-			prezzoFilm = 0f;
-		}
-		
 		// questa stringa contiene il nome del sistema operativo in utilizzo sulla macchina attuale
 		String OS = System.getProperty("os.name").toUpperCase();
 		
@@ -61,7 +56,23 @@ public class DBManager {
 		
 		// controllo: se cartellaDati esiste carica i nomi delle sale, altrimenti crea la struttura della directory
 		if(controllaEsistenzaPath()) {
-			;
+			// il prezzo e` definito?
+			// se si carica altrimenti inizializzalo a zero
+			if(!prezzoDefinito()) {
+				prezzoFilm = 0f;
+			} else {
+				try {
+					FileInputStream fis = new FileInputStream(new File(cartellaDati + "/Prezzo.pks"));
+					ObjectInputStream ois = new ObjectInputStream(fis);
+					prezzoFilm = (float) ois.readObject();
+					ois.close();
+					fis.close();
+				} catch (IOException | ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
 		} else {
 			creaStrutturaDirectory();
 		}
@@ -122,13 +133,32 @@ public class DBManager {
 	}
 	
 	/**
-	 * Salva uno spettacolo nel database
-	 * @param s oggetto spettacolo da aggiungere al database
+	 * Leggi il prezzo degli spettacoli dal database
+	 * @return float contenente il prezzo dei film
 	 */
 	
 	public float getPrezzoFilm() {
 		return prezzoFilm;
 	}
+	
+	public void setPrezzoFilm(float p) {
+		// serializza il prezzo
+		prezzoFilm = p;
+		try {
+			FileOutputStream prezzoFile = new FileOutputStream(new File(cartellaDati + "/Prezzo.pks"));
+			ObjectOutputStream outFile = new ObjectOutputStream(prezzoFile);
+			outFile.writeObject(prezzoFilm);
+			outFile.close();
+			prezzoFile.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Salva uno spettacolo nel database
+	 * @param s oggetto spettacolo da aggiungere al database
+	 */
 	
 	public void salvaSpettacolo(Spettacolo s) {
 		String filename = s.getTitoloSpettacolo().replace(" ", "") + "-" + s.getData().replace("/", "") + "-" + s.getOrarioDiInizio().replace(":", "") + "-" + Integer.toString(s.getNumeroSala()) + ".pks";
