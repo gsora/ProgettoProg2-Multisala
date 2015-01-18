@@ -24,23 +24,23 @@ public class CambiaPrezzi extends JPanel {
 	private JButton aggiorna;
 	private JLabel errore;
 	private float prezzo;
+	private DBManager dbm;
 	
 	public CambiaPrezzi() {
-		
+		dbm = new DBManager();
+		prezzo = dbm.getPrezzoFilm();
 		
 		Font font = new Font("Arial Unicode MS", Font.BOLD, 20);
 		//setLayout(new BorderLayout());
 		setBorder(new EmptyBorder(40, 20, 20, 20));
 		pnl = new JPanel();
-		pnl.setLayout(new GridLayout(6, 1, 0, 28));
+		pnl.setLayout(new GridLayout(6, 1, 0, 18));
 		
 		//messaggio principale
 		msg = new JLabel("Inserire il prezzo desiderato per sostituirlo a quello attuale.");
 		msg.setFont(font);
 		pnl.add(msg);
-		
-		//TODO: aggiungere integrazione con il DB per il prezzo
-		prezzo = 7.50f;
+
 		prezzoAttuale = new JLabel("Il prezzo attuale del biglietto è: " + prezzo + "€");
 		prezzoAttuale.setFont(font);
 		pnl.add(prezzoAttuale);
@@ -80,6 +80,7 @@ public class CambiaPrezzi extends JPanel {
 					prv = prv.replace(",", ".");
 					float p = Float.parseFloat(prv);
 					prezzo = p;
+					dbm.setPrezzoFilm(prezzo);
 					prezzoAttuale.setText("Il prezzo attuale del biglietto è: " + prezzo + "€" );
 				}
 				catch (Exception ee) {
