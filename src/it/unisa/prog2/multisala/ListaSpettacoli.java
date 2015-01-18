@@ -43,6 +43,10 @@ public class ListaSpettacoli extends JPanel {
 					dtm = (DefaultTableModel) informazioni.getModel();
 					dtm.setRowCount(0);
 					for(Spettacolo s: spettacoliCaricati) {
+						String sconto = String.valueOf(s.getSconto());
+						if(sconto.contentEquals("0.0")) {
+							sconto = "N/A";
+						}
 						dtm.addRow(new Object[] {
 								s.getTitoloSpettacolo(),
 								s.getNumeroSala(),
@@ -50,6 +54,7 @@ public class ListaSpettacoli extends JPanel {
 								s.getOrarioDiInizio(),
 								s.getDurata(),
 								s.sala().getNumeroPostiLiberi(),
+								sconto
 						});
 					}
 				}
@@ -58,7 +63,7 @@ public class ListaSpettacoli extends JPanel {
 		
 		
 		setLayout(new GridLayout());		
-		String[] nomiColonne ={"Titolo", "Numero Sala", "Data", "Orario di inizio", "Durata", "Posti liberi"};
+		String[] nomiColonne ={"Titolo", "Numero Sala", "Data", "Orario di inizio", "Durata", "Posti liberi", "Sconto"};
 		
 		informazioni = new JTable();
 		dtm = new DefaultTableModel(0, 0);
