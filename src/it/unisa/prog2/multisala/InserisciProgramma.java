@@ -30,11 +30,13 @@ public class InserisciProgramma extends JPanel {
 	private JTextField orarioDiInizio;
 	private JTextField dataSpettacolo;
 	private JTextField durata;
+	private JTextField sconto;
 	private JLabel ttl;
 	private JLabel nmsl;
 	private JLabel odi;
 	private JLabel dsp;
 	private JLabel drt;
+	private JLabel scnt;
 	private JButton okbutton;
 	
 		public InserisciProgramma() {
@@ -187,6 +189,33 @@ public class InserisciProgramma extends JPanel {
 			pnl.add(drt);
 			pnl.add(durata);
 			
+			//Sconto
+			scnt = new JLabel("Sconto per lo spettacolo:");
+			scnt.setHorizontalAlignment(JLabel.LEFT);
+
+			GridBagConstraints scntc = new GridBagConstraints();
+			scntc.gridx = 2;
+			scntc.gridy = 6;
+			scntc.weightx = 1;
+			scntc.weighty = 1;
+			scntc.fill = GridBagConstraints.HORIZONTAL;
+			gbl.setConstraints(scnt, scntc);
+			
+			sconto = new JTextField();
+			sconto.setFont(font);
+			sconto.setEditable(true);
+			sconto.setColumns(12);
+			sconto.setHorizontalAlignment(JTextField.CENTER);
+			
+			GridBagConstraints scontoc = new GridBagConstraints();
+			scontoc.gridx = 3;
+			scontoc.gridy = 6;
+			scontoc.weightx = 1; 
+			scontoc.weighty = 1;
+			scontoc.fill = GridBagConstraints.HORIZONTAL;
+			gbl.setConstraints(sconto, scontoc);
+			pnl.add(scnt);
+			pnl.add(sconto);
 			
 			okbutton = new JButton("OK");
 			JPanel pnl1 = new JPanel(new FlowLayout());
@@ -209,10 +238,21 @@ public class InserisciProgramma extends JPanel {
 					String o1 = orarioDiInizio.getText().toString();
 					String d1 = dataSpettacolo.getText().toString();
 					int p1 = Integer.parseInt(durata.getText().toString());
+					double s1;
+					if(sconto.getText().toString().contentEquals("")) {
+						s1 = 0;
+					} else {
+						s1 = Double.parseDouble(sconto.getText().toString());
+					}
 					DBManager dbm = new DBManager();
 					
 					try {
-						Spettacolo s = new Spettacolo(t1, n1, o1, d1, p1);
+						Spettacolo s;
+						if(s1 == 0) {
+							s = new Spettacolo(t1, n1, o1, d1, p1);
+						} else {
+							s = new Spettacolo(t1, n1, o1, d1, p1, s1);
+						}
 						dbm.salvaSpettacolo(s);
 						JOptionPane.showMessageDialog(null, "Spettacolo salvato correttamente nel database", "Spettacolo salvato", JOptionPane.INFORMATION_MESSAGE);
 						titolo.setText("");
@@ -220,10 +260,11 @@ public class InserisciProgramma extends JPanel {
 						orarioDiInizio.setText("");
 						dataSpettacolo.setText("");
 						durata.setText("");
+						sconto.setText("");
 					} catch (OrarioNonValidoException | DataNonValidaException e1) {
 						StringWriter sw = new StringWriter();
 						e1.printStackTrace(new PrintWriter(sw));
-						JOptionPane.showMessageDialog(null, sw.toString(), "Utente non trovato", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null, sw.toString(), "Errore nella scrittura del database", JOptionPane.ERROR_MESSAGE);
 					}
 				}
 			});
