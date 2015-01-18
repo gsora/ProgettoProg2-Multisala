@@ -21,6 +21,7 @@ public class Spettacolo implements Cloneable, Serializable {
 	private int dataAnnoInteger;
 	
 	private int durata;
+	private double sconto;
 	
 	private Sala salaAssegnata;
 
@@ -47,6 +48,35 @@ public class Spettacolo implements Cloneable, Serializable {
 		CheckData(dataSpettacolo);
 		
 		durata = dur;
+		sconto = 0;
+		salaAssegnata = new Sala(numSala);
+	}
+	
+	/**
+	 * Costruttore con sconto
+	 * 
+	 * @param titolo titolo dello spettacolo
+	 * @param numSala numero della sala assegnato
+	 * @param orarioDI orario di inizio passato in formato HH:MM
+	 * @param data data dello spettacolo passata in format GG/MM/AA
+	 * @param dur durata dello spettacolo
+	 * @param sc sconto per lo spettacolo
+	 * @throws OrarioNonValidoException 
+	 * @throws DataNonValidaException 
+	 */
+	
+	public Spettacolo(String titolo, int numSala, String orarioDI, String data, int dur, double sc) throws OrarioNonValidoException, DataNonValidaException {
+		titoloSpettacolo = titolo;
+		numeroSala = numSala;
+		
+		orarioDiInizio = orarioDI;
+		CheckValOrario(orarioDiInizio);
+		
+		dataSpettacolo = data;
+		CheckData(dataSpettacolo);
+		
+		durata = dur;
+		sconto = sc;
 		salaAssegnata = new Sala(numSala);
 	}
 	
@@ -64,6 +94,14 @@ public class Spettacolo implements Cloneable, Serializable {
 		} catch (CloneNotSupportedException e) {
 			throw new RuntimeException(e);
 		}
+	}
+	
+	/**
+	 * Ritorna sconto dello spettacolo
+	 * @return float contenente sconto dello spettacolo
+	 */
+	public double getSconto() {
+		return sconto;
 	}
 	
 	/**
