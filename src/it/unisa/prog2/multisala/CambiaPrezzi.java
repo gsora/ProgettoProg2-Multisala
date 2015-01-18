@@ -41,7 +41,7 @@ public class CambiaPrezzi extends JPanel {
 		
 		//TODO: aggiungere integrazione con il DB per il prezzo
 		prezzo = 7.50f;
-		prezzoAttuale = new JLabel("Il prezzo attuale del biglietto è: " + prezzo + "€");
+		prezzoAttuale = new JLabel("Il prezzo attuale del biglietto Ã¨: " + prezzo + "â‚¬");
 		prezzoAttuale.setFont(font);
 		pnl.add(prezzoAttuale);
 
@@ -80,7 +80,7 @@ public class CambiaPrezzi extends JPanel {
 					prv = prv.replace(",", ".");
 					float p = Float.parseFloat(prv);
 					prezzo = p;
-					prezzoAttuale.setText("Il prezzo attuale del biglietto è: " + prezzo + "€" );
+					prezzoAttuale.setText("Il prezzo attuale del biglietto Ã¨: " + prezzo + "â‚¬" );
 				}
 				catch (Exception ee) {
 					errore.setText("Hai inserito caratteri non validi, puoi utilizzare unicamente i numeri e il carattere \".\"");
