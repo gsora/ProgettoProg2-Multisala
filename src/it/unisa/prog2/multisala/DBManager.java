@@ -177,30 +177,26 @@ public class DBManager {
 		}
 	}
 	
-	// LA RIMOZIONE DI UNO SPETTACOLO è DA RIVEDERE, PASSARE UN OGGETTO INTERO DA RIMUOVERE NON è ELEGANTE
-//	public void rimuoviSpettacolo(Spettacolo s) {
-//		String pathSpettacolo = cartellaDati + "/" + nomiFileSale[s.getNumeroSala() - 1];
-//		File fA = new File(pathSpettacolo);
-//		
-//		try {
-//			FileInputStream fis = new FileInputStream(fA);
-//			ObjectInputStream ois = new ObjectInputStream(fis);
-//			ArrayList<Spettacolo> als = (ArrayList<Spettacolo>) ois.readObject();
-//			als.remove(s);
-//			ois.close();
-//			fis.close();
-//			
-//			fA.delete();
-//			
-//			FileOutputStream fos = new FileOutputStream(fA);
-//			ObjectOutputStream oos = new ObjectOutputStream(fos);
-//			oos.writeObject(als);
-//			oos.close();
-//			fos.close();
-//		} catch (IOException | ClassNotFoundException e) {
-//			e.printStackTrace();
-//		}
-//	}
+	/**
+	 * Elimina uno Spettacolo dal database
+	 * @param titolo titolo dello spettacolo
+	 * @param orario orario dello spettacolo denotato dai campi HH:MM
+	 * @param data data dello spettacolo denotato dai campi GG/MM/HHHH
+	 * @param sala sala in cui viene proiettato lo spettacolo
+	 * @throws SpettacoloNonTrovatoException file dello spettacolo non trovato
+	 */
+	
+	public void rimuoviSpettacolo(String titolo, String orario, String data, int sala) throws SpettacoloNonTrovatoException {
+		String filename = titolo.replace(" ", "") + "-" + data.replace("/", "") + "-" + orario.replace(":", "") + "-" + Integer.toString(sala) + ".pks";
+		String pathSpettacolo = cartellaDati + "/Spettacoli/" + filename;
+		File removeMe = new File(pathSpettacolo);
+		
+		if(!removeMe.exists()) {
+			throw new SpettacoloNonTrovatoException();
+		} else {
+			removeMe.delete();
+		}
+	}
 	
 	/**
 	 * Carica gli spettacoli
