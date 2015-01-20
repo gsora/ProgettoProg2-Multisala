@@ -1,11 +1,116 @@
-package it.unisa.prog2.multisala;
+	package it.unisa.prog2.multisala;
 
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.border.TitledBorder;
 
 public class ApplicaSconti extends JPanel {
 	
-	public ApplicaSconti() {
+	private JPanel scontoUno;
+	
+	private JLabel messaggioUno;
+	
+	private JLabel messaggioAttualeUno;
+	
+	private double valoreAttualeUno;
+	
+	private JTextField valoreNuovoUno;
+	
+	private JButton aggiornaUno;
+	
+	private JPanel scontoDue;
+	
+	private JLabel messaggioDue;
+	
+	private JComboBox<String> giorniDue;
+	
+	private JTextField valoreNuovoDue;
+	
+	private double valoreAttualeDue;
+	
+	private String giornoAttualeDue; 
+	
+	private JButton aggiornaDue;
+	
+		public ApplicaSconti() {
 		
-	}
+			setLayout(new GridLayout(2, 1));
+			
+			//pannello del primo sconto
+			
+			scontoUno = new JPanel();
+			scontoUno.setLayout(new GridLayout(2, 1));
+			messaggioAttualeUno = new JLabel("Lo sconto attuale per gli studenti è di " + valoreAttualeUno + "€");
+			JPanel app = new JPanel(new FlowLayout());
+			app.add(messaggioAttualeUno);
+			
+			messaggioUno = new JLabel("Nuovo sconto:");
+			valoreNuovoUno = new JTextField();
+			valoreNuovoUno.setEditable(true);
+			valoreNuovoUno.setPreferredSize(new Dimension(250, 30));
+			aggiornaUno = new JButton("Aggiorna");
+			aggiornaUno.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					try {
+						String prv = valoreNuovoUno.getText().toString();
+						if(prv.contains(",")) 
+						prv = prv.replace(",", ".");
+						double p = Double.parseDouble(prv);
+						valoreAttualeUno = p;
+					}
+					catch (Exception ee) {
+						//errore.setText("Hai inserito caratteri non validi, puoi utilizzare unicamente i numeri e il carattere \".\"");
+					}
+				}
+			});
+			
+			JPanel app0 = new JPanel(new FlowLayout());
+			app0.add(messaggioUno);
+			app0.add(valoreNuovoUno);
+			app0.add(aggiornaUno);
+			
+			scontoUno.setBorder(new TitledBorder("Sconto studenti"));
+			scontoUno.add(app);
+			scontoUno.add(app0);
+			
+			add(scontoUno);
+			
+			//pannello del secondo sconto
+			
+			scontoDue = new JPanel();
+			scontoDue.setLayout(new GridLayout(2, 2));
+			
+			messaggioDue = new JLabel("Lo sconto attuale è impostato nel giorno di " + giornoAttualeDue + " per il valore di " + valoreAttualeDue + "€." );
+			JPanel app1 = new JPanel(new FlowLayout());
+			app1.add(messaggioDue);
+			
+			String[] giorni = {"Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì", "Sabato", "Domenica" };
+			giorniDue = new JComboBox<String>(giorni);
+			valoreNuovoDue = new JTextField();
+			valoreNuovoDue.setEditable(true);
+			valoreNuovoDue.setPreferredSize(new Dimension(250, 30));
+			aggiornaDue = new JButton("Aggiorna");
+			JPanel app2 = new JPanel(new FlowLayout());
+			app2.add(giorniDue);
+			app2.add(valoreNuovoDue);
+			app2.add(aggiornaDue);
+			
+			scontoDue.setBorder(new TitledBorder("Sconto su un giorno della settima"));
+			scontoDue.add(app1);
+			scontoDue.add(app2);			
+			add(scontoDue);
+			
+		}
 
 }
