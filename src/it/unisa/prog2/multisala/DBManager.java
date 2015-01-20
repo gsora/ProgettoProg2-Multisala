@@ -26,6 +26,9 @@ public class DBManager {
 	// prezzo dei film
 	private float prezzoFilm;
 	
+	// Array contenente gli sconti per studenti e quello per giorno della settimana
+	private Object[] sconti;
+	
 	// arraylist con la lista dei posti prenotati
 	// TODO: controllare il funzionamento del meccanismo, probabilmente è più comodo crearne uno al volo all'interno del metodo
 	private ArrayList<Prenotazione> listaPostiPrenotati;
@@ -68,7 +71,24 @@ public class DBManager {
 					ois.close();
 					fis.close();
 				} catch (IOException | ClassNotFoundException e) {
-					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+			// gli sconti sono stati definiti?
+			// se si carica altrimenti inizializza {0, lunedi, zero}
+			if(!scontiDefiniti()) {
+				sconti[0] = 0.0d;
+				sconti[1] = "lunedi";
+				sconti[2] = 0.0d;
+			} else {
+				try {
+					FileInputStream fis = new FileInputStream(new File(cartellaDati + "/Sconti.pks"));
+					ObjectInputStream ois = new ObjectInputStream(fis);
+					sconti = (Object[]) ois.readObject();
+					ois.close();
+					fis.close();
+				} catch (IOException | ClassNotFoundException e) {
 					e.printStackTrace();
 				}
 			}
@@ -95,6 +115,7 @@ public class DBManager {
 		 * 			Spettacoli ->
 		 * 				nomeSpettacolo-data-ora-numerosala.pks
 		 * 			Prezzo.pks
+		 * 			Sconti.pks
 		 * 			StatisticheVendita.pks
 		 * 			Utenti->
 		 * 				utenteX.pks
@@ -132,6 +153,12 @@ public class DBManager {
 		return prezzo.exists();
 	}
 	
+	// gli sconti sono mai stati definiti?
+	private Boolean scontiDefiniti() {
+		File sconti = new File(cartellaDati + "/Sconti.pks");
+		return sconti.exists();
+	}
+	
 	/**
 	 * Leggi il prezzo degli spettacoli dal database
 	 * @return float contenente il prezzo dei film
@@ -141,6 +168,94 @@ public class DBManager {
 		return prezzoFilm;
 	}
 	
+	/**
+	 * Restituisci lo sconto studenti dal database
+	 * @return double contenente lo sconto studenti
+	 */
+	public double getScontoStudenti() {
+		return (Double) sconti[0];
+	}
+	
+	/**
+	 * Restituisci il giorno della settimana dove viene scontato il prezzo del biglietto
+	 * @return stringa contenente il giorno della settimana in italiano senza accento
+	 */
+	public String getGiornoScontoSettimanale() {
+		return (String) sconti[1];
+	}
+	
+	/**
+	 * Restituisci il valore dello sconto settimanale
+	 * @return double contenente lo sconto settimanale
+	 */
+	public double getValoreScontoSettimanale() {
+		return (Double) sconti[2];
+	}
+	
+	/**
+	 * Setta lo sconto settimanale
+	 * @param d double contenente sconto settimanale
+	 */
+	public void setScontoStudenti(double d) {
+		sconti[0] = (Double) d;
+		// serializza il prezzo
+		File f = new File(cartellaDati + "/Prezzo.pks");
+		f.delete();
+		try {
+			FileOutputStream prezzoFile = new FileOutputStream(f);
+			ObjectOutputStream outFile = new ObjectOutputStream(prezzoFile);
+			outFile.writeObject(prezzoFilm);
+			outFile.close();
+			prezzoFile.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Setta il giorno della settimana in cui scontare i biglietti
+	 * @param d String contenente il giorno della settimana in italiano senza accento
+	 */
+	public void setGiornScontoSettimanale(String s) {
+		sconti[1] = s;
+		// serializza il prezzo
+		File f = new File(cartellaDati + "/Prezzo.pks");
+		f.delete();
+		try {
+			FileOutputStream prezzoFile = new FileOutputStream(f);
+			ObjectOutputStream outFile = new ObjectOutputStream(prezzoFile);
+			outFile.writeObject(prezzoFilm);
+			outFile.close();
+			prezzoFile.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Setta il valore dello sconto settimanale
+	 * @param d double il valore sconto settimanale
+	 */
+	public void setValoreScontoSettimanale(double d) {
+		sconti[2] = (Double) d;
+		// serializza il prezzo
+		File f = new File(cartellaDati + "/Prezzo.pks");
+		f.delete();
+		try {
+			FileOutputStream prezzoFile = new FileOutputStream(f);
+			ObjectOutputStream outFile = new ObjectOutputStream(prezzoFile);
+			outFile.writeObject(prezzoFilm);
+			outFile.close();
+			prezzoFile.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Setta il prezzo dei film
+	 * @param p prezzo dei film da salvare nel database
+	 */
 	public void setPrezzoFilm(float p) {
 		// serializza il prezzo
 		prezzoFilm = p;
