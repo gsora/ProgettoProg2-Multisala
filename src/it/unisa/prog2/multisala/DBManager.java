@@ -43,6 +43,9 @@ public class DBManager {
 	public DBManager() {
 		cartellaDati = new String();
 		sconti = new String[3];
+		sconti[0] = "0";
+		sconti[1] = "lunedi";
+		sconti[2] = "0";
 		
 		// questa stringa contiene il nome del sistema operativo in utilizzo sulla macchina attuale
 		String OS = System.getProperty("os.name").toUpperCase();
@@ -78,11 +81,7 @@ public class DBManager {
 			
 			// gli sconti sono stati definiti?
 			// se si carica altrimenti inizializza {0, lunedi, 0}
-			if(!scontiDefiniti()) {
-				sconti[0] = "0";
-				sconti[1] = "lunedi";
-				sconti[2] = "0";
-			} else {
+			if(scontiDefiniti()) {
 				try {
 					FileInputStream fis = new FileInputStream(new File(cartellaDati + "/Sconti.pks"));
 					ObjectInputStream ois = new ObjectInputStream(fis);
@@ -185,7 +184,8 @@ public class DBManager {
 	 * @return double contenente lo sconto studenti
 	 */
 	public String getScontoStudenti() {
-		return sconti[0];
+		String a = sconti[0];
+		return a;
 	}
 	
 	/**
@@ -193,7 +193,8 @@ public class DBManager {
 	 * @return stringa contenente il giorno della settimana in italiano senza accento
 	 */
 	public String getGiornoScontoSettimanale() {
-		return sconti[1];
+		String a = sconti[1];
+		return a;
 	}
 	
 	/**
@@ -201,7 +202,8 @@ public class DBManager {
 	 * @return double contenente lo sconto settimanale
 	 */
 	public String getValoreScontoSettimanale() {
-		return sconti[2];
+		String a = sconti[2];
+		return a;
 	}
 	
 	/**
@@ -323,6 +325,30 @@ public class DBManager {
 		} else {
 			removeMe.delete();
 		}
+	}
+	
+	/**
+	 * Prendi un singolo spettacolo dal database
+	 * @param titolo titolo dello spettacolo
+	 * @param orario orario dello spettacolo denotato dai campi HH:MM
+	 * @param data data dello spettacolo denotato dai campi GG/MM/HHHH
+	 * @param sala sala in cui viene proiettato lo spettacolo
+	 * @throws SpettacoloNonTrovatoException file dello spettacolo non trovato
+	 */
+	public Spettacolo getSpettacolo(String titolo, String orario, String data, int sala) throws SpettacoloNonTrovatoException {
+		String filename = titolo.replace(" ", "") + "-" + data.replace("/", "") + "-" + orario.replace(":", "") + "-" + Integer.toString(sala) + ".pks";
+		String pathSpettacolo = cartellaDati + "/Spettacoli/" + filename;
+		Spettacolo returnthis = null;
+		try {
+			FileInputStream fis = new FileInputStream(new File(pathSpettacolo));
+			ObjectInputStream oos = new ObjectInputStream(fis);
+			returnthis = (Spettacolo) oos.readObject();
+			oos.close();
+			fis.close();
+		} catch (IOException | ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return returnthis;
 	}
 	
 	/**
