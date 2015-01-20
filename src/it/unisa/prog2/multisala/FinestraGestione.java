@@ -29,7 +29,7 @@ public class FinestraGestione implements GestioneGrafica{
 		
 		tabbedPane.addTab("Applica Sconti", new ApplicaSconti());
 		
-		tabbedPane.addTab("Modifica Status Posti", new ModificaStatusPosto());
+		tabbedPane.addTab("Modifica Status Posti", new ModificaStatusPosto(tabbedPane));
 		
 		tabbedPane.addTab("Bilancio Settimanale", new BilancioSettimanale());
 		
