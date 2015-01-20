@@ -6,6 +6,8 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.font.NumericShaper;
@@ -43,6 +45,8 @@ public class ModificaStatusPosto extends JPanel {
 	
 	private Spettacolo[] spettacoli;
 	
+	private ButtonGroup group;
+	
 	public ModificaStatusPosto(JTabbedPane p) {
 		pane=p;
 		
@@ -70,7 +74,9 @@ public class ModificaStatusPosto extends JPanel {
 		JPanel app = new JPanel(new FlowLayout(FlowLayout.CENTER, 100, 100));
 		app.add(listaSpettacoli);
 		
-		listaPosti = new JComboBox<Integer>();
+		Vector<Integer> intPosti = new Vector<Integer>();
+		inserimentoPosti = new DefaultComboBoxModel<Integer>(intPosti);
+		listaPosti = new JComboBox<Integer>(inserimentoPosti);
 		listaPosti.setEnabled(false);
 		listaPosti.setPreferredSize(new Dimension(300, 30));
 		
@@ -79,7 +85,7 @@ public class ModificaStatusPosto extends JPanel {
 		
 		postoLibero = new JRadioButton("Posto Libero");
 		postoOccupato = new JRadioButton("Posto occupato");
-		ButtonGroup group = new ButtonGroup();
+		group = new ButtonGroup();
 		group.add(postoLibero);
 		group.add(postoOccupato);
 		
@@ -111,7 +117,68 @@ public class ModificaStatusPosto extends JPanel {
 		@Override
 		public void itemStateChanged(ItemEvent arg0) {
 			if(arg0.getStateChange() == ItemEvent.SELECTED) {
-				System.out.println(arg0.getItem());
+				String[] param = arg0.getItem().toString().split(" - ");
+				Spettacolo rif = null;
+				try {
+					rif = DBm.getSpettacolo(param[0], param[1], param[2], Integer.parseInt(param[3]));
+				} catch (NumberFormatException | SpettacoloNonTrovatoException e) {
+					e.printStackTrace();
+				}
+				
+				for(int i = 1; i < rif.sala().getNumeroPostiTotali(); i++) {
+					inserimentoPosti.addElement(i-1);
+				}
+				listaPosti.setEnabled(true);
+				listaPosti.addItemListener(new SelListaPosti());
+			}
+		}
+		
+	}
+	
+	class SelListaPosti implements ItemListener {
+
+		@Override
+		public void itemStateChanged(ItemEvent arg0) {
+			if(arg0.getStateChange() == ItemEvent.SELECTED) {
+				String[] param = listaSpettacoli.getSelectedItem().toString().split(" - ");
+				Spettacolo rif = null;
+				try {
+					rif = DBm.getSpettacolo(param[0], param[1], param[2], Integer.parseInt(param[3]));
+				} catch (NumberFormatException | SpettacoloNonTrovatoException e) {
+					e.printStackTrace();
+				}
+				int posto = Integer.parseInt(arg0.getItem().toString());
+				switch (rif.sala().getStatoPostoSingolo(posto)) {
+				case 0:
+					statusAttuale.setText("<html> Status attuale: <br> libero");
+					break;
+				
+				case 1:
+					statusAttuale.setText("<html> Status attuale: <br> occupato");
+					break;
+					
+				case 3:
+					statusAttuale.setText("<html> Status attuale: <br> prenotato");
+					break;
+				default:
+					break;
+				}
+				
+				postoLibero.addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						System.out.println("posto libero");
+					}
+				});
+				
+				postoOccupato.addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						System.out.println("posto occupato");
+					}
+				});
 			}
 		}
 		
