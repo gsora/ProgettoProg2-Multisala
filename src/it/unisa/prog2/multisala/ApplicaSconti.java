@@ -15,6 +15,8 @@ import javax.swing.border.TitledBorder;
 
 public class ApplicaSconti extends JPanel {
 	
+	private DBManager valoriSconti;
+	
 	private JPanel scontoUno;
 	
 	private JLabel messaggioUno;
@@ -44,12 +46,13 @@ public class ApplicaSconti extends JPanel {
 		public ApplicaSconti() {
 		
 			setLayout(new GridLayout(2, 1));
+			valoriSconti = new DBManager();
 			
 			//pannello del primo sconto
 			
 			scontoUno = new JPanel();
 			scontoUno.setLayout(new GridLayout(2, 1));
-			messaggioAttualeUno = new JLabel("Lo sconto attuale per gli studenti è di " + valoreAttualeUno + "€");
+			messaggioAttualeUno = new JLabel("Lo sconto attuale per gli studenti è di " + valoriSconti.getScontoStudenti() + "€");
 			JPanel app = new JPanel(new FlowLayout());
 			app.add(messaggioAttualeUno);
 			
@@ -66,9 +69,8 @@ public class ApplicaSconti extends JPanel {
 						String prv = valoreNuovoUno.getText().toString();
 						if(prv.contains(",")) 
 						prv = prv.replace(",", ".");
-						double p = Double.parseDouble(prv);
-						valoreAttualeUno = p;
-					}
+						valoriSconti.setScontoStudenti(prv);
+						}
 					catch (Exception ee) {
 						//errore.setText("Hai inserito caratteri non validi, puoi utilizzare unicamente i numeri e il carattere \".\"");
 					}
