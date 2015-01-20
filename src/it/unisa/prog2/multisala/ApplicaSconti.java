@@ -70,9 +70,12 @@ public class ApplicaSconti extends JPanel {
 						if(prv.contains(",")) 
 						prv = prv.replace(",", ".");
 						valoriSconti.setScontoStudenti(prv);
-						}
+						messaggioAttualeUno.setText("Lo sconto attuale per gli studenti è di " + valoriSconti.getScontoStudenti() + "€");
+						
+						
+					}
 					catch (Exception ee) {
-						//errore.setText("Hai inserito caratteri non validi, puoi utilizzare unicamente i numeri e il carattere \".\"");
+
 					}
 				}
 			});
@@ -93,7 +96,7 @@ public class ApplicaSconti extends JPanel {
 			scontoDue = new JPanel();
 			scontoDue.setLayout(new GridLayout(2, 2));
 			
-			messaggioDue = new JLabel("Lo sconto attuale è impostato nel giorno di " + giornoAttualeDue + " per il valore di " + valoreAttualeDue + "€." );
+			messaggioDue = new JLabel("Lo sconto attuale è impostato nel giorno di " + valoriSconti.getGiornoScontoSettimanale() + " per il valore di " + valoriSconti.getValoreScontoSettimanale() + "€." );
 			JPanel app1 = new JPanel(new FlowLayout());
 			app1.add(messaggioDue);
 			
@@ -103,6 +106,29 @@ public class ApplicaSconti extends JPanel {
 			valoreNuovoDue.setEditable(true);
 			valoreNuovoDue.setPreferredSize(new Dimension(250, 30));
 			aggiornaDue = new JButton("Aggiorna");
+			aggiornaDue.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					try {
+						String vlr = valoreNuovoDue.getText().toString();
+						if(vlr.contains(",")) 
+						vlr = vlr.replace(",", ".");
+						valoriSconti.setValoreScontoSettimanale(vlr);
+						
+						String grn = giorniDue.getSelectedItem().toString().toLowerCase();
+						valoriSconti.setGiornScontoSettimanale(grn);
+						
+						messaggioDue.setText("Lo sconto attuale è impostato nel giorno di " + valoriSconti.getGiornoScontoSettimanale() + " per il valore di " + valoriSconti.getValoreScontoSettimanale() + "€." );
+						
+						
+						}
+					catch (Exception ee) {
+
+					}
+					
+				}
+			});
 			JPanel app2 = new JPanel(new FlowLayout());
 			app2.add(giorniDue);
 			app2.add(valoreNuovoDue);
