@@ -125,11 +125,12 @@ public class ModificaStatusPosto extends JPanel {
 					e.printStackTrace();
 				}
 				
-				for(int i = 1; i < rif.sala().getNumeroPostiTotali(); i++) {
-					inserimentoPosti.addElement(i-1);
+				inserimentoPosti.removeAllElements();
+				for(int i = 1; i <= rif.sala().getNumeroPostiTotali(); i++) {
+					inserimentoPosti.addElement(i);
 				}
 				listaPosti.setEnabled(true);
-				listaPosti.addItemListener(new SelListaPosti());
+				listaPosti.addItemListener(new SelListaPosti(rif));
 			}
 		}
 		
@@ -137,18 +138,41 @@ public class ModificaStatusPosto extends JPanel {
 	
 	class SelListaPosti implements ItemListener {
 
+		private Spettacolo spett;
+		
+		public SelListaPosti(Spettacolo s) {
+			spett = s;
+			
+			for(ActionListener a : postoLibero.getActionListeners()) {
+				postoLibero.removeActionListener(a);
+			}
+			
+			for(ActionListener a : postoOccupato.getActionListeners()) {
+				postoOccupato.removeActionListener(a);
+			}
+			
+			postoLibero.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					System.out.println("posto libero");
+				}
+			});
+			
+			postoOccupato.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					System.out.println("posto occupato");
+				}
+			});
+		}
+		
 		@Override
 		public void itemStateChanged(ItemEvent arg0) {
 			if(arg0.getStateChange() == ItemEvent.SELECTED) {
-				String[] param = listaSpettacoli.getSelectedItem().toString().split(" - ");
-				Spettacolo rif = null;
-				try {
-					rif = DBm.getSpettacolo(param[0], param[1], param[2], Integer.parseInt(param[3]));
-				} catch (NumberFormatException | SpettacoloNonTrovatoException e) {
-					e.printStackTrace();
-				}
-				int posto = Integer.parseInt(arg0.getItem().toString());
-				switch (rif.sala().getStatoPostoSingolo(posto)) {
+				int posto = (Integer.parseInt(arg0.getItem().toString())-1);
+				switch (spett.sala().getStatoPostoSingolo(posto)) {
 				case 0:
 					statusAttuale.setText("<html> Status attuale: <br> libero");
 					break;
@@ -163,22 +187,6 @@ public class ModificaStatusPosto extends JPanel {
 				default:
 					break;
 				}
-				
-				postoLibero.addActionListener(new ActionListener() {
-					
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						System.out.println("posto libero");
-					}
-				});
-				
-				postoOccupato.addActionListener(new ActionListener() {
-					
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						System.out.println("posto occupato");
-					}
-				});
 			}
 		}
 		
