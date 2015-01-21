@@ -233,17 +233,42 @@ public class InserisciProgramma extends JPanel {
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					String t1 = titolo.getText().toString(); 
-					int n1 = Integer.parseInt(numSala.getText().toString());
+					String t1 = titolo.getText().toString();
+					if(t1.contentEquals("")) {
+						JOptionPane.showMessageDialog(null, "Inserire un titolo per il film", "Errore di compilazione", JOptionPane.ERROR_MESSAGE);
+					}
+					
+					int n1 = 0;
+					try {
+						n1 = Integer.parseInt(numSala.getText().toString());
+					} catch (NumberFormatException n1error) {
+						JOptionPane.showMessageDialog(null, "Inserire il numero della sala", "Errore di compilazione", JOptionPane.ERROR_MESSAGE);
+					}
+					
 					String o1 = orarioDiInizio.getText().toString();
+					if(o1.contentEquals("")) {
+						JOptionPane.showMessageDialog(null, "Inserire un orario di inizio per il film", "Errore di compilazione", JOptionPane.ERROR_MESSAGE);
+					}
+					
 					String d1 = dataSpettacolo.getText().toString();
-					int p1 = Integer.parseInt(durata.getText().toString());
+					if(d1.contentEquals("")) {
+						JOptionPane.showMessageDialog(null, "Inserire una data di proiezione per il film", "Errore di compilazione", JOptionPane.ERROR_MESSAGE);
+					}
+					
+					int p1 = 0;
+					try {
+						p1 = Integer.parseInt(durata.getText().toString());
+					} catch (NumberFormatException n1error) {
+						JOptionPane.showMessageDialog(null, "Inserire la durata del film", "Errore di compilazione", JOptionPane.ERROR_MESSAGE);
+					}
+					
 					double s1;
 					if(sconto.getText().toString().contentEquals("")) {
 						s1 = 0;
 					} else {
 						s1 = Double.parseDouble(sconto.getText().toString());
 					}
+					
 					DBManager dbm = new DBManager();
 					
 					try {
@@ -262,9 +287,7 @@ public class InserisciProgramma extends JPanel {
 						durata.setText("");
 						sconto.setText("");
 					} catch (OrarioNonValidoException | DataNonValidaException e1) {
-						StringWriter sw = new StringWriter();
-						e1.printStackTrace(new PrintWriter(sw));
-						JOptionPane.showMessageDialog(null, sw.toString(), "Errore nella scrittura del database", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null, e1.getMessage(), "Errore nella scrittura del database", JOptionPane.ERROR_MESSAGE);
 					}
 				}
 			});
