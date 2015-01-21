@@ -19,6 +19,7 @@ public class FinestraGestione implements GestioneGrafica{
 		gestione.setTitle("Gestione Multisala Pancakes");
 		gestione.setResizable(false);
 		gestione.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		gestione.setLocationRelativeTo(null);
 		JTabbedPane tabbedPane = new JTabbedPane();
 		
 		tabbedPane.addTab("Inserisci Programma", new InserisciProgramma());
