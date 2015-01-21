@@ -48,7 +48,7 @@ public class ModificaStatusPosto extends JPanel {
 	private ButtonGroup group;
 	
 	public ModificaStatusPosto(JTabbedPane p) {
-		pane=p;
+		pane = p;
 		
 		p.addChangeListener(new ChangeListener() {
 			
@@ -108,8 +108,19 @@ public class ModificaStatusPosto extends JPanel {
 		for(Spettacolo s: spettacoli) {
 			inserimentoSpettacoli.addElement(s.getTitoloSpettacolo() + " - " + s.getOrarioDiInizio() + " - " + s.getData()+ " - " + String.valueOf(s.getNumeroSala()));
 		}
-		
-		listaSpettacoli.setSelectedIndex(0);
+		try {
+			listaSpettacoli.setSelectedIndex(0);
+			listaPosti.setEnabled(false);
+			listaSpettacoli.setEnabled(false);
+			postoOccupato.setEnabled(false);
+			postoLibero.setEnabled(false);
+		} catch (IllegalArgumentException e) {
+			// probabilmente il database è vuoto
+			listaPosti.setEnabled(true);
+			listaSpettacoli.setEnabled(true);
+			postoOccupato.setEnabled(true);
+			postoLibero.setEnabled(true);
+		}
 	}
 
 	class SelListaSpettacoli implements ItemListener {
