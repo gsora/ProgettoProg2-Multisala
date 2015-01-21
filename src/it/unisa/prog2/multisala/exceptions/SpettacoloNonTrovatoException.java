@@ -1,4 +1,4 @@
-package it.unisa.prog2.multisala;
+package it.unisa.prog2.multisala.exceptions;
 
 public class SpettacoloNonTrovatoException extends Exception {
 	

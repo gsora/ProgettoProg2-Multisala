@@ -1,4 +1,8 @@
-package it.unisa.prog2.multisala;
+package it.unisa.prog2.multisala.gui.generals;
+
+import it.unisa.prog2.multisala.abstracts.DBManager;
+import it.unisa.prog2.multisala.abstracts.GestioneGrafica;
+import it.unisa.prog2.multisala.gui.gestione.ListaSale;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -38,7 +42,7 @@ public class EntrataNuovoUtente implements GestioneGrafica {
 		nuovoUtente.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		nuovoUtente.setLayout(new BorderLayout());
 		
-		messaggio1 = new JLabel("Il tuo codice ID è:", SwingConstants.CENTER);
+		messaggio1 = new JLabel("Il tuo codice ID ï¿½:", SwingConstants.CENTER);
 		
 		codiceID = new JTextPane();
 		codiceID.setText(IDUtente);

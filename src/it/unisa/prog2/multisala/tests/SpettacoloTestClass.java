@@ -1,4 +1,8 @@
-package it.unisa.prog2.multisala;
+package it.unisa.prog2.multisala.tests;
+
+import it.unisa.prog2.multisala.abstracts.Spettacolo;
+import it.unisa.prog2.multisala.exceptions.DataNonValidaException;
+import it.unisa.prog2.multisala.exceptions.OrarioNonValidoException;
 
 public class SpettacoloTestClass {
 	

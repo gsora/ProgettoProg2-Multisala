@@ -1,4 +1,4 @@
-package it.unisa.prog2.multisala;
+package it.unisa.prog2.multisala.abstracts;
 
 import javax.swing.JComponent;
 import java.awt.Color;	

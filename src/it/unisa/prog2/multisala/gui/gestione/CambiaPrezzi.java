@@ -1,4 +1,6 @@
-package it.unisa.prog2.multisala;
+package it.unisa.prog2.multisala.gui.gestione;
+
+import it.unisa.prog2.multisala.abstracts.DBManager;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -55,8 +57,8 @@ public class CambiaPrezzi extends JPanel {
 		nuovoPrezzo.setHorizontalAlignment(JTextField.HORIZONTAL);
 		JPanel app0 = new JPanel(new FlowLayout());
 		app0.add(nuovoPrezzo);
-		pnl.add(app0);
 		
+		pnl.add(app0);
 		errore = new JLabel("");
 		errore.setFont(font);
 		errore.setForeground(Color.RED);

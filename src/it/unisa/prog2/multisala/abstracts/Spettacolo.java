@@ -1,4 +1,7 @@
-package it.unisa.prog2.multisala;
+package it.unisa.prog2.multisala.abstracts;
+
+import it.unisa.prog2.multisala.exceptions.DataNonValidaException;
+import it.unisa.prog2.multisala.exceptions.OrarioNonValidoException;
 
 import java.io.Serializable;
 import java.util.Calendar;

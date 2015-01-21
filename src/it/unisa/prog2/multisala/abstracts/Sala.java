@@ -1,4 +1,7 @@
-package it.unisa.prog2.multisala;
+package it.unisa.prog2.multisala.abstracts;
+
+import it.unisa.prog2.multisala.exceptions.PostiLiberiEsauritiException;
+import it.unisa.prog2.multisala.exceptions.PostiPrenotabiliEsauritiException;
 
 import java.io.Serializable;
 

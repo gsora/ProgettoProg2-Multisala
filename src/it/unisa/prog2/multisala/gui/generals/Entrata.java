@@ -1,4 +1,6 @@
-package it.unisa.prog2.multisala;
+package it.unisa.prog2.multisala.gui.generals;
+
+import it.unisa.prog2.multisala.abstracts.GestioneGrafica;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;

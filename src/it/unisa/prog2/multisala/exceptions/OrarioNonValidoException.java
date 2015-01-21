@@ -1,4 +1,4 @@
-package it.unisa.prog2.multisala;
+package it.unisa.prog2.multisala.exceptions;
 
 /**
  * Eccezione generata nel caso in cui l'orario dato in input non è valido

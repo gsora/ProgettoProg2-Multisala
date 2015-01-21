@@ -1,4 +1,8 @@
-package it.unisa.prog2.multisala;
+package it.unisa.prog2.multisala.gui.gestione;
+
+import it.unisa.prog2.multisala.abstracts.DBManager;
+import it.unisa.prog2.multisala.abstracts.Spettacolo;
+import it.unisa.prog2.multisala.exceptions.SpettacoloNonTrovatoException;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;

@@ -1,4 +1,4 @@
-package it.unisa.prog2.multisala;
+package it.unisa.prog2.multisala.abstracts;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;

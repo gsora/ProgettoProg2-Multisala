@@ -1,4 +1,6 @@
-package it.unisa.prog2.multisala;
+package it.unisa.prog2.multisala.gui.gestione;
+
+import it.unisa.prog2.multisala.abstracts.GestioneGrafica;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;

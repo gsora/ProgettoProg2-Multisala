@@ -1,4 +1,6 @@
-	package it.unisa.prog2.multisala;
+	package it.unisa.prog2.multisala.gui.gestione;
+
+import it.unisa.prog2.multisala.abstracts.DBManager;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;

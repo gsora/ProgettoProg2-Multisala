@@ -1,4 +1,11 @@
-package it.unisa.prog2.multisala;
+package it.unisa.prog2.multisala.tests;
+
+import it.unisa.prog2.multisala.abstracts.DrawPosto;
+import it.unisa.prog2.multisala.abstracts.Sala;
+import it.unisa.prog2.multisala.abstracts.Spettacolo;
+import it.unisa.prog2.multisala.exceptions.DataNonValidaException;
+import it.unisa.prog2.multisala.exceptions.OrarioNonValidoException;
+import it.unisa.prog2.multisala.exceptions.PostiLiberiEsauritiException;
 
 import javax.swing.*;
 
