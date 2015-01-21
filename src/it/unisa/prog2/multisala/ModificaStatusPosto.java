@@ -77,7 +77,6 @@ public class ModificaStatusPosto extends JPanel {
 		Vector<Integer> intPosti = new Vector<Integer>();
 		inserimentoPosti = new DefaultComboBoxModel<Integer>(intPosti);
 		listaPosti = new JComboBox<Integer>(inserimentoPosti);
-		listaPosti.setEnabled(false);
 		listaPosti.setPreferredSize(new Dimension(300, 30));
 		
 		statusAttuale = new JLabel("<html> Status attuale <br> status" );
@@ -96,7 +95,6 @@ public class ModificaStatusPosto extends JPanel {
 		app1.add(postoLibero);
 		app1.add(postoOccupato);
 		
-		
 		add(app);
 		add(statusAttuale);
 		add(app0);
@@ -110,6 +108,8 @@ public class ModificaStatusPosto extends JPanel {
 		for(Spettacolo s: spettacoli) {
 			inserimentoSpettacoli.addElement(s.getTitoloSpettacolo() + " - " + s.getOrarioDiInizio() + " - " + s.getData()+ " - " + String.valueOf(s.getNumeroSala()));
 		}
+		
+		listaSpettacoli.setSelectedIndex(0);
 	}
 
 	class SelListaSpettacoli implements ItemListener {
@@ -117,6 +117,9 @@ public class ModificaStatusPosto extends JPanel {
 		@Override
 		public void itemStateChanged(ItemEvent arg0) {
 			if(arg0.getStateChange() == ItemEvent.SELECTED) {
+				for(ItemListener i : listaPosti.getItemListeners()) {
+					listaPosti.removeItemListener(i);
+				}
 				String[] param = arg0.getItem().toString().split(" - ");
 				Spettacolo rif = null;
 				try {
@@ -124,12 +127,12 @@ public class ModificaStatusPosto extends JPanel {
 				} catch (NumberFormatException | SpettacoloNonTrovatoException e) {
 					e.printStackTrace();
 				}
-				
+								
 				inserimentoPosti.removeAllElements();
 				for(int i = 1; i <= rif.sala().getNumeroPostiTotali(); i++) {
 					inserimentoPosti.addElement(i);
 				}
-				listaPosti.setEnabled(true);
+				
 				listaPosti.addItemListener(new SelListaPosti(rif));
 			}
 		}
@@ -156,6 +159,7 @@ public class ModificaStatusPosto extends JPanel {
 		@Override
 		public void itemStateChanged(ItemEvent arg0) {
 			if(arg0.getStateChange() == ItemEvent.SELECTED) {
+				System.out.println("Film selezionato: " + spett.getTitoloSpettacolo());
 				int posto = (Integer.parseInt(arg0.getItem().toString())-1);
 				switch (spett.sala().getStatoPostoSingolo(posto)) {
 				case 0:
