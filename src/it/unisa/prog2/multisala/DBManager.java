@@ -328,7 +328,7 @@ public class DBManager {
 	}
 	
 	/**
-	 * Prendi un singolo spettacolo dal database
+	 * Prendi un singolo spettacolo dal database 
 	 * @param titolo titolo dello spettacolo
 	 * @param orario orario dello spettacolo denotato dai campi HH:MM
 	 * @param data data dello spettacolo denotato dai campi GG/MM/HHHH

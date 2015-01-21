@@ -10,6 +10,10 @@ public class Posto implements Serializable{
 	// 0 = libero; 1 = assegnato; 2 = prenotato
 	private int status;
 	
+	// variabili globali su status posti
+	public static int LIBERO = 0;
+	public static int ASSEGNATO = 1;
+	public static int PRENOTATO = 2;
 	
 	/**
 	 * Costruttore della classe Posto

@@ -151,21 +151,6 @@ public class ModificaStatusPosto extends JPanel {
 				postoOccupato.removeActionListener(a);
 			}
 			
-			postoLibero.addActionListener(new ActionListener() {
-				
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					System.out.println("posto libero");
-				}
-			});
-			
-			postoOccupato.addActionListener(new ActionListener() {
-				
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					System.out.println("posto occupato");
-				}
-			});
 		}
 		
 		@Override
@@ -175,18 +160,40 @@ public class ModificaStatusPosto extends JPanel {
 				switch (spett.sala().getStatoPostoSingolo(posto)) {
 				case 0:
 					statusAttuale.setText("<html> Status attuale: <br> libero");
+					postoLibero.setSelected(true);
 					break;
 				
 				case 1:
 					statusAttuale.setText("<html> Status attuale: <br> occupato");
+					postoOccupato.setSelected(true);
 					break;
 					
 				case 3:
 					statusAttuale.setText("<html> Status attuale: <br> prenotato");
+					postoLibero.setSelected(false);
+					postoOccupato.setSelected(false);
 					break;
 				default:
 					break;
 				}
+				
+				postoLibero.addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						spett.sala().setStatusPostoSingolo(posto+1, Posto.LIBERO);
+						DBm.salvaSpettacolo(spett);
+					}
+				});
+				
+				postoOccupato.addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						spett.sala().setStatusPostoSingolo(posto+1, Posto.ASSEGNATO);
+						DBm.salvaSpettacolo(spett);
+					}
+				});
 			}
 		}
 		

@@ -3,6 +3,7 @@ package it.unisa.prog2.multisala;
 import java.io.Serializable;
 
 public class Sala implements Serializable {
+	
 	// numero massimo di posti in una sala
 	private static int MAX_POSTI = 50;
 	
@@ -84,6 +85,7 @@ public class Sala implements Serializable {
 	public void incrementaPostiLiberi() {
 		postiLiberi++;
 		postiAssegnati--;
+		ricaricaStatusPosti(listaPosti);
 	}
 	
 	public void compraBiglietto() throws PostiLiberiEsauritiException {
@@ -110,6 +112,11 @@ public class Sala implements Serializable {
 	// TODO: aggiugnere controllo overflow posti
 	public int getStatoPostoSingolo(int a) {
 		return listaPosti[a].getStatus();
+	}
+	
+	public void setStatusPostoSingolo(int nPosto, int stato) {
+		listaPosti[nPosto-1].setStatus(stato);
+		ricaricaStatusPosti(listaPosti);
 	}
 	
 	// METODI PRIVATI //
