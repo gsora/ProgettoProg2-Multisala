@@ -1,6 +1,6 @@
 // TODO: rinominare la classe ListaSpettacoli?
 
-package it.unisa.prog2.multisala.gui.gestione;
+package it.unisa.prog2.multisala.gui.utente;
 
 import it.unisa.prog2.multisala.abstracts.DBManager;
 import it.unisa.prog2.multisala.abstracts.GestioneGrafica;
