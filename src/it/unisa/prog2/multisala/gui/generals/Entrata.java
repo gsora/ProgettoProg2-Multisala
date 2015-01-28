@@ -39,7 +39,7 @@ public class Entrata implements GestioneGrafica {
 		entrata.add(pan, BorderLayout.SOUTH);
 		
 		messaggioEntrata = new JLabel("Benvenuto al Multisala Pancakes", SwingConstants.CENTER);
-		entrata.add(messaggioEntrata, BorderLayout.NORTH);
+		entrata.add(messaggioEntrata, BorderLayout.CENTER);
 		
 		nuovoUtente.addActionListener(new ActionListener() {
 			
