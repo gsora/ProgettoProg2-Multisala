@@ -4,6 +4,7 @@ package it.unisa.prog2.multisala.gui.utente;
 
 import it.unisa.prog2.multisala.abstracts.DBManager;
 import it.unisa.prog2.multisala.abstracts.GestioneGrafica;
+import it.unisa.prog2.multisala.abstracts.Spettacolo;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -41,14 +42,26 @@ public class ListaSale implements GestioneGrafica {
 		listaSale.setLocationRelativeTo(null);
 		listaSale.setTitle("Lista spettacoli");
 		listaSale.setLayout(new BorderLayout());
+		dbm = new DBManager();
 		
 		String[] nomiColonne = {"Titolo", "Numero Sala", "Data", "Orario di inizio", "Durata", "Posti liberi", "Sconto"};
 		
 		informazioni = new JTable();
+		informazioni.setAutoCreateRowSorter(true);
 		dtm = new DefaultTableModel(0, 0) {
 			@Override
 			public boolean isCellEditable(int row, int column) {
 				return false;
+			}
+			
+			public Class<?> getColumnClass(int columnIndex) {
+				if(columnIndex == 0) {
+					return String.class;
+				} else if(columnIndex == 1) {
+					return Integer.class;
+				}
+				
+				return Object.class;
 			}
 		};
 		
@@ -62,16 +75,34 @@ public class ListaSale implements GestioneGrafica {
 		
 		visualizzaSala = new JComboBox<String>();
 		visualizzaSala.addItem("Programmazione Complessiva");
-		visualizzaSala.addItem("Sala 1");
-		visualizzaSala.addItem("Sala 2");
-		visualizzaSala.addItem("Sala 3");
-		visualizzaSala.addItem("Sala 4");
+		for(int i = 0; i < dbm.numeroMassimoSale(); i++) {
+			int num = i+1;
+			visualizzaSala.addItem("Sala " + num);
+		}
+		
 		visualizzaSala.setPreferredSize(new Dimension(300, 30));
+		
+		for(Spettacolo spett : dbm.caricaSpettacoli()) {
+			String sconto = String.valueOf(spett.getSconto());
+			if(sconto.contentEquals("0.0")) {
+				sconto = "N/A";
+			}
+			dtm.addRow(new Object[] {
+					spett.getTitoloSpettacolo(),
+					spett.getNumeroSala(),
+					spett.getData(),
+					spett.getOrarioDiInizio(),
+					spett.getDurata(),
+					spett.sala().getNumeroPostiLiberi(),
+					sconto
+			});
+		}
+		
 		JPanel app0 = new JPanel(new FlowLayout());
 		app0.add(visualizzaSala);
 		listaSale.add(app0, BorderLayout.NORTH);		
 		
-		prenotaAcquista = new JButton("Prenota//Acquista");
+		prenotaAcquista = new JButton("Prenota/Acquista");
 		prenotaAcquista.addActionListener(new ActionListener() {
 			
 			@Override
@@ -84,8 +115,6 @@ public class ListaSale implements GestioneGrafica {
 		JPanel app1 = new JPanel(new FlowLayout());
 		app1.add(prenotaAcquista);
 		listaSale.add(app1, BorderLayout.SOUTH);
-
-	
 	}
 	
 	
@@ -94,9 +123,6 @@ public class ListaSale implements GestioneGrafica {
 	}
 
 	@Override
-	public void costruisciUI() {
-		// TODO Auto-generated method stub
-		
-	}
+	public void costruisciUI() { }
 
 }
