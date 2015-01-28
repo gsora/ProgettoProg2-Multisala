@@ -397,6 +397,47 @@ public class DBManager {
 	}
 	
 	/**
+	 * Restituisce gli spettacoli nella sala data in  argomento
+	 * @param n numero della sala
+	 * @return Spettacolo[] contenente gli spettacoli della sala numero N
+	 */
+	public Spettacolo[] caricaSpettacoliInSala(int n) {
+		ArrayList<Spettacolo> spettacoli = new ArrayList<Spettacolo>();
+		for(File f : new File(cartellaDati + "/Spettacoli/").listFiles()) {
+			String[] fn = f.getName().split("-");
+			if(fn[3].replace(".pks", "").contentEquals(String.valueOf(n))) {
+				try {
+					Spettacolo lol = null;
+					FileInputStream fis = new FileInputStream(f);
+					ObjectInputStream oos = new ObjectInputStream(fis);
+					lol = (Spettacolo) oos.readObject();
+					oos.close();
+					fis.close();
+					spettacoli.add(lol);
+				} catch (IOException | ClassNotFoundException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return spettacoli.toArray(new Spettacolo[spettacoli.size()]);
+	}
+	
+	/**
+	 * Restituisce il numero di sale presenti nel database
+	 * @return int contenente il numero di sale presenti nel database
+	 */
+	public int numeroMassimoSale() {
+		int nSala = 0;
+		for(File f : new File(cartellaDati + "/Spettacoli/").listFiles()) {
+			String[] fn = f.getName().split("-");
+			if(Integer.valueOf(fn[3].replace(".pks", "")) > nSala) {
+				nSala = Integer.valueOf(fn[3].replace(".pks", ""));
+			}
+		}
+		return nSala;
+	}
+	
+	/**
 	 * Aggiungi un utente al database
 	 * @param userID ID dell'utente
 	 */
