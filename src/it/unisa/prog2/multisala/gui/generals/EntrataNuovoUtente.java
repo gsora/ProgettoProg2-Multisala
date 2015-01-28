@@ -2,7 +2,7 @@ package it.unisa.prog2.multisala.gui.generals;
 
 import it.unisa.prog2.multisala.abstracts.DBManager;
 import it.unisa.prog2.multisala.abstracts.GestioneGrafica;
-import it.unisa.prog2.multisala.gui.gestione.ListaSale;
+import it.unisa.prog2.multisala.gui.utente.ListaSale;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
