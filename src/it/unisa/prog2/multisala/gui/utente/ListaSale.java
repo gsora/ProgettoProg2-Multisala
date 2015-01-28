@@ -19,6 +19,8 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 public class ListaSale implements GestioneGrafica {
 	
@@ -48,6 +50,8 @@ public class ListaSale implements GestioneGrafica {
 		
 		informazioni = new JTable();
 		informazioni.setAutoCreateRowSorter(true);
+		informazioni.getTableHeader().setReorderingAllowed(false);
+		informazioni.getTableHeader().setResizingAllowed(false);
 		dtm = new DefaultTableModel(0, 0) {
 			@Override
 			public boolean isCellEditable(int row, int column) {
@@ -79,9 +83,8 @@ public class ListaSale implements GestioneGrafica {
 			int num = i+1;
 			visualizzaSala.addItem("Sala " + num);
 		}
-		
-		visualizzaSala.setPreferredSize(new Dimension(300, 30));
-		
+		visualizzaSala.setSelectedIndex(0);
+		informazioni.removeAll();
 		for(Spettacolo spett : dbm.caricaSpettacoli()) {
 			String sconto = String.valueOf(spett.getSconto());
 			if(sconto.contentEquals("0.0")) {
@@ -97,6 +100,58 @@ public class ListaSale implements GestioneGrafica {
 					sconto
 			});
 		}
+		visualizzaSala.setPreferredSize(new Dimension(300, 30));
+		
+		
+		visualizzaSala.addItemListener(new ItemListener() {
+			
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				if(e.getStateChange() == ItemEvent.SELECTED) {
+					if(e.getItem().toString().contains("Programmazione")) {
+						dtm.fireTableDataChanged();
+						dtm = (DefaultTableModel) informazioni.getModel();
+						dtm.setRowCount(0);
+						for(Spettacolo spett : dbm.caricaSpettacoli()) {
+							String sconto = String.valueOf(spett.getSconto());
+							if(sconto.contentEquals("0.0")) {
+								sconto = "N/A";
+							}
+							dtm.addRow(new Object[] {
+									spett.getTitoloSpettacolo(),
+									spett.getNumeroSala(),
+									spett.getData(),
+									spett.getOrarioDiInizio(),
+									spett.getDurata(),
+									spett.sala().getNumeroPostiLiberi(),
+									sconto
+							});
+						}
+
+					} else {
+						String[] nS = e.getItem().toString().split(" ");
+						dtm.fireTableDataChanged();
+						dtm = (DefaultTableModel) informazioni.getModel();
+						dtm.setRowCount(0);
+						for(Spettacolo spett : dbm.caricaSpettacoliInSala(Integer.valueOf(nS[1]))) {
+							String sconto = String.valueOf(spett.getSconto());
+							if(sconto.contentEquals("0.0")) {
+								sconto = "N/A";
+							}
+							dtm.addRow(new Object[] {
+									spett.getTitoloSpettacolo(),
+									spett.getNumeroSala(),
+									spett.getData(),
+									spett.getOrarioDiInizio(),
+									spett.getDurata(),
+									spett.sala().getNumeroPostiLiberi(),
+									sconto
+							});
+						}
+					}
+				}
+			}
+		});
 		
 		JPanel app0 = new JPanel(new FlowLayout());
 		app0.add(visualizzaSala);
