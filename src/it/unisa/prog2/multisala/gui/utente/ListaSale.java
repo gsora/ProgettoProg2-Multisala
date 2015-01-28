@@ -70,7 +70,7 @@ public class ListaSale implements GestioneGrafica {
 		};
 		
 		dtm.setColumnIdentifiers(nomiColonne);
-		informazioni.setCellSelectionEnabled(true);
+		informazioni.setRowSelectionAllowed(true);
 		informazioni.setModel(dtm);
 		
 		
@@ -162,9 +162,15 @@ public class ListaSale implements GestioneGrafica {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-
-				System.out.println(informazioni.getSelectedRow());
 				
+				for(int i = 0; i < informazioni.getModel().getColumnCount(); i++) {
+					System.out.println(
+							informazioni.getModel().getValueAt(
+									informazioni.convertRowIndexToModel(informazioni.getSelectedRow()), i
+							)
+					);
+				}
+
 			}
 		});
 		JPanel app1 = new JPanel(new FlowLayout());
