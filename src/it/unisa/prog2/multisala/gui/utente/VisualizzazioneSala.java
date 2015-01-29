@@ -1,6 +1,7 @@
 package it.unisa.prog2.multisala.gui.utente;
 
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -57,20 +58,23 @@ public class VisualizzazioneSala implements MouseListener{
 			int numeroPosto = ((DrawPosto) e.getSource()).getNumeroPostoDraw();
 			ricaricaUI(frm, sSelez, a); 
 			frm = new JFrame();
-			frm.setSize(600, 350);
-			frm.setVisible(true);
+			frm.setSize(400, 150);
 			frm.setResizable(false);
+			frm.setLocationRelativeTo(null);
 			frm.setTitle("Compra o Prenota Biglietto");
 			frm.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-			frm.setLayout(new BorderLayout());
-			JPanel subpanel = new JPanel();
+			frm.setLayout(new GridLayout(2, 1, 30, 30));
+			JPanel subpanel = new JPanel(new FlowLayout());
 			JButton Compra = new JButton("Compra");
 			JButton Prenota = new JButton("Prenota");	
 			subpanel.add(Prenota);
 			subpanel.add(Compra);
-			frm.add(subpanel, BorderLayout.SOUTH);
 			JLabel lab1 = new JLabel("Scegliere l'opzione da eseguire con il posto numero " + numeroPosto);
-			frm.add(lab1, BorderLayout.NORTH);
+			JPanel app0 = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 20));
+			app0.add(lab1);
+			frm.add(app0);
+			frm.add(subpanel);
+			frm.setVisible(true);
 			}
 
 		@Override
