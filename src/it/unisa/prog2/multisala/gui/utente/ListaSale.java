@@ -14,6 +14,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import com.sun.org.apache.bcel.internal.generic.GETSTATIC;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -163,8 +165,10 @@ public class ListaSale implements GestioneGrafica {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				
-				for(int i = 0; i < informazioni.getModel().getColumnCount(); i++) {
-					System.out.println(
+				if (informazioni.getSelectedRow() < 0)
+					;
+				else for(int i = 0; i < informazioni.getModel().getColumnCount(); i++) {
+						System.out.println(
 							informazioni.getModel().getValueAt(
 									informazioni.convertRowIndexToModel(informazioni.getSelectedRow()), i
 							)
