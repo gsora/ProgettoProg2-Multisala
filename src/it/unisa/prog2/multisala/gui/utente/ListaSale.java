@@ -183,7 +183,7 @@ public class ListaSale implements GestioneGrafica {
 				
 				try {
 					Spettacolo spSel = dbm.getSpettacolo((String) argomenti.get(0), (String) argomenti.get(3), (String) argomenti.get(2), (int) argomenti.get(1));
-					
+					VisualizzazioneSala vs = new VisualizzazioneSala(spSel.sala());
 				} catch (SpettacoloNonTrovatoException e) {
 					e.printStackTrace();
 				}
