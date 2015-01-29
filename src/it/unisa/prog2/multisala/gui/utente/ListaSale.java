@@ -165,14 +165,26 @@ public class ListaSale implements GestioneGrafica {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				
-				if (informazioni.getSelectedRow() < 0)
+				try {
+					try {
+						for(int i = 0; i < informazioni.getModel().getColumnCount(); i++) {
+							System.out.println(
+									informazioni.getModel().getValueAt(
+											informazioni.convertRowIndexToModel(informazioni.getSelectedRow()), i
+									)
+							);
+						}
+					} catch (IndexOutOfBoundsException e) {
+						for(int i = 0; i < informazioni.getModel().getColumnCount(); i++) {
+							System.out.println(
+									informazioni.getModel().getValueAt(
+											informazioni.getSelectedRow(), i
+									)
+							);
+						}
+					}
+				} catch (IndexOutOfBoundsException e) {
 					;
-				else for(int i = 0; i < informazioni.getModel().getColumnCount(); i++) {
-						System.out.println(
-							informazioni.getModel().getValueAt(
-									informazioni.convertRowIndexToModel(informazioni.getSelectedRow()), i
-							)
-					);
 				}
 
 			}
