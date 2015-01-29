@@ -5,6 +5,7 @@ package it.unisa.prog2.multisala.gui.utente;
 import it.unisa.prog2.multisala.abstracts.DBManager;
 import it.unisa.prog2.multisala.abstracts.GestioneGrafica;
 import it.unisa.prog2.multisala.abstracts.Spettacolo;
+import it.unisa.prog2.multisala.exceptions.SpettacoloNonTrovatoException;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -23,6 +24,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.ArrayList;
 
 public class ListaSale implements GestioneGrafica {
 	
@@ -164,29 +166,27 @@ public class ListaSale implements GestioneGrafica {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				
+				ArrayList<Object> argomenti = new ArrayList<Object>();
 				try {
 					try {
 						for(int i = 0; i < informazioni.getModel().getColumnCount(); i++) {
-							System.out.println(
-									informazioni.getModel().getValueAt(
-											informazioni.convertRowIndexToModel(informazioni.getSelectedRow()), i
-									)
-							);
+							argomenti.add(informazioni.getModel().getValueAt(informazioni.convertRowIndexToModel(informazioni.getSelectedRow()), i));
 						}
 					} catch (IndexOutOfBoundsException e) {
 						for(int i = 0; i < informazioni.getModel().getColumnCount(); i++) {
-							System.out.println(
-									informazioni.getModel().getValueAt(
-											informazioni.getSelectedRow(), i
-									)
-							);
+							argomenti.add(informazioni.getModel().getValueAt(informazioni.getSelectedRow(), i));
 						}
 					}
 				} catch (IndexOutOfBoundsException e) {
 					;
 				}
-
+				
+				try {
+					Spettacolo spSel = dbm.getSpettacolo((String) argomenti.get(0), (String) argomenti.get(3), (String) argomenti.get(2), (int) argomenti.get(1));
+					
+				} catch (SpettacoloNonTrovatoException e) {
+					e.printStackTrace();
+				}
 			}
 		});
 		JPanel app1 = new JPanel(new FlowLayout());
