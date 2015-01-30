@@ -2,6 +2,7 @@
 
 package it.unisa.prog2.multisala.gui.utente;
 
+import it.unisa.prog2.multisala.abstracts.CheckSconto;
 import it.unisa.prog2.multisala.abstracts.DBManager;
 import it.unisa.prog2.multisala.abstracts.GestioneGrafica;
 import it.unisa.prog2.multisala.abstracts.Spettacolo;
@@ -10,6 +11,7 @@ import it.unisa.prog2.multisala.exceptions.SpettacoloNonTrovatoException;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -39,6 +41,10 @@ public class ListaSale implements GestioneGrafica {
 	private JButton prenotaAcquista;
 
 	private DBManager dbm;
+	
+	private CheckSconto cS;
+	
+	private JLabel scontoOggi;
 	
 	public ListaSale(JFrame frameChiamante) {
 		// inizializzazione listaSale con le proprietà corrette
@@ -158,7 +164,14 @@ public class ListaSale implements GestioneGrafica {
 		});
 		
 		JPanel app0 = new JPanel(new FlowLayout());
+		scontoOggi = new JLabel("Oggi c'è uno sconto di " + dbm.getValoreScontoSettimanale() + "€");
+		cS = new CheckSconto();
 		app0.add(visualizzaSala);
+		if(cS.oggiSconto() == true)
+			app0.add(scontoOggi);
+			
+				
+
 		listaSale.add(app0, BorderLayout.NORTH);		
 		
 		prenotaAcquista = new JButton("Prenota/Acquista");
