@@ -522,6 +522,8 @@ public class DBManager {
 		} catch (ClassNotFoundException | IOException e) {
 			
 		}
+		
+		spett.sala().setStatusPostoSingolo(numeroPosto, 0);
 	}
 	
 	/**
