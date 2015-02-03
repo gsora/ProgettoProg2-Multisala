@@ -492,6 +492,39 @@ public class DBManager {
 	}
 	
 	/**
+	 * Rimuovi prenotazione per l'utente
+	 * @param userID utente da cui rimuovere la prenotazione
+	 * @param numeroPosto numero del posto della prenotazione
+	 * @param spett spettacolo per cui eliminare la prenotazione
+	 */
+	
+	public void rimuoviPrenotazione(String userID, int numeroPosto, Spettacolo spett) {
+		
+		File user = new File(cartellaDati + "/Utenti/" + userID + "/Prenotazioni.pks");
+		
+		ListaPrenotazioni prenotazioniUtente;
+		
+		try {
+			FileInputStream f = new FileInputStream(user);
+			ObjectInputStream o = new ObjectInputStream(f);
+			prenotazioniUtente = (ListaPrenotazioni) o.readObject();
+			prenotazioniUtente.rimuoviPrenotazione(numeroPosto, spett.getTitoloSpettacolo(), spett.getData(), spett.getOrarioDiInizio(), spett.sala().getNumeroSala());
+			o.close();
+			f.close();
+			
+			user.delete();
+			FileOutputStream f2 = new FileOutputStream(user);
+			ObjectOutputStream o2 = new ObjectOutputStream(f2);
+			o2.writeObject(prenotazioniUtente);
+			o2.close();
+			f2.close();
+			
+		} catch (ClassNotFoundException | IOException e) {
+			
+		}
+	}
+	
+	/**
 	 * Restituisce la lista delle prenotazioni di un utente
 	 * @param userID ID dell'utente in questione
 	 * @return array di Prenotazione contenente tutte le prenotazioni che l'utente ha effettuato
