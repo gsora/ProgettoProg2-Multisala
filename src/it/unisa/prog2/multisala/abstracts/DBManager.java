@@ -27,7 +27,7 @@ public class DBManager {
 	
 	// arraylist con la lista dei posti prenotati
 	// TODO: controllare il funzionamento del meccanismo, probabilmente è più comodo crearne uno al volo all'interno del metodo
-	private ArrayList<Prenotazione> listaPostiPrenotati;
+	private ArrayList<ListaPrenotazioni> listaPostiPrenotati;
 	
 	/**
 	 * Costruttore di DBManager
@@ -439,6 +439,18 @@ public class DBManager {
 		// crea una cartella sotto cartellaDati/Utenti con l'userID come nome
 		File user = new File(cartellaDati + "/Utenti/" + userID);
 		user.mkdir();
+		
+		// crea una lista prenotazioni per l'utente
+		ListaPrenotazioni usrP = new ListaPrenotazioni();
+		try {
+			FileOutputStream fos = new FileOutputStream(new File(cartellaDati + "/Utenti/" + userID + "/Prenotazioni.pks"));
+			ObjectOutputStream oos = new ObjectOutputStream(fos);
+			oos.writeObject(usrP);
+			oos.close();
+			fos.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public static Boolean controllaEsistenzaUtente(String userID) {
@@ -452,47 +464,28 @@ public class DBManager {
 	 * @param numeroPosto numero posto da prenotare
 	 * @param numeroSala numero sala in cui prenotare il posto
 	 */
-	public void aggiungiPrenotazione(String userID, int numeroPosto, int numeroSala) {
+	public void aggiungiPrenotazione(String userID, int numeroPosto, Spettacolo spett) {
 		
-		ArrayList<Prenotazione> prenotazioniUtente;
+		File user = new File(cartellaDati + "/Utenti/" + userID + "/Prenotazioni.pks");
 		
-		// controlla che non esista un database per le prenotazioni di quell'utente
-		// se non esiste, crealo
-		File user = new File(cartellaDati + "/Utenti/" + userID + "Prenotazioni" + ".pks");
+		ListaPrenotazioni prenotazioniUtente;
 		
-		if(!user.exists()) {
-			try {
-			prenotazioniUtente = new ArrayList<Prenotazione>();
-			FileOutputStream f = new FileOutputStream(user);
-			ObjectOutputStream o = new ObjectOutputStream(f);
-			o.writeObject(prenotazioniUtente);
+		try {
+			FileInputStream f = new FileInputStream(user);
+			ObjectInputStream o = new ObjectInputStream(f);
+			prenotazioniUtente = (ListaPrenotazioni) o.readObject();
+			prenotazioniUtente.aggiungiPrenotazione(numeroPosto, spett.getTitoloSpettacolo(), spett.getData(), spett.getOrarioDiInizio(), spett.sala().getNumeroSala());
 			o.close();
 			f.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		} else {
-			// crea una prenotazione p
-			Prenotazione p = new Prenotazione(numeroSala, numeroPosto);
 			
-			try {
-				FileInputStream f = new FileInputStream(user);
-				ObjectInputStream o = new ObjectInputStream(f);
-				prenotazioniUtente = (ArrayList<Prenotazione>) o.readObject();
-				prenotazioniUtente.add(p);
-				o.close();
-				f.close();
-				
-				user.delete();
-				FileOutputStream f2 = new FileOutputStream(user);
-				ObjectOutputStream o2 = new ObjectOutputStream(f2);
-				o2.writeObject(prenotazioniUtente);
-				o2.close();
-				f2.close();
-				
-			} catch (ClassNotFoundException | IOException e) {
-				
-			}
+			user.delete();
+			FileOutputStream f2 = new FileOutputStream(user);
+			ObjectOutputStream o2 = new ObjectOutputStream(f2);
+			o2.writeObject(prenotazioniUtente);
+			o2.close();
+			f2.close();
+			
+		} catch (ClassNotFoundException | IOException e) {
 			
 		}
 	}
@@ -503,16 +496,16 @@ public class DBManager {
 	 * @return array di Prenotazione contenente tutte le prenotazioni che l'utente ha effettuato
 	 */
 	
-	public Prenotazione[] prenotazioniUtente(String userID) {
+	public ListaPrenotazioni[] prenotazioniUtente(String userID) {
 		
 		// arraylist d'appoggio su cui deserializzare le prenotazioni dell'utente in argomento
-		ArrayList<Prenotazione> prenotazioniUtente = new ArrayList<Prenotazione>();
+		ArrayList<ListaPrenotazioni> prenotazioniUtente = new ArrayList<ListaPrenotazioni>();
 		File user = new File(cartellaDati + "/Utenti/" + userID + "Prenotazioni" + ".pks");
 		
 		try {
 			FileInputStream f = new FileInputStream(user);
 			ObjectInputStream o = new ObjectInputStream(f);
-			prenotazioniUtente = (ArrayList<Prenotazione>) o.readObject();
+			prenotazioniUtente = (ArrayList<ListaPrenotazioni>) o.readObject();
 			o.close();
 			f.close();
 		} catch (ClassNotFoundException | IOException e) {
@@ -520,6 +513,6 @@ public class DBManager {
 		}
 		
 		// ritorna direttamente l'array derivato dall'arraylist d'appoggio
-		return prenotazioniUtente.toArray(new Prenotazione[prenotazioniUtente.size()]);
+		return prenotazioniUtente.toArray(new ListaPrenotazioni[prenotazioniUtente.size()]);
 	}
 }

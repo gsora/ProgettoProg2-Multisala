@@ -1,76 +1,34 @@
 package it.unisa.prog2.multisala.abstracts;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.util.GregorianCalendar;
 
-public class Prenotazione implements Serializable{
+public class Prenotazione implements Serializable {
+	
+	private GregorianCalendar dataPrenotazione;
+	private int posto;
+	
+	/**
+	 * Costruttore con parametro della classe
+	 * @param posto numero del posto da prenotare
+	 */
+	public Prenotazione(int posto) {
+		dataPrenotazione = new GregorianCalendar();
+	}
+	
+	/**
+	 * Controlla se la prenotazione attuale e` valida
+	 * @return boolean con status della prenotazione
+	 */
+	public boolean prenotazioneNonValida() {
+		return dataPrenotazione.after(new GregorianCalendar());
+	}
 
-	private static final long serialVersionUID = 4393668541232102771L;
-	private int numeroSalaPrenotazione;
-	private int numeroPostoPrenotazione;
-	private LocalDateTime dataCreazione;
-	private LocalTime oraCreazione;
-	private Boolean prenotazioneValida;
-	
-	public Prenotazione() {
-		dataCreazione = LocalDateTime.now();
-		oraCreazione = LocalTime.now();
-		prenotazioneValida = true;
-	}
-	
-	public Prenotazione(int nsp, int npp) {
-		numeroSalaPrenotazione = nsp;
-		numeroPostoPrenotazione = npp;
-		dataCreazione = LocalDateTime.now();
-		oraCreazione = LocalTime.now();
-		prenotazioneValida = true;
-	}
-	
-	public void setNumeroSalaPrenotazione(int nsp) {
-		numeroSalaPrenotazione = nsp;
-	}
-	
-	public void setNumeroPostoPrenotazione(int npp) {
-		numeroPostoPrenotazione = npp;
-	}
-	
-	public int getNumeroPostoPrenotazione() {
-		return numeroPostoPrenotazione;
-	}
-	
-	public int getNumeroSalaPrenotazione() {
-		return numeroSalaPrenotazione;
-	}
-	
-	public Boolean statusValPrenotazione() {
-		return prenotazioneValida;
-	}
-	
-	public LocalTime getOraCreazione() {
-		return oraCreazione;
-	}
-	
-	public LocalDateTime getDataCreazione() {
-		return dataCreazione;
-	}
-	
-	public void settaStatusValPrenotazione(Boolean b) {
-		prenotazioneValida = b;
-	}
-	
-	public static Boolean prenotazioneScadua(Prenotazione p) {
-		LocalDateTime dataAttuale = LocalDateTime.now();
-		LocalTime oraAttuale = LocalTime.now();
-		
-		int oreAttuali = (dataAttuale.getDayOfYear() * 24) - (24 - oraAttuale.getHour());
-		int oreCreazione = (p.getDataCreazione().getDayOfYear() * 24) - (24 - p.getOraCreazione().getHour());
-		
-		return true;
-	}
-	
-	public static void main(String[] args) {
-		Prenotazione a = new Prenotazione();
-		Prenotazione.prenotazioneScadua(a);
+	/**
+	 * Restituisci il numero del posto prenotato
+	 * @return int con numero posto prenotato
+	 */
+	public int getPostoPrenotato() {
+		return posto;
 	}
 }
