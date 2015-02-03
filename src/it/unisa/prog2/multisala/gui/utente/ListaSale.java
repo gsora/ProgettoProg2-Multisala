@@ -165,9 +165,8 @@ public class ListaSale implements GestioneGrafica {
 		
 		JPanel app0 = new JPanel(new FlowLayout());
 		scontoOggi = new JLabel("Oggi c'è uno sconto di " + dbm.getValoreScontoSettimanale() + "€");
-		cS = new CheckSconto();
 		app0.add(visualizzaSala);
-		if(cS.oggiSconto() == true)
+		if(CheckSconto.oggiSconto())
 			app0.add(scontoOggi);
 			
 				
