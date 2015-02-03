@@ -39,6 +39,8 @@ public class ListaSale implements GestioneGrafica {
 	private JComboBox<String> visualizzaSala;
 	
 	private JButton prenotaAcquista;
+	
+	private JButton visualizzaPrenotazioni;
 
 	private DBManager dbm;
 	
@@ -46,8 +48,13 @@ public class ListaSale implements GestioneGrafica {
 	
 	private JLabel scontoOggi;
 	
-	public ListaSale(JFrame frameChiamante) {
+	private String userID;
+	
+	private PrenotazioniUtente pU;
+	
+	public ListaSale(JFrame frameChiamante,String userID ) {
 		// inizializzazione listaSale con le proprietà corrette
+		this.userID = userID;
 		listaSale = new JFrame();
 		listaSale.setSize(750,800);
 		listaSale.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -180,14 +187,24 @@ public class ListaSale implements GestioneGrafica {
 				
 				try {
 					Spettacolo spSel = dbm.getSpettacolo((String) argomenti.get(0), (String) argomenti.get(3), (String) argomenti.get(2), (int) argomenti.get(1));
-					VisualizzazioneSala vs = new VisualizzazioneSala(spSel);
+					VisualizzazioneSala vs = new VisualizzazioneSala(spSel, userID);
 				} catch (SpettacoloNonTrovatoException e) {
 					e.printStackTrace();
 				}
 			}
 		});
+		
+		visualizzaPrenotazioni = new JButton("Visualizza prenotazioni");
+		visualizzaPrenotazioni.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				pU = new PrenotazioniUtente(userID);
+			}
+		});
 		JPanel app1 = new JPanel(new FlowLayout());
 		app1.add(prenotaAcquista);
+		app1.add(visualizzaPrenotazioni);
 		listaSale.add(app1, BorderLayout.SOUTH);
 	}
 	

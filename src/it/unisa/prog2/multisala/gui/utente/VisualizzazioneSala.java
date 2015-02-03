@@ -20,6 +20,7 @@ import it.unisa.prog2.multisala.abstracts.DrawPosto;
 import it.unisa.prog2.multisala.abstracts.Sala;
 import it.unisa.prog2.multisala.abstracts.Spettacolo;
 import it.unisa.prog2.multisala.exceptions.PostiLiberiEsauritiException;
+import it.unisa.prog2.multisala.exceptions.PostiPrenotabiliEsauritiException;
 import it.unisa.prog2.multisala.exceptions.SpettacoloNonTrovatoException;
 
 public class VisualizzazioneSala implements MouseListener{
@@ -34,10 +35,11 @@ public class VisualizzazioneSala implements MouseListener{
 	private DBManager dbm;
 	private float prezzostudenti;
 	private float prezzo;
+	private String userID;
 	
-	
-	public VisualizzazioneSala(Spettacolo spass) {
+	public VisualizzazioneSala(Spettacolo spass, String userID) {
 		
+		this.userID = userID;
 		sSelez = spass;
 		frm = new JFrame();
 		frm.setSize(1150, 720);
@@ -117,6 +119,20 @@ public class VisualizzazioneSala implements MouseListener{
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
+					try {
+						sSelez.sala().prenotaPosto(numeroPosto, userID, sSelez);
+						ricaricaUI(frm, sSelez, a);
+						try {
+							dbm.rimuoviSpettacolo(sSelez.getTitoloSpettacolo(), sSelez.getOrarioDiInizio(), sSelez.getData(), sSelez.getNumeroSala());
+							dbm.salvaSpettacolo(sSelez);
+						} catch (SpettacoloNonTrovatoException e1) {
+							e1.printStackTrace();
+						}
+						frm0.dispose();
+					} catch (PostiPrenotabiliEsauritiException e1) {
+						e1.printStackTrace();
+					}
+					
 					
 				}
 			});

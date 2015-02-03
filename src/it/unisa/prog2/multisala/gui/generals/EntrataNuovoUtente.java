@@ -89,7 +89,7 @@ public class EntrataNuovoUtente implements GestioneGrafica {
 				dmb.aggiungiUtente(IDUtente);
 				frameChiamante.setVisible(false);
 				nuovoUtente.setVisible(false);
-				ListaSale ls = new ListaSale(nuovoUtente);
+				ListaSale ls = new ListaSale(nuovoUtente, IDUtente);
 				ls.costruisciUI(nuovoUtente);
 			}
 		});
