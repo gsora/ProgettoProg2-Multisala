@@ -3,24 +3,40 @@ package it.unisa.prog2.multisala.gui.utente;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import it.unisa.prog2.multisala.abstracts.DBManager;
 import it.unisa.prog2.multisala.abstracts.DrawPosto;
 import it.unisa.prog2.multisala.abstracts.Sala;
+import it.unisa.prog2.multisala.abstracts.Spettacolo;
+import it.unisa.prog2.multisala.exceptions.PostiLiberiEsauritiException;
+import it.unisa.prog2.multisala.exceptions.SpettacoloNonTrovatoException;
 
 public class VisualizzazioneSala implements MouseListener{
 
 	private JFrame frm;
+	private JFrame frm0;
 	private DrawPosto[] a;
-	private Sala sSelez;
+	private Spettacolo sSelez;
+	private JCheckBox studente;
+	private JButton compra;
+	private JButton prenota;
+	private DBManager dbm;
+	private float prezzostudenti;
+	private float prezzo;
 	
-	public VisualizzazioneSala(Sala spass) {
+	
+	public VisualizzazioneSala(Spettacolo spass) {
 		
 		sSelez = spass;
 		frm = new JFrame();
@@ -37,12 +53,12 @@ public class VisualizzazioneSala implements MouseListener{
 		
 	}
 	
-	private void ricaricaUI(JFrame frame, Sala s, DrawPosto[] a) {
+	private void ricaricaUI(JFrame frame, Spettacolo s, DrawPosto[] a) {
 		
 		frame.getContentPane().removeAll();
 		
-		for(int i = 0; i < s.getNumeroPostiTotali(); i++) {
-			a[i] = new DrawPosto(s.getStatoPostoSingolo(i), i+1);
+		for(int i = 0; i < s.sala().getNumeroPostiTotali(); i++) {
+			a[i] = new DrawPosto(s.sala().getStatoPostoSingolo(i), i+1);
 			a[i].addMouseListener(this);
 			frame.add(a[i]);			
 		}
@@ -57,24 +73,68 @@ public class VisualizzazioneSala implements MouseListener{
 		public void mouseClicked(MouseEvent e) {
 			int numeroPosto = ((DrawPosto) e.getSource()).getNumeroPostoDraw();
 			ricaricaUI(frm, sSelez, a); 
-			frm = new JFrame();
-			frm.setSize(400, 150);
-			frm.setResizable(false);
-			frm.setLocationRelativeTo(null);
-			frm.setTitle("Compra o Prenota Biglietto");
-			frm.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-			frm.setLayout(new GridLayout(2, 1, 30, 30));
+			frm0 = new JFrame();
+			frm0.setSize(400, 150);
+			frm0.setResizable(false);
+			frm0.setLocationRelativeTo(null);
+			frm0.setTitle("Compra o Prenota Biglietto");
+			frm0.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			frm0.setLayout(new GridLayout(3, 1, 10, 10));
+			
+			dbm = new DBManager();
+			
 			JPanel subpanel = new JPanel(new FlowLayout());
-			JButton Compra = new JButton("Compra");
-			JButton Prenota = new JButton("Prenota");	
-			subpanel.add(Prenota);
-			subpanel.add(Compra);
+			compra = new JButton("Compra");
+			compra.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					if (studente.isSelected())
+						prezzostudenti = dbm.getPrezzoFilm() - Float.parseFloat(dbm.getScontoStudenti());
+					else 
+						prezzostudenti = 10000.0f;
+					
+					prezzo = dbm.getPrezzoFilm();
+					try {
+						sSelez.sala().compraBiglietto(numeroPosto);
+						ricaricaUI(frm, sSelez, a);
+						try {
+							dbm.rimuoviSpettacolo(sSelez.getTitoloSpettacolo(), sSelez.getOrarioDiInizio(), sSelez.getData(), sSelez.getNumeroSala());
+							dbm.salvaSpettacolo(sSelez);
+						} catch (SpettacoloNonTrovatoException e) {
+							e.printStackTrace();
+						}	
+						frm0.dispose();
+					} catch (PostiLiberiEsauritiException e) {
+						e.printStackTrace();
+					}
+					
+				}
+			});
+			
+			prenota = new JButton("Prenota");	
+			prenota.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					
+				}
+			});
+			
+			subpanel.add(prenota);
+			subpanel.add(compra);
+			
+			studente = new JCheckBox();
+			studente.setText("Sono uno studente");
+			
 			JLabel lab1 = new JLabel("Scegliere l'opzione da eseguire con il posto numero " + numeroPosto);
 			JPanel app0 = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 20));
+			
 			app0.add(lab1);
-			frm.add(app0);
-			frm.add(subpanel);
-			frm.setVisible(true);
+			frm0.add(app0);
+			frm0.add(studente);
+			frm0.add(subpanel);
+			frm0.setVisible(true);
 			}
 
 		@Override
