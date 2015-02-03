@@ -20,6 +20,12 @@ public class Entrata implements GestioneGrafica {
 	private JPanel pan;
 	private JLabel messaggioEntrata;
 	
+	/**
+	 * Costruttore di Entrata
+	 * 
+	 * Crea l'interfaccia grafica d'entrata per la selezione di un nuovo utete o di un utente già esistente
+	 */
+	
 	public Entrata(String nomeCinema){
 		entrata = new JFrame();
 		entrata.setSize(300, 150);

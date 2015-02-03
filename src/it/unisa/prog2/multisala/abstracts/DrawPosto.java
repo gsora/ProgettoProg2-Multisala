@@ -15,10 +15,21 @@ public class DrawPosto extends JComponent {
 	private GeneralPath path;
 	private Color c;
 	private int numeroPosto;
+	
+	/**
+	 * costruttore vuoto per il metodo DrawPosto
+	 * 
+	 */
 
 	public DrawPosto() {
 		
 	}
+	
+	/**
+	 *  	Costruttore di DrawPosto che inizializza un posto di un determinato colore in base al suo status
+	 * @param status  indica la sistuazione del posto ovvero se è libero, prenotato o occupato
+	 * @param ns indica il numero del posto che si sta inizializzando
+	 */
 	
 	public DrawPosto(int status, int ns) {
 		switch (status) {
@@ -38,6 +49,11 @@ public class DrawPosto extends JComponent {
 		
 		numeroPosto = ns;
 	}
+	
+	/**
+	 * Metodo privato per costruire nelle interfacce grafiche la struttura visiva del posto con il proprio numero
+	 * 
+	 */
 	
 	private void disegnaPath() {
         g2.setColor(c);
@@ -60,10 +76,19 @@ public class DrawPosto extends JComponent {
         g2.draw(path);
 		
 	}
+	 
+	/**
+	 * metodo pubblico che restituisce il numero del posto corrente
+	 * @return restituisce il numero del posto corrente
+	 */
 	
 	public int getNumeroPostoDraw() {
 		return numeroPosto;
 	}
+	
+	/**
+	 * Metodo pubblico per disegnare i posti nelle interfacce grafiche
+	 */
 	
 	public void paintComponent(Graphics g) {
 		g2 = (Graphics2D) g;

@@ -4,8 +4,21 @@ import java.util.Calendar;
 
 public class CheckSconto {
 	
+	/**
+	 * Metodo vuoto per CheckSconto
+	 * 
+	 * 
+	 */
+	
 	public CheckSconto() {}
 
+	/**
+	 * Metodo che controlla se il giorno corrente corrisponde o meno al giorno predefinito per lo sconto
+	 * 
+	 * 
+	 * @return restituisce un valore booleano veritiero se se il giorno corrente corrisponde al giorno per lo sconto altrimenti falso
+	 */
+	
 	public static boolean oggiSconto() {
 		DBManager dbm = new DBManager();
 		
