@@ -56,7 +56,7 @@ public class ListaSale implements GestioneGrafica {
 		listaSale.setLayout(new BorderLayout());
 		dbm = new DBManager();
 		
-		String[] nomiColonne = {"Titolo", "Numero Sala", "Data", "Orario di inizio", "Durata", "Posti liberi", "Sconto"};
+		String[] nomiColonne = {"Titolo", "Numero Sala", "Data", "Orario di inizio", "Durata", "Posti liberi", "Prezzo"};
 		
 		informazioni = new JTable();
 		informazioni.setAutoCreateRowSorter(true);
@@ -96,10 +96,6 @@ public class ListaSale implements GestioneGrafica {
 		visualizzaSala.setSelectedIndex(0);
 		informazioni.removeAll();
 		for(Spettacolo spett : dbm.caricaSpettacoli()) {
-			String sconto = String.valueOf(spett.getSconto());
-			if(sconto.contentEquals("0.0")) {
-				sconto = "N/A";
-			}
 			dtm.addRow(new Object[] {
 					spett.getTitoloSpettacolo(),
 					spett.getNumeroSala(),
@@ -107,7 +103,7 @@ public class ListaSale implements GestioneGrafica {
 					spett.getOrarioDiInizio(),
 					spett.getDurata(),
 					spett.sala().getNumeroPostiLiberi(),
-					sconto
+					prezzoFilm(spett)
 			});
 		}
 		visualizzaSala.setPreferredSize(new Dimension(300, 30));
@@ -118,15 +114,11 @@ public class ListaSale implements GestioneGrafica {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
 				if(e.getStateChange() == ItemEvent.SELECTED) {
+					dtm.fireTableDataChanged();
+					dtm = (DefaultTableModel) informazioni.getModel();
+					dtm.setRowCount(0);
 					if(e.getItem().toString().contains("Programmazione")) {
-						dtm.fireTableDataChanged();
-						dtm = (DefaultTableModel) informazioni.getModel();
-						dtm.setRowCount(0);
 						for(Spettacolo spett : dbm.caricaSpettacoli()) {
-							String sconto = String.valueOf(spett.getSconto());
-							if(sconto.contentEquals("0.0")) {
-								sconto = "N/A";
-							}
 							dtm.addRow(new Object[] {
 									spett.getTitoloSpettacolo(),
 									spett.getNumeroSala(),
@@ -134,20 +126,13 @@ public class ListaSale implements GestioneGrafica {
 									spett.getOrarioDiInizio(),
 									spett.getDurata(),
 									spett.sala().getNumeroPostiLiberi(),
-									sconto
+									prezzoFilm(spett)
 							});
 						}
 
 					} else {
 						String[] nS = e.getItem().toString().split(" ");
-						dtm.fireTableDataChanged();
-						dtm = (DefaultTableModel) informazioni.getModel();
-						dtm.setRowCount(0);
 						for(Spettacolo spett : dbm.caricaSpettacoliInSala(Integer.valueOf(nS[1]))) {
-							String sconto = String.valueOf(spett.getSconto());
-							if(sconto.contentEquals("0.0")) {
-								sconto = "N/A";
-							}
 							dtm.addRow(new Object[] {
 									spett.getTitoloSpettacolo(),
 									spett.getNumeroSala(),
@@ -155,7 +140,7 @@ public class ListaSale implements GestioneGrafica {
 									spett.getOrarioDiInizio(),
 									spett.getDurata(),
 									spett.sala().getNumeroPostiLiberi(),
-									sconto
+									prezzoFilm(spett)
 							});
 						}
 					}
@@ -213,5 +198,31 @@ public class ListaSale implements GestioneGrafica {
 
 	@Override
 	public void costruisciUI() { }
+
+	private String prezzoFilm(Spettacolo spett) {
+		float pr = dbm.getPrezzoFilm();
+		String prezzoSpettacoloFinale = null;
+		
+		if(spett.getSconto() == 0.0d) {
+			if(CheckSconto.oggiSconto()) {
+				prezzoSpettacoloFinale = String.valueOf(pr - Double.valueOf(dbm.getValoreScontoSettimanale()));
+			} else {
+				prezzoSpettacoloFinale = String.valueOf(pr);
+			}
+		} else {
+			if(CheckSconto.oggiSconto()) {
+				double pScontoSettimanale = (pr - Double.valueOf(dbm.getValoreScontoSettimanale()));
+				double pScontoFilm = (pr - spett.getSconto());
+				if(pScontoSettimanale > pScontoFilm)
+					prezzoSpettacoloFinale = String.valueOf(pScontoFilm);
+				else
+					prezzoSpettacoloFinale = String.valueOf(pScontoSettimanale);
+			} else {
+				prezzoSpettacoloFinale = String.valueOf(pr - spett.getSconto());
+			}
+			
+		}
+		return prezzoSpettacoloFinale;
+	}
 
 }
