@@ -534,7 +534,7 @@ public class DBManager {
 	
 	public HashMap<Object[], ArrayList<Prenotazione>> prenotazioniUtente(String userID) {
 
-		File user = new File(cartellaDati + "/Utenti/" + userID + "Prenotazioni.pks");
+		File user = new File(cartellaDati + "/Utenti/" + userID + "/Prenotazioni.pks");
 		ListaPrenotazioni prenotazioniUtente = null;
 		
 		try {
