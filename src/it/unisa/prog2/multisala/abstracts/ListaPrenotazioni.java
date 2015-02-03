@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class ListaPrenotazioni implements Serializable {
 	
-	Map<Object[], ArrayList<Prenotazione>> lPrenotazioni;
+	private Map<Object[], ArrayList<Prenotazione>> lPrenotazioni;
 	
 	public ListaPrenotazioni() {
 		lPrenotazioni = new HashMap<Object[], ArrayList<Prenotazione>>();
@@ -60,6 +60,10 @@ public class ListaPrenotazioni implements Serializable {
 				orarioF,
 				salaF
 		}, app);
+	}
+	
+	public HashMap<Object[], ArrayList<Prenotazione>> prenotazioniUtente() {
+		return (HashMap<Object[], ArrayList<Prenotazione>>) lPrenotazioni;
 	}
 	
 }

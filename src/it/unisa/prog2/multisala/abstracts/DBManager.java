@@ -10,6 +10,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 public class DBManager {
 	
@@ -496,23 +497,21 @@ public class DBManager {
 	 * @return array di Prenotazione contenente tutte le prenotazioni che l'utente ha effettuato
 	 */
 	
-	public ListaPrenotazioni[] prenotazioniUtente(String userID) {
-		
-		// arraylist d'appoggio su cui deserializzare le prenotazioni dell'utente in argomento
-		ArrayList<ListaPrenotazioni> prenotazioniUtente = new ArrayList<ListaPrenotazioni>();
-		File user = new File(cartellaDati + "/Utenti/" + userID + "Prenotazioni" + ".pks");
+	public HashMap<Object[], ArrayList<Prenotazione>> prenotazioniUtente(String userID) {
+
+		File user = new File(cartellaDati + "/Utenti/" + userID + "Prenotazioni.pks");
+		ListaPrenotazioni prenotazioniUtente = null;
 		
 		try {
 			FileInputStream f = new FileInputStream(user);
 			ObjectInputStream o = new ObjectInputStream(f);
-			prenotazioniUtente = (ArrayList<ListaPrenotazioni>) o.readObject();
+			prenotazioniUtente = (ListaPrenotazioni) o.readObject();
 			o.close();
 			f.close();
 		} catch (ClassNotFoundException | IOException e) {
 			e.printStackTrace();
 		}
 		
-		// ritorna direttamente l'array derivato dall'arraylist d'appoggio
-		return prenotazioniUtente.toArray(new ListaPrenotazioni[prenotazioniUtente.size()]);
+		return prenotazioniUtente.prenotazioniUtente();
 	}
 }
