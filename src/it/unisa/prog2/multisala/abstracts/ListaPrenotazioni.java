@@ -20,8 +20,16 @@ public class ListaPrenotazioni implements Serializable {
 		filmRif[2] = orarioF;
 		filmRif[3] = salaF;
 		ArrayList<Prenotazione> app = lPrenotazioni.get(filmRif);
-		app.add(new Prenotazione(posto));
-		lPrenotazioni.put(filmRif, app);
+		if(app == null) {
+			app = new ArrayList<Prenotazione>();
+			app.add(new Prenotazione(posto));
+			lPrenotazioni.put(filmRif, app);
+		} else {
+			app.add(new Prenotazione(posto));
+			lPrenotazioni.put(filmRif, app);
+		}
+		
+	
 	}
 	
 	public ArrayList<Prenotazione> numeroPostiDaPrenotazione(int posto, String nomeF, String dataF, String orarioF, int salaF) {
