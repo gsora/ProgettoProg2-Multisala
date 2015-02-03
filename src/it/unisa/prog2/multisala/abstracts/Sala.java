@@ -79,10 +79,13 @@ public class Sala implements Serializable {
 	
 	// TODO: scrivere javadoc 
 	// TODO: controllare le funzioni di prenotazione, incremento e acquisto biglietto perché non scrivono nell'oggetto Posto
-	public void prenotaPosto() throws PostiPrenotabiliEsauritiException {
+	public void prenotaPosto(int posto, String userID, Spettacolo spett) throws PostiPrenotabiliEsauritiException {
 		if(postiLiberi <= 0) {
 			throw new PostiPrenotabiliEsauritiException("posti prenotabili nella sala esauriti.");
 		}
+		listaPosti[posto-1].setStatus(2);
+		DBManager dbm = new DBManager();
+		dbm.aggiungiPrenotazione(userID, posto, spett);
 	}
 	
 	public void incrementaPostiLiberi() {
