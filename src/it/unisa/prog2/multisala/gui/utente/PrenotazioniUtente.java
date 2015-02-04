@@ -23,8 +23,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import com.sun.javafx.collections.MappingChange.Map;
-
 public class PrenotazioniUtente {
 
 	private JFrame frm;
@@ -34,7 +32,7 @@ public class PrenotazioniUtente {
 	private JComboBox<String> listaPrenotazioni;
 	private DBManager dbm;
 	private DefaultComboBoxModel<String> inserimentoPrenotazioni;
-	private HashMap<Object[], ArrayList<Prenotazione>> prenotazione;
+	private HashMap<ArrayList<Object>, ArrayList<Prenotazione>> prenotazione;
 	
 	/**
 	 * Tramite questo Jframe l'utente può visualizzare tutte le prenotazioni attualmente fatte a suo nome e può decidere se renderle nulle oppure se confermarle e quindi renderle posti comprati
@@ -54,16 +52,16 @@ public class PrenotazioniUtente {
 		frm.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		mex = new JLabel("Scegliere la prenotazione da confermare o annullare");
 		
-		listaPrenotazioni = new JComboBox<String>();
-		listaPrenotazioni.setPreferredSize(new Dimension(200, 30));
 		Vector<String> stringhePrenotazioni = new Vector<String>();
 		inserimentoPrenotazioni = new DefaultComboBoxModel<String>(stringhePrenotazioni);
+		listaPrenotazioni = new JComboBox<String>(inserimentoPrenotazioni);
+		listaPrenotazioni.setPreferredSize(new Dimension(200, 30));
 		
 		prenotazione = dbm.prenotazioniUtente(userID);
-		for (Entry<Object[], ArrayList<Prenotazione>> i : prenotazione.entrySet()) {
-			Object[] pren = i.getKey();
+		for (Entry<ArrayList<Object>, ArrayList<Prenotazione>> i : prenotazione.entrySet()) {
+			ArrayList<Object> pren = i.getKey();
 			for (Prenotazione a : i.getValue()) {
-				inserimentoPrenotazioni.addElement(pren[0] + "-" + pren[1] + "-" + pren[2] + "-" + pren[3] + "- posto " + a);
+				inserimentoPrenotazioni.addElement(pren.get(0) + "-" + pren.get(1) + "-" + pren.get(2) + "-" + pren.get(3) + "- posto " + a);
 			}
 		}
 		JPanel app1 = new JPanel(new FlowLayout());
@@ -74,10 +72,11 @@ public class PrenotazioniUtente {
 		
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			inserimentoPrenotazioni.getSelectedItem().toString().replace(" posto ", "");
-			String[] prenSelezionato = inserimentoPrenotazioni.getSelectedItem().toString().split("-");
+			String iPSelect = inserimentoPrenotazioni.getSelectedItem().toString().replace(" posto ", "");
+			String[] prenSelezionato = iPSelect.split("-");
+			
 			try {
-				dbm.rimuoviPrenotazione(userID, Integer.parseInt(prenSelezionato[4]), dbm.getSpettacolo(prenSelezionato[0], prenSelezionato[1], prenSelezionato[2], Integer.parseInt(prenSelezionato[3])));
+				dbm.rimuoviPrenotazione(userID, Integer.valueOf(prenSelezionato[4]), dbm.getSpettacolo(prenSelezionato[0], prenSelezionato[2], prenSelezionato[1], Integer.parseInt(prenSelezionato[3])));
 			} catch (NumberFormatException | SpettacoloNonTrovatoException e) {
 				e.printStackTrace();
 			}
@@ -90,18 +89,21 @@ public class PrenotazioniUtente {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				inserimentoPrenotazioni.getSelectedItem().toString().replace(" posto ", "");
-				String[] prenSelezionato = inserimentoPrenotazioni.getSelectedItem().toString().split("-");
+				String iPSelect = inserimentoPrenotazioni.getSelectedItem().toString().replace(" posto ", "");
+				String[] prenSelezionato = iPSelect.split("-");
+				
 				try {
-					dbm.rimuoviPrenotazione(userID, Integer.parseInt(prenSelezionato[4]), dbm.getSpettacolo(prenSelezionato[0], prenSelezionato[1], prenSelezionato[2], Integer.parseInt(prenSelezionato[3])));
+					dbm.rimuoviPrenotazione(userID, Integer.valueOf(prenSelezionato[4]), dbm.getSpettacolo(prenSelezionato[0], prenSelezionato[2], prenSelezionato[1], Integer.parseInt(prenSelezionato[3])));
 				} catch (NumberFormatException | SpettacoloNonTrovatoException e) {
 					e.printStackTrace();
 				}
 				
 				try {
-					dbm.getSpettacolo(prenSelezionato[0], prenSelezionato[1], prenSelezionato[2], Integer.parseInt(prenSelezionato[3])).sala().compraBiglietto(Integer.parseInt(prenSelezionato[4]));
-				} catch (NumberFormatException | PostiLiberiEsauritiException
-						| SpettacoloNonTrovatoException e) {
+					Spettacolo fin = dbm.getSpettacolo(prenSelezionato[0], prenSelezionato[2], prenSelezionato[1], Integer.parseInt(prenSelezionato[3]));
+					fin.sala().compraBiglietto(Integer.parseInt(prenSelezionato[4]));
+					dbm.rimuoviSpettacolo(prenSelezionato[0], prenSelezionato[2], prenSelezionato[1], Integer.parseInt(prenSelezionato[3]));
+					dbm.salvaSpettacolo(fin);
+				} catch (NumberFormatException | PostiLiberiEsauritiException | SpettacoloNonTrovatoException e) {
 					e.printStackTrace();
 				}
 			}

@@ -3,6 +3,7 @@ package it.unisa.prog2.multisala.abstracts;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 public class ListaPrenotazioni implements Serializable {
@@ -53,10 +54,10 @@ public class ListaPrenotazioni implements Serializable {
 		
 		ArrayList<Prenotazione> app = lPrenotazioni.get(keyRif);
 		
-		for(Prenotazione i : app) {
-			if(i.getPostoPrenotato() == posto) {
-				app.remove(i);
-			}
+		for(Iterator<Prenotazione> it = app.iterator(); it.hasNext();) {
+			Prenotazione nextPren = it.next();
+			if(nextPren.getPostoPrenotato() == posto)
+				it.remove();
 		}
 		
 		

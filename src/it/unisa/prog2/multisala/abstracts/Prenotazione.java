@@ -14,6 +14,7 @@ public class Prenotazione implements Serializable {
 	 */
 	public Prenotazione(int posto) {
 		dataPrenotazione = new GregorianCalendar();
+		this.posto = posto;
 	}
 	
 	/**
@@ -30,5 +31,10 @@ public class Prenotazione implements Serializable {
 	 */
 	public int getPostoPrenotato() {
 		return posto;
+	}
+	
+	@Override
+	public String toString() {
+		return String.valueOf(posto);
 	}
 }
