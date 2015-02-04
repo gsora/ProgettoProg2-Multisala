@@ -38,8 +38,6 @@ public class FinestraGestione implements GestioneGrafica{
 		
 		tabbedPane.addTab("Modifica Status Posti", new ModificaStatusPosto(tabbedPane));
 		
-		tabbedPane.addTab("Bilancio Settimanale", new BilancioSettimanale());
-		
 		gestione.add(tabbedPane);
 		
 	}
