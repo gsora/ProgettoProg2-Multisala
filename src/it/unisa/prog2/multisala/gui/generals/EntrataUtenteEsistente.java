@@ -81,11 +81,10 @@ public class EntrataUtenteEsistente implements GestioneGrafica {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(codiceID.getText().contentEquals("MLGPR0")) {
-					// TODO: apri finestra gestione
 					FinestraGestione fg = new FinestraGestione();
 					fg.costruisciUI(utenteEsistente);
 					frameChiamante.setVisible(false);
-				} else if(DBManager.controllaEsistenzaUtente(codiceID.getText()) == false) {
+				} else if(new DBManager().controllaEsistenzaUtente(codiceID.getText()) == false) {
 					JOptionPane.showMessageDialog(null, "Impossibile trovare l'utente inserito", "Utente non trovato", JOptionPane.ERROR_MESSAGE);
 				} else {
 					ListaSale ls = new ListaSale(utenteEsistente, codiceID.getText());
