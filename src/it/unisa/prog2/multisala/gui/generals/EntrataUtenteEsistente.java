@@ -3,6 +3,7 @@ package it.unisa.prog2.multisala.gui.generals;
 import it.unisa.prog2.multisala.abstracts.DBManager;
 import it.unisa.prog2.multisala.abstracts.GestioneGrafica;
 import it.unisa.prog2.multisala.gui.gestione.FinestraGestione;
+import it.unisa.prog2.multisala.gui.utente.ListaSale;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -27,6 +28,7 @@ public class EntrataUtenteEsistente implements GestioneGrafica {
 	private JTextField codiceID;
 	private JButton bottoneEntra;
 	private JPanel pan;
+	private ActionListener entra;
 	
 	/**
 	 * Costruttore di EntrataUtenteEsistente
@@ -68,12 +70,13 @@ public class EntrataUtenteEsistente implements GestioneGrafica {
 	
 		utenteEsistente.add(pan);
 	}
+
 	
 	@Override
 	public void costruisciUI(JFrame frameChiamante) {
 		utenteEsistente.setVisible(true);
 		
-		bottoneEntra.addActionListener(new ActionListener() {
+		entra = new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -84,32 +87,19 @@ public class EntrataUtenteEsistente implements GestioneGrafica {
 					frameChiamante.setVisible(false);
 				} else if(DBManager.controllaEsistenzaUtente(codiceID.getText()) == false) {
 					JOptionPane.showMessageDialog(null, "Impossibile trovare l'utente inserito", "Utente non trovato", JOptionPane.ERROR_MESSAGE);
+				} else {
+					ListaSale ls = new ListaSale(utenteEsistente, codiceID.getText());
+					ls.costruisciUI(utenteEsistente);
+					frameChiamante.setVisible(false);
 				}
 				// TODO: inserire controllo ID valido
 				// se controllo ok:
 				// frameChiamante.setVisible(false);
-			}
-		});
+		}};
 		
-		codiceID.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if(codiceID.getText().contentEquals("MLGPR0")) {
-					// TODO: apri finestra gestione
-					FinestraGestione fg = new FinestraGestione();
-					fg.costruisciUI(utenteEsistente);
-					frameChiamante.setVisible(false);
-				} else if(DBManager.controllaEsistenzaUtente(codiceID.getText()) == false) {
-					JOptionPane.showMessageDialog(null, "Impossibile trovare l'utente inserito", "Utente non trovato", JOptionPane.ERROR_MESSAGE);
-				}
-				// TODO: inserire controllo ID valido
-				// se controllo ok:
-				// frameChiamante.setVisible(false);	
-				
-			}
-		});
+		bottoneEntra.addActionListener(entra);
 		
+		codiceID.addActionListener(entra);
 	}
 
 	@Override
