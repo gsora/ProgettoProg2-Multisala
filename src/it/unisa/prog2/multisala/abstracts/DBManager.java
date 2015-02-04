@@ -454,7 +454,7 @@ public class DBManager {
 		}
 	}
 	
-	public static Boolean controllaEsistenzaUtente(String userID) {
+	public Boolean controllaEsistenzaUtente(String userID) {
 		File user = new File(cartellaDati + "/Utenti/" + userID);
 		return user.exists();
 	}
