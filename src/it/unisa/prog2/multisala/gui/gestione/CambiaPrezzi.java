@@ -28,6 +28,10 @@ public class CambiaPrezzi extends JPanel {
 	private float prezzo;
 	private DBManager dbm;
 	
+	/**
+	 * Tramite questo JPanel è possibile visualizzare il costo attuale del biglietto d'ingresso ed è inoltre possibile modificarlo
+	 */
+	
 	public CambiaPrezzi() {
 		dbm = new DBManager();
 		prezzo = dbm.getPrezzoFilm();

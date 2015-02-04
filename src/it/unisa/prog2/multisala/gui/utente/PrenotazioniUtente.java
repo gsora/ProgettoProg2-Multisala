@@ -6,6 +6,7 @@ import it.unisa.prog2.multisala.abstracts.Spettacolo;
 import it.unisa.prog2.multisala.exceptions.PostiLiberiEsauritiException;
 import it.unisa.prog2.multisala.exceptions.SpettacoloNonTrovatoException;
 
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -35,6 +36,11 @@ public class PrenotazioniUtente {
 	private DefaultComboBoxModel<String> inserimentoPrenotazioni;
 	private HashMap<Object[], ArrayList<Prenotazione>> prenotazione;
 	
+	/**
+	 * Tramite questo Jframe l'utente può visualizzare tutte le prenotazioni attualmente fatte a suo nome e può decidere se renderle nulle oppure se confermarle e quindi renderle posti comprati
+	 * @param userID codice d'identificazione dell'utente necessario per modificare la situazione delle prenotazioni
+	 */
+	
 	public PrenotazioniUtente(String userID) {
 		
 		dbm = new DBManager();
@@ -49,6 +55,7 @@ public class PrenotazioniUtente {
 		mex = new JLabel("Scegliere la prenotazione da confermare o annullare");
 		
 		listaPrenotazioni = new JComboBox<String>();
+		listaPrenotazioni.setPreferredSize(new Dimension(200, 30));
 		Vector<String> stringhePrenotazioni = new Vector<String>();
 		inserimentoPrenotazioni = new DefaultComboBoxModel<String>(stringhePrenotazioni);
 		
@@ -59,7 +66,8 @@ public class PrenotazioniUtente {
 				inserimentoPrenotazioni.addElement(pren[0] + "-" + pren[1] + "-" + pren[2] + "-" + pren[3] + "- posto " + a);
 			}
 		}
-		
+		JPanel app1 = new JPanel(new FlowLayout());
+		app1.add(listaPrenotazioni);
 		
 		annullaPrenotazione = new JButton("Annulla Prenotazione");
 		annullaPrenotazione.addActionListener(new ActionListener() {
@@ -104,7 +112,7 @@ public class PrenotazioniUtente {
 		app0.add(completaAcquisto);
 		
 		frm.add(mex);
-		frm.add(listaPrenotazioni);
+		frm.add(app1);
 		frm.add(app0);
 		frm.setVisible(true);
 	}

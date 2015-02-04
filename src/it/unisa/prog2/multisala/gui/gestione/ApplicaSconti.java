@@ -45,6 +45,10 @@ public class ApplicaSconti extends JPanel {
 	
 	private JButton aggiornaDue;
 	
+	/**
+	 * Tramite questo JPanel è possibile gestire e modificare le politiche di sconto attualmente in uso
+	 */
+	
 		public ApplicaSconti() {
 		
 			setLayout(new GridLayout(2, 1));

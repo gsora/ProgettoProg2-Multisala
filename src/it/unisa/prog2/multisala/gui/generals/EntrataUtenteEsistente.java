@@ -28,6 +28,12 @@ public class EntrataUtenteEsistente implements GestioneGrafica {
 	private JButton bottoneEntra;
 	private JPanel pan;
 	
+	/**
+	 * Costruttore di EntrataUtenteEsistente
+	 * 
+	 * verifica il codice utilizzato dall'utente e tramite specifico codice da l'accesso alla sezione di gestione del multisala
+	 */
+	
 	public EntrataUtenteEsistente(){
 		utenteEsistente = new JFrame();
 		utenteEsistente.setSize(400 , 200);

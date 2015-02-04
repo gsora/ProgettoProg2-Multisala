@@ -14,6 +14,10 @@ public class FinestraGestione implements GestioneGrafica{
 	
 	private JFrame gestione;
 	
+	/**
+	 * Costruttore di FinestraGestione che richiama i JPanel realizzati per la gestione del multisala e li unisce tutti in un frame unico
+	 */
+	
 	
 	public FinestraGestione() {
 		gestione = new JFrame();

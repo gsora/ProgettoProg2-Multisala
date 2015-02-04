@@ -32,6 +32,12 @@ public class EntrataNuovoUtente implements GestioneGrafica {
 	private JPanel pan;
 	private String IDUtente;
 	
+	/**
+	 * Costruttore di EntrataNuovoUtente
+	 * 
+	 * Assegna ad ogni nuovo utente del multisala un codice di riconoscimento grazie al quale riesce a conotrollare le sue prenotazioni e disdire o confermare le prenotazioni precedentemente effettuate
+	 */
+	
 	public EntrataNuovoUtente(){
 		IDUtente = generaID();
 		nuovoUtente = new JFrame();

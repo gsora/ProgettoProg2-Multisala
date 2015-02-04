@@ -44,6 +44,10 @@ public class InserisciProgramma extends JPanel {
 	private JLabel scnt;
 	private JButton okbutton;
 	
+	/**
+	 * Tramite questo JPanel è possibile inserire un nuovo spettacolo al multisala specificandone tutti i valori utili (tiitolo, orario, sala,etc..)
+	 */
+	
 		public InserisciProgramma() {
 			
 			//setPreferredSize(new Dimension(850, 650));

@@ -52,6 +52,12 @@ public class ListaSale implements GestioneGrafica {
 	
 	private PrenotazioniUtente pU;
 	
+	/**
+	 * Tramite questo JFrame l'utente ha accesso a tutti gli spettacoli attualmente disponibili, ordinabili per sala, in ordine alfabetico o visualizzabili per sala singola
+	 * @param frameChiamante frame che ha invocato la Classe ListaSale utile per modificare la visibilità dei frame sullo schermo
+	 * @param userID codice dell'utente necessario per poter abbinare le prenotazioni ad ogni utente
+	 */
+	
 	public ListaSale(JFrame frameChiamante,String userID ) {
 		// inizializzazione listaSale con le proprietà corrette
 		this.userID = userID;

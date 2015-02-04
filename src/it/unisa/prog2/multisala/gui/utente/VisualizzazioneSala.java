@@ -37,6 +37,12 @@ public class VisualizzazioneSala implements MouseListener{
 	private float prezzo;
 	private String userID;
 	
+	/**
+	 * Costruttore che genera visivamente la situazione dei posti in una sala
+	 * @param spass spettacolo attualmente in utlizzo necessario per caricare tutte le informazioni sui posti e sulla sala
+	 * @param userID codice d'identificazione dell'utente necessario per abbianare le prenotazioni alla persona
+	 */
+	
 	public VisualizzazioneSala(Spettacolo spass, String userID) {
 		
 		this.userID = userID;

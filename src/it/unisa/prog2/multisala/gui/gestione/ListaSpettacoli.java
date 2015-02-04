@@ -47,6 +47,11 @@ public class ListaSpettacoli extends JPanel {
 	
 	private DefaultComboBoxModel<String> inserimentoInComboBox; 
 	
+	/**
+	 * Tramite questo JPanel è possibile visualizzare tutti gli spettacoli attualmente inseriti e eventualmente eliminarli 
+	 * @param p valore del pane necessario per ricaricare il JPanel prima di visualizzare la lista
+	 */
+	
 	public ListaSpettacoli(JTabbedPane p) {
 		pane = p;
 		
