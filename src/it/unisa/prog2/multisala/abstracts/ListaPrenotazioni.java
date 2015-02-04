@@ -7,26 +7,27 @@ import java.util.Map;
 
 public class ListaPrenotazioni implements Serializable {
 	
-	private Map<Object[], ArrayList<Prenotazione>> lPrenotazioni;
+	private Map<ArrayList<Object>, ArrayList<Prenotazione>> lPrenotazioni;
 	
 	public ListaPrenotazioni() {
-		lPrenotazioni = new HashMap<Object[], ArrayList<Prenotazione>>();
+		lPrenotazioni = new HashMap<ArrayList<Object>, ArrayList<Prenotazione>>();
 	}
 	
 	public void aggiungiPrenotazione(int posto, String nomeF, String dataF, String orarioF, int salaF) {
-		Object[] filmRif = new Object[4];
-		filmRif[0] = nomeF;
-		filmRif[1] = dataF;
-		filmRif[2] = orarioF;
-		filmRif[3] = salaF;
-		ArrayList<Prenotazione> app = lPrenotazioni.get(filmRif);
+		ArrayList<Object> keyRif = new ArrayList<Object>();
+		keyRif.add(nomeF);
+		keyRif.add(dataF);
+		keyRif.add(orarioF);
+		keyRif.add(salaF);
+		
+		ArrayList<Prenotazione> app = lPrenotazioni.get(keyRif);
 		if(app == null) {
 			app = new ArrayList<Prenotazione>();
 			app.add(new Prenotazione(posto));
-			lPrenotazioni.put(filmRif, app);
+			lPrenotazioni.put(keyRif, app);
 		} else {
 			app.add(new Prenotazione(posto));
-			lPrenotazioni.put(filmRif, app);
+			lPrenotazioni.put(keyRif, app);
 		}
 		
 	
@@ -42,6 +43,13 @@ public class ListaPrenotazioni implements Serializable {
 	}
 	
 	public void rimuoviPrenotazione(int posto, String nomeF, String dataF, String orarioF, int salaF) {
+		
+		for(Map.Entry<ArrayList<Object>, ArrayList<Prenotazione>> i : lPrenotazioni.entrySet()) {
+			for(Object a : i.getKey()) {
+				System.out.println(a);
+			}
+		}
+		
 		ArrayList<Prenotazione> app = lPrenotazioni.get(new Object[] {
 				nomeF,
 				dataF,
@@ -54,16 +62,19 @@ public class ListaPrenotazioni implements Serializable {
 				app.remove(i);
 			}
 		}
-		lPrenotazioni.put(new Object[] {
-				nomeF,
-				dataF,
-				orarioF,
-				salaF
-		}, app);
+		
+		ArrayList<Object> keyRif = new ArrayList<Object>();
+		keyRif.add(nomeF);
+		keyRif.add(dataF);
+		keyRif.add(orarioF);
+		keyRif.add(salaF);
+		
+		
+		lPrenotazioni.put(keyRif, app);
 	}
 	
-	public HashMap<Object[], ArrayList<Prenotazione>> prenotazioniUtente() {
-		return (HashMap<Object[], ArrayList<Prenotazione>>) lPrenotazioni;
+	public HashMap<ArrayList<Object>, ArrayList<Prenotazione>> prenotazioniUtente() {
+		return (HashMap<ArrayList<Object>, ArrayList<Prenotazione>>) lPrenotazioni;
 	}
 	
 }
