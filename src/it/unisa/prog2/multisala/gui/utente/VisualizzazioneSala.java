@@ -1,6 +1,5 @@
 package it.unisa.prog2.multisala.gui.utente;
 
-import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -10,14 +9,12 @@ import java.awt.event.MouseListener;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import it.unisa.prog2.multisala.abstracts.DBManager;
 import it.unisa.prog2.multisala.abstracts.DrawPosto;
-import it.unisa.prog2.multisala.abstracts.Sala;
 import it.unisa.prog2.multisala.abstracts.Spettacolo;
 import it.unisa.prog2.multisala.exceptions.PostiLiberiEsauritiException;
 import it.unisa.prog2.multisala.exceptions.PostiPrenotabiliEsauritiException;
@@ -33,7 +30,6 @@ public class VisualizzazioneSala implements MouseListener{
 	private JButton compra;
 	private JButton prenota;
 	private DBManager dbm;
-	private float prezzostudenti;
 	private float prezzo;
 	private String userID;
 	
@@ -43,9 +39,10 @@ public class VisualizzazioneSala implements MouseListener{
 	 * @param userID codice d'identificazione dell'utente necessario per abbianare le prenotazioni alla persona
 	 */
 	
-	public VisualizzazioneSala(Spettacolo spass, String userID) {
+	public VisualizzazioneSala(Spettacolo spass, String userID, float prezzo) {
 		
 		this.userID = userID;
+		this.prezzo = prezzo;
 		sSelez = spass;
 		frm = new JFrame();
 		frm.setSize(1150, 720);
@@ -98,13 +95,13 @@ public class VisualizzazioneSala implements MouseListener{
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
 					if (studente.isSelected())
-						prezzostudenti = dbm.getPrezzoFilm() - Float.parseFloat(dbm.getScontoStudenti());
-					else 
-						prezzostudenti = 10000.0f;
+						prezzo = dbm.getPrezzoFilm() - Float.parseFloat(dbm.getScontoStudenti());
 					
-					prezzo = dbm.getPrezzoFilm();
 					try {
 						sSelez.sala().compraBiglietto(numeroPosto);
+						System.out.println(sSelez.getIncasso());
+						sSelez.spettacoloComprato(prezzo);
+						System.out.println(sSelez.getIncasso());
 						ricaricaUI(frm, sSelez, a);
 						try {
 							dbm.rimuoviSpettacolo(sSelez.getTitoloSpettacolo(), sSelez.getOrarioDiInizio(), sSelez.getData(), sSelez.getNumeroSala());

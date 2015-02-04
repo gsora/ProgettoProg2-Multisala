@@ -25,6 +25,7 @@ public class Spettacolo implements Cloneable, Serializable {
 	
 	private int durata;
 	private double sconto;
+	private double incasso;
 	
 	private Sala salaAssegnata;
 
@@ -52,6 +53,7 @@ public class Spettacolo implements Cloneable, Serializable {
 		
 		durata = dur;
 		sconto = 0;
+		incasso = 0d;
 		salaAssegnata = new Sala(numSala);
 	}
 	
@@ -80,6 +82,7 @@ public class Spettacolo implements Cloneable, Serializable {
 		
 		durata = dur;
 		sconto = sc;
+		incasso = 0d;
 		salaAssegnata = new Sala(numSala);
 	}
 	
@@ -199,6 +202,22 @@ public class Spettacolo implements Cloneable, Serializable {
 	 */
 	public Sala sala() {
 		return salaAssegnata;
+	}
+	
+	/**
+	 * Restituisce l'incasso totale dello spettacolo
+	 * @return double con incasso totale dello spettacolo
+	 */
+	public double getIncasso() {
+		return incasso;
+	}
+	
+	/**
+	 * Aggiorna le statistiche riguardo l'acquisto di uno spettacolo
+	 * @param val prezzo del biglietto comprato
+	 */
+	public void spettacoloComprato(double val) {
+		incasso += val;
 	}
 	
 	/*

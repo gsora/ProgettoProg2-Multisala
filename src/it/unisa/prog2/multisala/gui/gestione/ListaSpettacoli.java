@@ -71,7 +71,7 @@ public class ListaSpettacoli extends JPanel {
 		
 		
 		setLayout(new BorderLayout());		
-		String[] nomiColonne ={"Titolo", "Numero Sala", "Data", "Orario di inizio", "Durata", "Posti liberi", "Sconto"};
+		String[] nomiColonne ={"Titolo", "Numero Sala", "Data", "Orario di inizio", "Durata", "Posti liberi", "Sconto", "Incasso"};
 		
 		informazioni = new JTable();
 		dtm = new DefaultTableModel(0, 0) {
@@ -147,7 +147,8 @@ public class ListaSpettacoli extends JPanel {
 						s.getOrarioDiInizio(),
 						s.getDurata(),
 						s.sala().getNumeroPostiLiberi(),
-						sconto
+						sconto,
+						s.getIncasso()
 				});
 				
 				inserimentoInComboBox.addElement(s.getTitoloSpettacolo() + " - " + s.getOrarioDiInizio() + " - " + s.getData()+ " - " +  String.valueOf(s.getNumeroSala()));
