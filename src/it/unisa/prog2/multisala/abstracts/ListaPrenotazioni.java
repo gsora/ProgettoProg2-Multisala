@@ -34,40 +34,30 @@ public class ListaPrenotazioni implements Serializable {
 	}
 	
 	public ArrayList<Prenotazione> numeroPostiDaPrenotazione(int posto, String nomeF, String dataF, String orarioF, int salaF) {
-		return lPrenotazioni.get(new Object[] {
-				nomeF,
-				dataF,
-				orarioF,
-				salaF
-		});
+		ArrayList<Object> keyRif = new ArrayList<Object>();
+		keyRif.add(nomeF);
+		keyRif.add(dataF);
+		keyRif.add(orarioF);
+		keyRif.add(salaF);
+		
+		return lPrenotazioni.get(keyRif);
 	}
 	
 	public void rimuoviPrenotazione(int posto, String nomeF, String dataF, String orarioF, int salaF) {
-		
-		for(Map.Entry<ArrayList<Object>, ArrayList<Prenotazione>> i : lPrenotazioni.entrySet()) {
-			for(Object a : i.getKey()) {
-				System.out.println(a);
-			}
-		}
-		
-		ArrayList<Prenotazione> app = lPrenotazioni.get(new Object[] {
-				nomeF,
-				dataF,
-				orarioF,
-				salaF
-		});
-		
-		for(Prenotazione i : app) {
-			if(i.getPostoPrenotato() == posto) {
-				app.remove(i);
-			}
-		}
 		
 		ArrayList<Object> keyRif = new ArrayList<Object>();
 		keyRif.add(nomeF);
 		keyRif.add(dataF);
 		keyRif.add(orarioF);
 		keyRif.add(salaF);
+		
+		ArrayList<Prenotazione> app = lPrenotazioni.get(keyRif);
+		
+		for(Prenotazione i : app) {
+			if(i.getPostoPrenotato() == posto) {
+				app.remove(i);
+			}
+		}
 		
 		
 		lPrenotazioni.put(keyRif, app);
