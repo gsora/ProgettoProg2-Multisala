@@ -532,7 +532,7 @@ public class DBManager {
 	 * @return array di Prenotazione contenente tutte le prenotazioni che l'utente ha effettuato
 	 */
 	
-	public HashMap<Object[], ArrayList<Prenotazione>> prenotazioniUtente(String userID) {
+	public HashMap<ArrayList<Object>, ArrayList<Prenotazione>> prenotazioniUtente(String userID) {
 
 		File user = new File(cartellaDati + "/Utenti/" + userID + "/Prenotazioni.pks");
 		ListaPrenotazioni prenotazioniUtente = null;
