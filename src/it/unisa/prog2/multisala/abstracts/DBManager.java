@@ -14,9 +14,6 @@ import java.util.HashMap;
 
 public class DBManager {
 	
-	// numero delle sale da gestire
-	private static final int NUM_SALE = 4;
-	
 	// path dove sono contenuti i file dati
 	private static String cartellaDati;
 	
@@ -25,10 +22,6 @@ public class DBManager {
 	
 	// Array contenente gli sconti per studenti e quello per giorno della settimana
 	private String[] sconti;
-	
-	// arraylist con la lista dei posti prenotati
-	// TODO: controllare il funzionamento del meccanismo, probabilmente è più comodo crearne uno al volo all'interno del metodo
-	private ArrayList<ListaPrenotazioni> listaPostiPrenotati;
 	
 	/**
 	 * Costruttore di DBManager
