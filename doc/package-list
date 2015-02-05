@@ -1,1 +1,5 @@
-it.unisa.prog2.multisala
+it.unisa.prog2.multisala.abstracts
+it.unisa.prog2.multisala.exceptions
+it.unisa.prog2.multisala.gui.generals
+it.unisa.prog2.multisala.gui.gestione
+it.unisa.prog2.multisala.gui.utente
